@@ -22,7 +22,7 @@ spec:
         ports:
           main:
             port: 10216
-            port: 8081  # Assuming this is the correct target port
+            targetPort: 8081  # Assuming this is the correct target port
 
     persistence:
       downloads:
