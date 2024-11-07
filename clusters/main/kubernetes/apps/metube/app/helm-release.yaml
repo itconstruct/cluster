@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: metube
+  namespace: metube
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: metube
+      version: 1.2.40
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: 192.168.1.215  # Adjust this IP as needed
+        ports:
+          main:
+            port: 30094
+            targetPort: 8081  # Assuming this is the correct target port
+
+    persistence:
+      downloads:
+        enabled: true
+        type: nfs
+        server: "192.168.1.223"  # Replace with your NFS server IP
+        path: "/mnt/docker/talos_apps/metube/downloads"
+        mountPath: "/downloads"
+      config:
+        enabled: true
+        type: pvc
+        storageClass: "longhorn"
+        size: 1Gi  # Adjust size as needed
+        mountPath: "/config"
+
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 8Gi
+
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
