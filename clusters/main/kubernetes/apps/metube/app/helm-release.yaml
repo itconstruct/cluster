@@ -18,11 +18,19 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: 192.168.1.215  # Adjust this IP as needed
+        loadBalancerIP: "${METUBE_IP}"  # Adjust this IP as needed
         ports:
           main:
             port: 10216
             targetPort: 8081  # Assuming this is the correct target port
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-metube"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
 
     persistence:
       downloads:
@@ -32,11 +40,29 @@ spec:
         path: "/mnt/docker/talos_apps/metube/downloads"
         mountPath: "/downloads"
       config:
+        volsync:
+          - name: b2-r2
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 10Gi
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
+      backup:
         enabled: true
-        type: pvc
-        storageClass: "longhorn"
-        size: 1Gi  # Adjust size as needed
-        mountPath: "/config"
+        mountPath: /config/Backups
+        volsync:
+          - name: b2
+            type: restic
+            credentials: s3
+            dest:
+              cacheCapacity: 10Gi
+              enabled: true
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
 
     resources:
       limits:
