@@ -4,3 +4,6 @@ resources:
   - kyverno-policies/ks.yaml
   - metallb-config/ks.yaml
   - system-upgrade-controller-plans/ks.yaml
+  - blocky/ks.yaml
+  - clusterissuer/ks.yaml
+  - traefik/ks.yaml
