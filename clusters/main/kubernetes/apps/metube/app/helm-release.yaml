@@ -45,7 +45,7 @@ spec:
             type: restic
             credentials: s3
             dest:
-              enabled: false
+              enabled: true
               cacheCapacity: 10Gi
             src:
               enabled: true
