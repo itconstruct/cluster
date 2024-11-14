@@ -43,7 +43,7 @@ spec:
         volsync:
           - name: config
             type: restic
-            credentials: backblaze-s3prod
+            credentials: s3
             dest:
               enabled: true
               cacheCapacity: 10Gi
