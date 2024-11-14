@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: metube
+  namespace: metube
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: metube
+      version: 14.7.4
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: "${METUBE_IP}"  # Adjust this IP as needed
+        ports:
+          main:
+            port: 10216
+            targetPort: 8081  # Assuming this is the correct target port
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-metube"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+
+    persistence:
+      downloads:
+        enabled: true
+        type: nfs
+        server: "192.168.1.223"  # Replace with your NFS server IP
+        path: "/mnt/docker/talos_apps/metube/downloads"
+        mountPath: "/downloads"
+      config:
+        volsync:
+          - name: config
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 10Gi
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
