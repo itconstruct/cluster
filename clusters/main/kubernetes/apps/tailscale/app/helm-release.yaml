@@ -1,0 +1,66 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tailscale
+  namespace: tailscale
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: tailscale
+      version: 10.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  values:
+    oauth:
+      clientId: "${TAILSCALE_CLIENTID}"
+      clientSecret: "${TAILSCALE_CLIENT_SECRET"
+    
+    service:
+      main:
+        type: LoadBalancer
+        ports:
+          main:
+            port: 41641  # Tailscale default port
+
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-tailscale"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+
+    persistence:
+      config:
+        mountPath: /var/lib/tailscale
+        volsync:
+          - name: tailscale-backup
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 1Gi
+            src:
+              enabled: true
+              cacheCapacity: 1Gi
+    
+    securityContext:
+      container:
+        runAsUser: 1000
+        runAsGroup: 1000
+      pod:
+        fsGroup: 1000
+    
+    advertiseRoutes:
+      - "192.168.1.8/32"
+      - "192.168.1.222/32"
+      - "192.168.1.223/32"
+      - "192.168.1.10/32"
+      - "192.168.1.220/32"
+      - "192.168.1.230/32"
+      - "192.168.1.225/32"
