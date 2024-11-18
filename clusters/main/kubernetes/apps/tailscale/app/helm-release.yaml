@@ -22,37 +22,6 @@ spec:
         ports:
           main:
             port: 41641  # Tailscale default port
-
-    credentials:
-      s3:
-        type: s3
-        url: "${S3URL}"
-        bucket: "${S3PREFIX}-tailscale"
-        accessKey: "${S3ID}"
-        secretKey: "${S3KEY}"
-        encrKey: "${S3KEY}"
-
-    persistence:
-      config:
-        mountPath: /var/lib/tailscale
-        volsync:
-          - name: tailscale-backup
-            type: restic
-            credentials: s3
-            dest:
-              enabled: true
-              cacheCapacity: 1Gi
-            src:
-              enabled: true
-              cacheCapacity: 1Gi
-    
-    securityContext:
-      container:
-        runAsUser: 1000
-        runAsGroup: 1000
-      pod:
-        fsGroup: 1000
-    
     advertiseRoutes:
       - "192.168.1.8/32"
       - "192.168.1.222/32"
