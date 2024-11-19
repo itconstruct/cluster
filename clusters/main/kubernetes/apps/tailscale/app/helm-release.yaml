@@ -18,13 +18,12 @@ spec:
     tailscale:
       authkey: "${TAILSCALE_AUTHKEY}"
     securityContext:
-      runAsNonRoot: true
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
+      runAsNonRoot: false
+      runAsUser: 0
       capabilities:
-        add: ["NET_ADMIN"]
-        drop: ["ALL"]
+        add: ["NET_ADMIN", "NET_RAW"]
+    podSecurityContext:
+      fsGroup: 1000
 
     volumes:
       - name: tun
