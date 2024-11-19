@@ -17,6 +17,18 @@ spec:
   values:
     tailscale:
       authkey: "${TAILSCALE_AUTHKEY}"
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      capabilities:
+        add: ["NET_ADMIN"]
+        drop: ["ALL"]
+
+    volumes:
+      - name: tun
+        emptyDir: {}
     service:
       main:
         ports:
