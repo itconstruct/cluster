@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2
+flux reconcile source git cluster -n flux-systemapiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: homepage
@@ -87,21 +87,3 @@ spec:
           ports:
             codeserver:
               port: 12321
-		    - name: b2
-			type: restic
-			credentials: s3
-			dest:
-			  enabled: true
-			  cacheCapacity: 10Gi
-			src:
-              enabled: true
-              cacheCapacity: 10Gi
-    addons:
-      codeserver:
-        enabled: true
-        service:
-		  type: "LoadBalancer"
-		  loadBalancerIP: "${HOMEPAGE_IP}"
-		  ports:
-		    codeserver:
-			  port: 12321
