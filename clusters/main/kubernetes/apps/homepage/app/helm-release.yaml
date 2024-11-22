@@ -70,14 +70,14 @@ spec:
         mountPath: /app/config
         volsync:
           - name: b2
-          type: restic
-          credentials: s3
-          dest:
-            enabled: true
-            cacheCapacity: 10Gi
-          src:
-            enabled: true
-            cacheCapacity: 10Gi
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 10Gi
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
     addons:
       codeserver:
         enabled: true
