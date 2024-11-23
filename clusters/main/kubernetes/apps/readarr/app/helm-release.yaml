@@ -13,41 +13,41 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
-    values:
-      service:
-        main:
-          type: LoadBalancer
-          loadBalancerIP: "${ARRs_IP}"
-          ports:
-            main:
-              port: 8787
-        metrics:
-          enabled: true
-          ports:
-            metrics:
-              enabled: true
-              port: 8788
-              targetSelector: exportarr
-          targetSelector: exportarr
-          type: ClusterIP
-        credentials:
-          s3:
-            type: s3
-            url: "${S3URL}"
-            bucket: "${S3PREFIX}-metube"
-            accessKey: "${S3ID}"
-            secretKey: "${S3KEY}"
-            encrKey: "${S3KEY}"
-        persistence:
-          config:
-            mountPath: /config
-            volsync:
-              - name: b2
-                type: restic
-                credentials: s3
-                dest:
-                  enabled: true
-                  cacheCapacity: 10Gi
-                src:
-                  enabled: true
-                  cacheCapacity: 10Gi
+  values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: "${ARRs_IP}"
+        ports:
+          main:
+            port: 8787
+      metrics:
+        enabled: true
+        ports:
+          metrics:
+            enabled: true
+            port: 8788
+            targetSelector: exportarr
+        targetSelector: exportarr
+        type: ClusterIP
+      credentials:
+        s3:
+          type: s3
+          url: "${S3URL}"
+          bucket: "${S3PREFIX}-metube"
+          accessKey: "${S3ID}"
+          secretKey: "${S3KEY}"
+          encrKey: "${S3KEY}"
+      persistence:
+        config:
+          mountPath: /config
+          volsync:
+            - name: b2
+              type: restic
+              credentials: s3
+              dest:
+                enabled: true
+                cacheCapacity: 10Gi
+              src:
+                enabled: true
+                cacheCapacity: 10Gi
