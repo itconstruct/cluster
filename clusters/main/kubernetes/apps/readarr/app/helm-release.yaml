@@ -39,6 +39,12 @@ spec:
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
     persistence:
+      downloads:
+        enabled: true
+        type: nfs
+        server: "192.168.1.223"  # Replace with your NFS server IP
+        path: "/mnt/docker/talos_apps/readarr/downloads"
+        mountPath: "/downloads"
       config:
         mountPath: /config
         volsync:
