@@ -6,3 +6,4 @@ resources:
   - librespeed/ks.yaml
   - metube/ks.yaml
   - tailscale/ks.yaml
+  - readarr/ks.yaml
