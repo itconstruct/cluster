@@ -13,7 +13,6 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
-    releaseName: readarr
     values:
       service:
         main:
