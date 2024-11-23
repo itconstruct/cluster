@@ -30,24 +30,24 @@ spec:
             targetSelector: exportarr
         targetSelector: exportarr
         type: ClusterIP
-      credentials:
-        s3:
-          type: s3
-          url: "${S3URL}"
-          bucket: "${S3PREFIX}-readarr"
-          accessKey: "${S3ID}"
-          secretKey: "${S3KEY}"
-          encrKey: "${S3KEY}"
-      persistence:
-        config:
-          mountPath: /config
-          volsync:
-            - name: b2
-              type: restic
-              credentials: s3
-              dest:
-                enabled: true
-                cacheCapacity: 10Gi
-              src:
-                enabled: true
-                cacheCapacity: 10Gi
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-readarr"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      config:
+        mountPath: /config
+        volsync:
+          - name: b2
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 10Gi
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
