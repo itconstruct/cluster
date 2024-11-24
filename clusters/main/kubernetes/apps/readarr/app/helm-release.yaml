@@ -45,12 +45,12 @@ spec:
         server: "192.168.1.223"  # Replace with your NFS server IP
         path: "/mnt/docker/talos_apps/readarr/downloads"
         mountPath: "/downloads"
-      media:
+      ebooks:
         enabled: true
         type: nfs
         server: "192.168.1.223"
         path: "/mnt/docker/talos_apps/readarr/ebooks"
-        mountPath: "/media"
+        mountPath: "/ebooks"
       config:
         mountPath: /config
         volsync:
