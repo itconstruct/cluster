@@ -48,9 +48,9 @@ spec:
       ebooks:
         enabled: true
         type: nfs
-        server: "192.168.1.223"
-        path: "/mnt/docker/talos_apps/readarr/ebooks"
-        mountPath: "/ebooks"
+        server: "192.168.1.223" #NFS IP
+        path: "/mnt/docker/talos_apps/readarr/eBooks"
+        mountPath: "/eBooks"
       config:
         mountPath: /config
         volsync:
