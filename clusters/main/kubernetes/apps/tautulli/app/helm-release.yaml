@@ -16,8 +16,12 @@ spec:
  values:
    service:
      main:
-       port: 8181
-       targetPort: 8181
+       type: LoadBalancer
+       loadBalancerIP: "${TAUTULLI_IP}"
+       ports:
+         main:
+           port: 8181
+           targetPort: 8181
    credentials:
      s3:
        type: s3
