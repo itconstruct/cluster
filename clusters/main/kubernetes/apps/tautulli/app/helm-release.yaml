@@ -13,32 +13,32 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
- values:
-   service:
-     main:
-       type: LoadBalancer
-       loadBalancerIP: "${TAUTULLI_IP}"
-       ports:
-         main:
-           port: 8181
-           targetPort: 8181
-   credentials:
-     s3:
-       type: s3
-       url: "${S3URL}"
-       bucket: "${S3PREFIX}-tautulli"
-       accessKey: "${S3ID}"
-       secretKey: "${S3KEY}"
-       encrKey: "${S3KEY}"
-   persistence:
-     config:
-       volsync:
-         - name: b2
-           type: restic
-           credentials: s3
-           dest:
-             enabled: true
-             cacheCapacity: 10Gi
-           src:
-             enabled: true
-             cacheCapacity: 10Gi
+  values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: "${TAUTULLI_IP}"
+        ports:
+          main:
+            port: 8181
+            targetPort: 8181
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-tautulli"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      config:
+        volsync:
+          - name: b2
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 10Gi
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
