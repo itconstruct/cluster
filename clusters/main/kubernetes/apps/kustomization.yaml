@@ -7,4 +7,5 @@ resources:
   - metube/ks.yaml
   - tailscale/ks.yaml
   - readarr/ks.yaml
+  - tautulli/ks.yaml
   - uptime-kuma/ks.yaml

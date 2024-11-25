@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tautulli
+  namespace: tautulli
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: tautulli
+      version: 2.14.6
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+ values:
+   service:
+     main:
+       port: 8181
+       targetPort: 8181
+   credentials:
+     s3:
+       type: s3
+       url: "${S3URL}"
+       bucket: "${S3PREFIX}-tautulli"
+       accessKey: "${S3ID}"
+       secretKey: "${S3KEY}"
+       encrKey: "${S3KEY}"
+   persistence:
+     config:
+       volsync:
+         - name: b2
+           type: restic
+           credentials: s3
+           dest:
+             enabled: true
+             cacheCapacity: 10Gi
+           src:
+             enabled: true
+             cacheCapacity: 10Gi
