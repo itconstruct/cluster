@@ -18,7 +18,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: "${UPTIME-KUMA_IP}"  # Adjust this IP as needed
+        loadBalancerIP: "${UPTIME_KUMA_IP}"  # Adjust this IP as needed
         ports:
           main:
             port: 80
@@ -27,7 +27,7 @@ spec:
       s3:
         type: s3
         url: "${S3URL}"
-        bucket: "${S3PREFIX}-metube"
+        bucket: "${S3PREFIX}-uptime-kuma"
         accessKey: "${S3ID}"
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
