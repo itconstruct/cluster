@@ -22,7 +22,7 @@ spec:
         ports:
           main:
             port: 80
-            targetPort: 3001  # Assuming this is the correct target port
+            targetPort: 80  # Assuming this is the correct target port
     credentials:
       s3:
         type: s3
