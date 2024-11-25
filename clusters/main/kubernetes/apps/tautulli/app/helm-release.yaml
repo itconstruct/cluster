@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: tautulli
-      version: 2.14.6
+      version: 20.2.3
       sourceRef:
         kind: HelmRepository
         name: truecharts
