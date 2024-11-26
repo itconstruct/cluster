@@ -5,8 +5,9 @@ resources:
   - kubernetes-dashboard/ks.yaml
   - librespeed/ks.yaml
   - metube/ks.yaml
-  - tailscale/ks.yaml
+  - prowlarr/ks.yaml
   - readarr/ks.yaml
+  - tailscale/ks.yaml
   - tautulli/ks.yaml
-  - threadfinn/ks.yaml
+#  - threadfinn/ks.yaml
   - uptime-kuma/ks.yaml
