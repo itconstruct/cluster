@@ -22,6 +22,15 @@ spec:
         ports:
           main:
             port: 9696
+      metrics:
+        enabled: true
+        ports:
+          metrics:
+            enabled: true
+            port: 9697
+            targetSelector: exportarr
+        targetSelector: exportarr
+        type: ClusterIP
     credentials:
       s3:
         type: s3
