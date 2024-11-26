@@ -18,7 +18,7 @@ spec:
       main:
         type: LoadBalancer
         loadBalancerIP: "${ARRs_IP}"
-        sharedKey: "arrs-shared"
+        sharedKey: arrs-shared
         ports:
           main:
             port: 8787
