@@ -8,4 +8,5 @@ resources:
   - tailscale/ks.yaml
   - readarr/ks.yaml
   - tautulli/ks.yaml
+  - threadfinn/ks.yaml
   - uptime-kuma/ks.yaml
