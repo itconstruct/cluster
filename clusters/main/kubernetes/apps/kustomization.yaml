@@ -5,6 +5,7 @@ resources:
   - kubernetes-dashboard/ks.yaml
   - librespeed/ks.yaml
   - metube/ks.yaml
+  - pgadmin/ks.yaml
   - prowlarr/ks.yaml
   - readarr/ks.yaml
   - tailscale/ks.yaml
