@@ -21,7 +21,8 @@ spec:
         sharedKey: it-tools-shared
         ports:
           main:
-            port: 5050
+            port: 10024
+            targetPort: 80
     credentials:
       s3:
         type: s3
