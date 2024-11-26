@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pgadmin
+  namespace: pgadmin
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: pgadmin
+      version: 17.8.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: "${IT_TOOLS_SHAREDIP}"
+        sharedKey: it-tools-shared
+        ports:
+          main:
+            port: 5050
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-pgadmin"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      config:
+        volsync:
+          - name: b2
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 10Gi
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
+    env:
+      TZ: Australia/Sydney
+      PGADMIN_DEFAULT_EMAIL: "${DOMAIN_0_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_PASS}"
