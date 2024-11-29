@@ -5,6 +5,7 @@ resources:
   - kubernetes-dashboard/ks.yaml
   - librespeed/ks.yaml
   - metube/ks.yaml
+  - nextcloud/ks.yaml
   - pgadmin/ks.yaml
   - prowlarr/ks.yaml
   - readarr/ks.yaml
@@ -12,3 +13,4 @@ resources:
   - tautulli/ks.yaml
 #  - threadfinn/ks.yaml
   - uptime-kuma/ks.yaml
+  - nextcloud/ks.yaml

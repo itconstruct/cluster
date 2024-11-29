@@ -1,0 +1,103 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: nextcloud
+      version: 32.2.11
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: "${NEXTCLOUD_IP}"
+        ports:
+          main:
+            port: 9000
+            targetPort: 9000
+    ingress:
+      main:
+        enabled: true
+        hosts:
+          - host: cloud.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: "domain-0-le-prod"
+          traefik:
+            enabled: true
+            entrypoints:
+              - websecure
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-nextcloud"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      config:
+        volsync:
+          - name: b2
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 10Gi
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
+      html:
+        volsync:
+          - name: r2
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 2Gi
+            src:
+              enabled: false
+              CacheCapacity: 2Gi
+      data:
+        type: nfs
+        server: ${NAS_IP}
+        path: /mnt/docker/talos_apps/nextcloud/data
+    cnpg:
+      main:
+        mode: standalone
+        # Set to 'recovery' when recovery from S3, also change the revisions
+        backups:
+          enabled: true
+          credentials: s3
+          # revision: 1
+        recovery:
+          method: object_store
+          credentials: s3
+          # revision: 1
+    nextcloud:
+      general:
+        default_phone_region: AU
+        accessIP: ${TRAEFIK_IP}
+      previews:
+        providers:
+          - BMP
+          - GIF
+          - JPEG
+          - Krita
+          - MarkDown
+          - MP3
+          - OpenDocument
+          - PNG
+          - TXT
+          - XBitmap
