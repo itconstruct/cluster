@@ -12,4 +12,3 @@ resources:
   - tailscale/ks.yaml
   - tautulli/ks.yaml
   - uptime-kuma/ks.yaml
-  - nextcloud/ks.yaml
