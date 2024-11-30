@@ -36,11 +36,11 @@ spec:
             certificateIssuer: "domain-0-le-prod"
           traefik:
             enabled: true
-            middlewares:
-              - name: auth
-                namespace: traefik
-#            entrypoints:
-#              - websecure
+#            middlewares:
+#              - name: auth
+#                namespace: traefik
+            entrypoints:
+              - websecure
     credentials:
       s3:
         type: s3
