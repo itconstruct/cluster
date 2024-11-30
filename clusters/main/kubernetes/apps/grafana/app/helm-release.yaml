@@ -48,15 +48,17 @@ spec:
         encrKey: "${S3KEY}"
     persistence:
       config:
-        - name: b2
-          type: restic
-          credentials: s3
-          dest:
-            enabled: true
-            cacheCapacity: 10Gi
-          src:
-            enabled: true
-            cacheCapacity: 10Gi
+        mountPath: "/etc/grafana"
+        volsync:
+          - name: b2
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 10Gi
+            src:
+              enabled: true
+              cacheCapacity: 10Gi
       storage:
         enabled: true
         type: pvc
