@@ -48,6 +48,9 @@ spec:
         encrKey: "${S3KEY}"
     persistence:
       config:
+        type: pvc
+        accessMode: ReadWriteOnce
+        storageClass: longhorn
         mountPath: "/etc/grafana"
         volsync:
           - name: b2
