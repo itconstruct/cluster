@@ -61,9 +61,10 @@ spec:
               cacheCapacity: 10Gi
       data:
         enabled: true
-        type: pvc
-        accessMode: ReadWriteOnce
-        storageClass: longhorn
+        #type: pvc
+        #accessMode: ReadWriteOnce
+        #storageClass: longhorn
+        existingClaim: grafana-data
         mountPath: "/var/lib/grafana"
       tmp:
         enabled: true
