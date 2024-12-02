@@ -59,10 +59,13 @@ spec:
             src:
               enabled: true
               cacheCapacity: 10Gi
-      storage:
+      data:
         enabled: true
         type: pvc
         accessMode: ReadWriteOnce
         size: 50Gi
         storageClass: longhorn
         mountPath: "/var/lib/grafana"
+      tmp:
+        enabled: true
+        type: emptyDir
