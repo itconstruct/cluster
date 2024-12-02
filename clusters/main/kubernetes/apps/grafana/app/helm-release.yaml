@@ -63,7 +63,6 @@ spec:
         enabled: true
         type: pvc
         accessMode: ReadWriteOnce
-        size: 50Gi
         storageClass: longhorn
         mountPath: "/var/lib/grafana"
       tmp:
