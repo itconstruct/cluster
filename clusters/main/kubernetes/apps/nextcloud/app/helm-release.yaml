@@ -78,16 +78,17 @@ spec:
         path: /mnt/docker/talos_apps/nextcloud/data
     cnpg:
       main:
-        mode: standalone
+        mode: recovery
+        # standalone
         # Set to 'recovery' when recovery from S3, also change the revisions
         backups:
           enabled: true
           credentials: s3
-          # revision: 1
+          revision: 1
         recovery:
           method: object_store
           credentials: s3
-          # revision: 1
+          revision: 1
     nextcloud:
       general:
         default_phone_region: AU
