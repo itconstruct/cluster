@@ -78,4 +78,4 @@ spec:
           containers:
             main:
               env:
-                PAPERLESS_URL: "paperless.itconstruct.net.au"
+                PAPERLESS_URL: "https://paperless.itconstruct.net.au"
