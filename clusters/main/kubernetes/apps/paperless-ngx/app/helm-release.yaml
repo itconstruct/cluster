@@ -2,6 +2,10 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: paperless-ngx
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+  annotations:
+    volsync.backube/privileged-movers: "true"
   namespace: paperless-ngx
 spec:
   interval: 15m
