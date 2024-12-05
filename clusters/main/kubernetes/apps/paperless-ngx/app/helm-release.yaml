@@ -8,6 +8,11 @@ spec:
   chart:
     spec:
       chart: paperless-ngx
+      version: 9.10.8
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
   values:
     ingress:
       main:
@@ -24,11 +29,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-      version: 9.10.8
-      sourceRef:
-        kind: HelmRepository
-        name: truecharts
-        namespace: flux-system
     credentials:
       s3:
         type: s3
