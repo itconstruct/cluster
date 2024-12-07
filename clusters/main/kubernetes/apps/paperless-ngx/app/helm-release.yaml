@@ -62,10 +62,6 @@ spec:
           method: object_store
           credentials: s3
           # revision: 1
-        service:
-          main:
-            type: LoadBalancer
-            LoadBalancerIP: 192.168.1.207
     workload:
       main:
         podSpec:
