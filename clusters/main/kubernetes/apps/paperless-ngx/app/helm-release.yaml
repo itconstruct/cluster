@@ -67,7 +67,6 @@ spec:
         enabled: true
         service:
           type: "LoadBalancer"
-          loadBalancerIP: "${IT_TOOLS_SHAREDIP}"
           ports:
             codeserver:
               port: 12321
