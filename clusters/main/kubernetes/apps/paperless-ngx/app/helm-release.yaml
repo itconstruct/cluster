@@ -18,6 +18,10 @@ spec:
       main:
         type: LoadBalancer
         loadBalancerIP: "${TMP_IP}"
+        ports:
+          main:
+            port: 10140
+            targetPort: 8000
     ingress:
       main:
         enabled: true
