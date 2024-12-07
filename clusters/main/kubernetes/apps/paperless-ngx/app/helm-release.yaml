@@ -43,29 +43,6 @@ spec:
         type: nfs
         server: "192.168.1.223"
         path: "/mnt/docker/talos_apps/paperless/consume"
-        tls:
-          - hosts:
-              - paperless.${DOMAIN_0}
-            clusterIssuer: domain-0-wildcard
-        hosts:
-          - host: paperless.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
-    credentials:
-      s3:
-        type: s3
-        url: "${S3URL}"
-        bucket: "${S3PREFIX}-paperless"
-        accessKey: "${S3ID}"
-        secretKey: "${S3KEY}"
-        encrKey: "${S3KEY}"
-    persistence:
-      consume:
-        enabled: true
-        type: nfs
-        server: "192.168.1.223"
-        path: "/mnt/docker/talos_apps/paperless/consume"
         mountPath: "/consume"
       media:
         enabled: true
