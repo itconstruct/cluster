@@ -14,6 +14,10 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
+    postgresql:
+      primary:
+        service:
+          type: LoadBalancer
     ingress:
       main:
         enabled: true
