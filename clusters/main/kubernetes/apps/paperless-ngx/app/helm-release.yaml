@@ -14,6 +14,10 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
+    service:
+      main:
+        type: loadBalancer
+        loadBalancerIP: "${TMP_IP}"
     ingress:
       main:
         enabled: true
@@ -67,6 +71,7 @@ spec:
         enabled: true
         service:
           type: "LoadBalancer"
+          loadBalancerIP: "${TMP_IP}"
           ports:
             codeserver:
               port: 12321
