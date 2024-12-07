@@ -16,7 +16,7 @@ spec:
   values:
     service:
       main:
-        type: loadBalancer
+        type: LoadBalancer
         loadBalancerIP: "${TMP_IP}"
     ingress:
       main:
@@ -70,7 +70,7 @@ spec:
       codeserver:
         enabled: true
         service:
-          type: "LoadBalancer"
+          type: LoadBalancer
           loadBalancerIP: "${TMP_IP}"
           ports:
             codeserver:
