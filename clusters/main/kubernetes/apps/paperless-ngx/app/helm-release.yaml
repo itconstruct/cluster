@@ -62,6 +62,15 @@ spec:
           method: object_store
           credentials: s3
           # revision: 1
+    addons:
+      codeserver:
+        enabled: true
+        service:
+          type: "LoadBalancer"
+          loadBalancerIP: "${IT_TOOLS_SHAREDIP}"
+          ports:
+            codeserver:
+              port: 12321
     workload:
       main:
         podSpec:
