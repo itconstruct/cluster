@@ -14,14 +14,6 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
-    service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: "${TMP_IP}"
-        ports:
-          main:
-            port: 10140
-            targetPort: 8000
     ingress:
       main:
         enabled: true
@@ -70,15 +62,6 @@ spec:
           method: object_store
           credentials: s3
           # revision: 1
-    addons:
-      codeserver:
-        enabled: true
-        service:
-          type: LoadBalancer
-          loadBalancerIP: "${TMP_IP}"
-          ports:
-            codeserver:
-              port: 12321
     workload:
       main:
         podSpec:
