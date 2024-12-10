@@ -1,0 +1,86 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: paperless
+  namespace: paperless
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: paperless-ngx
+      version: 9.10.8
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    ingress:
+      main:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+        tls:
+          - hosts:
+              - paperless.${DOMAIN_0}
+            clusterIssuer: domain-0-wildcard
+        hosts:
+          - host: paperless.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-paperless2"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      consume:
+        enabled: true
+        type: nfs
+        server: "192.168.1.223"
+        path: "/mnt/docker/talos_apps/paperless/consume"
+        mountPath: "/consume"
+      media:
+        enabled: true
+        type: nfs
+        server: "192.168.1.223"
+        path: "/mnt/docker/talos_apps/paperless/media"
+        mountPath: "/media"
+      export:
+        enabled: true
+        type: nfs
+        server: "192.168.1.223"
+        path: "/mnt/docker/talos_apps/paperless/export"
+        mountPath: "/export"
+    cnpg:
+      main:
+        mode: standalone
+        # Set to 'recovery' when recovery from S3, also change the revisions
+        backups:
+          enabled: true
+          credentials: s3
+          # revision: 1
+        recovery:
+          method: object_store
+          credentials: s3
+          # revision: 1
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                PAPERLESS_URL: "https://paperless.itconstruct.net.au"

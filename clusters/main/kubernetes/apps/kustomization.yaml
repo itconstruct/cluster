@@ -14,3 +14,4 @@ resources:
   - uptime-kuma/ks.yaml
   - grafana/ks.yaml
   - paperless-ngx/ks.yaml
+  - paperless/ks.yaml
