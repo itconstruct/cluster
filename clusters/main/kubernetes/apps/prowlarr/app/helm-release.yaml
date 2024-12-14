@@ -14,14 +14,21 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
-    service:
+    ingress:
       main:
-        type: LoadBalancer
-        loadBalancerIP: "${ARRs_IP}"
-        sharedKey: arrs-shared
-        ports:
-          main:
-            port: 9696
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+        tls:
+          - hosts:
+              - prowlarr.${DOMAIN_0}
+            clusterIssuer: domain-0-wildcard
+        hosts:
+          - host: prowlarr.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
     credentials:
       s3:
         type: s3
