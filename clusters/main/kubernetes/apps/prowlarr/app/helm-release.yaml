@@ -14,6 +14,14 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: "${ARRs_IP}"
+        sharedKey: arrs-shared
+        ports:
+          main:
+            port: 9696
     ingress:
       main:
         enabled: true
