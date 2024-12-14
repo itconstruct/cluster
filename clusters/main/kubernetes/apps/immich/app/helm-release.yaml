@@ -41,17 +41,17 @@ spec:
     persistence:
       library:
         type: nfs
-        server: {NAS_IP}
+        server: "${NAS_IP}"
         path: /mnt/docker/talos_apps/immich/library
         mountPath: /usr/src/app/upload/library
       profile:
         type: nfs
-        server: {NAS_IP}
+        server: "${NAS_IP}"
         path: /mnt/docker/talos_apps/immich/profile
         mountPath: /usr/src/app/upload/profile
       uploads:
         type: nfs
-        server: {NAS_IP}
+        server: "${NAS_IP}"
         path: /mnt/docker/talos_apps/immich/uploads
         mountPath: /usr/src/app/upload/upload
     cnpg:
