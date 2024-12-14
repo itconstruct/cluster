@@ -49,10 +49,10 @@ spec:
         server: "${NAS_IP}"
         path: /mnt/docker/talos_apps/immich/profile
         mountPath: /usr/src/app/upload/profile
-      uploads:
+      upload:
         type: nfs
         server: "${NAS_IP}"
-        path: /mnt/docker/talos_apps/immich/uploads
+        path: /mnt/docker/talos_apps/immich/upload
         mountPath: /usr/src/app/upload/upload
     cnpg:
       main:
