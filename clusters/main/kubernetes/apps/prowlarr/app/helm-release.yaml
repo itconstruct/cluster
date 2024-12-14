@@ -33,11 +33,11 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
-          hosts:
-            - host: prowlarr.${DOMAIN_0}
-              paths:
-                - path: /
-                  pathType: Prefix
+        hosts:
+          - host: prowlarr.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
     credentials:
       s3:
         type: s3
