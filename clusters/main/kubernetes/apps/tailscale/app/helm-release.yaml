@@ -1,20 +1,11 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: tailscale
   namespace: tailscale
 spec:
-    postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              version: v1
-              kind: Deployment
-              name: qbittorrent
-            patch: |
-              - op: add
-                path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
-                value: 1
   interval: 15m
   chart:
     spec:
@@ -25,31 +16,27 @@ spec:
         name: truecharts
         namespace: flux-system
       interval: 15m
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
+    global:
+      stopAll: false
+    TZ: Australia/Sydney
     tailscale:
-      authkey: "${TAILSCALE_AUTHKEY}"
-    securityContext:
-      runAsNonRoot: false
-      runAsUser: 0
-      capabilities:
-        add: ["NET_ADMIN", "NET_RAW"]
-    podSecurityContext:
-      fsGroup: 1000
-
-    volumes:
-      - name: tun
-        emptyDir: {}
-    service:
-      main:
-        ports:
-          main:
-            port: 41641  # Tailscale default port
-    advertiseRoutes:
-      - "192.168.1.8/32"
-      - "192.168.1.222/32"
-      - "192.168.1.223/32"
-      - "192.168.1.10/32"
-      - "192.168.1.215/32"
-      - "192.168.1.220/32"
-      - "192.168.1.230/32"
-      - "192.168.1.225/32"
+      authkey: ${TAILSCALE_AUTH_KEY}
+      auth_once: false
+      userspace: true
+      accept_dns: true
+      routes: 192.168.1.0/24
+      dest_ip: ""
+      advertise_as_exit_node: true
