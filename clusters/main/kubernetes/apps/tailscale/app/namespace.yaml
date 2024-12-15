@@ -1,4 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-    name: tailscale
+  name: tailscale
+    labels:
+      pod-security.kubernetes.io/enforce: privileged
