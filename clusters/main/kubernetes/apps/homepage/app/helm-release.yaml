@@ -14,15 +14,22 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
-    service:
+    ingress:
       main:
-        type: LoadBalancer
-        loadBalancerIP: "${HOMEPAGE_IP}"
-        ports:
-          main:
-            port: 10352
-            targetPort: 3000
-    credentials:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+        tls:
+          - hosts:
+              - homepage.${DOMAIN_0}
+            clusterIssuer: domain-0-wildcard
+        hosts:
+          - host: homepage.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+credentials:
       s3:
         type: s3
         url: "${S3URL}"
