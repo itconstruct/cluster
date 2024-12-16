@@ -54,15 +54,11 @@ spec:
       codeserver:
         enabled: true
         ingress:
-          main:
-            enabled: true
-            hosts:
-              - host: homepage.cs.${DOMAIN_0}
-                paths:
-                  - path: /
-                    pathType: Prefix
-            tls:
-              - hosts:
-                  - homepage.cs.${DOMAIN_0}
-                clusterIssuer: domain-0-wildcard
+          enabled: true
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: domain-0-wildcard
+          hosts:
+            - host: homepage.codeserver.${DOMAIN_0}
 
