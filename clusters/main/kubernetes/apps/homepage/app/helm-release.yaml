@@ -29,7 +29,7 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-credentials:
+    credentials:
       s3:
         type: s3
         url: "${S3URL}"
@@ -53,9 +53,16 @@ credentials:
     addons:
       codeserver:
         enabled: true
-        service:
-          type: "LoadBalancer"
-          loadBalancerIP: "${HOMEPAGE_IP}"
-          ports:
-            codeserver:
-              port: 12321
+        ingress:
+          main:
+            enabled: true
+            hosts:
+              - host: homepage.cs.${DOMAIN_0}
+                paths:
+                  - path: /
+                    pathType: Prefix
+            tls:
+              - hosts:
+                  - homepage.cs.${DOMAIN_0}
+                clusterIssuer: domain-0-wildcard
+
