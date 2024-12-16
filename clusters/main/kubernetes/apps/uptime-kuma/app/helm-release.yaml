@@ -15,14 +15,21 @@ spec:
         namespace: flux-system
       interval: 15m
   values:
-    service:
+    ingress:
       main:
-        type: LoadBalancer
-        loadBalancerIP: "${UPTIME_KUMA_IP}"  # Adjust this IP as needed
-        ports:
-          main:
-            port: 80
-            targetPort: 80  # Assuming this is the correct target port
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+        tls:
+          - hosts:
+              - uptime-kuma.${DOMAIN_0}
+            clusterIssuer: domain-0-wildcard
+        hosts:
+          - host: uptime-kuma.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
     credentials:
       s3:
         type: s3
