@@ -23,6 +23,7 @@ spec:
               - path: /
                 pathType: Prefix
       integrations:
+        enabled: true
         certManager:
           enabled: true
           certificateIssuer: "domain-0-le-prod"
