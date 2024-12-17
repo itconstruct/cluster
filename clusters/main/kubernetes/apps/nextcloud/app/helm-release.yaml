@@ -36,7 +36,7 @@ spec:
             certificateIssuer: "domain-0-le-prod"
           homepage:
             enabled: true
-            group: Productivity
+            group: Infra
             widget:
               custom:
                 key: "${NEXTCLOUD_API_KEY}"
