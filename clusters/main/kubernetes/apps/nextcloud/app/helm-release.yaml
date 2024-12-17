@@ -34,6 +34,12 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: "domain-0-le-prod"
+          homepage:
+            enabled: true
+            group: Productivity
+            widget:
+              custom:
+                key: "${NEXTCLOUD_API_KEY}"
           traefik:
             enabled: true
 #            middlewares:
