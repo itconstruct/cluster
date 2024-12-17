@@ -90,11 +90,11 @@ spec:
         backups:
           enabled: true
           credentials: s3
-          revision: 1
+          revision: "1"
         recovery:
           method: object_store
           credentials: s3
-          revision: 1
+          revision: "1"
     nextcloud:
       general:
         default_phone_region: AU
