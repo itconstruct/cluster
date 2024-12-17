@@ -17,24 +17,22 @@ spec:
     ingress:
       main:
         enabled: true
+        integrations:
+          traefik:
+            enabled: true
+            middlewares:
+              - name: local
+                namespace: traefik
+              - name: bouncer
+                namespace: traefik
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
         hosts:
           - host: tautulli.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-              - tautulli.${DOMAIN_0}
-            secretName: tautulli-tls
-      integrations:
-        enabled: true
-        certManager:
-          enabled: true
-          certificateIssuer: "domain-0-le-prod"
-        traefik:
-          enabled: true
-          entrypoints:
-            - websecure
     credentials:
       s3:
         type: s3
