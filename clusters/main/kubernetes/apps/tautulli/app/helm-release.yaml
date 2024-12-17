@@ -14,14 +14,22 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
-    service:
+    ingress:
       main:
-        type: LoadBalancer
-        loadBalancerIP: "${TAUTULLI_IP}"
-        ports:
-          main:
-            port: 8181
-            targetPort: 8181
+        enabled: true
+      hosts:
+        - host: tautulli.${DOMAIN_0}
+          paths:
+            - path: /
+              pathType: Prefix
+      integrations:
+        certManager:
+          enabled: true
+          certificateIssuer: "domain-0-le-prod"
+        traefik:
+          enabled: true
+          entrypoints:
+            - websecure
     credentials:
       s3:
         type: s3
