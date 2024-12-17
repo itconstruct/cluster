@@ -14,14 +14,28 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
-    service:
+    ingress:
       main:
-        type: LoadBalancer
-        loadBalancerIP: "${ARRs_IP}"
-        sharedKey: arrs-shared
-        ports:
-          main:
-            port: 8787
+        enabled: true
+        hosts:
+          - host: readarr.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: "domain-0-le-prod"
+          homepage:
+            enabled: true
+            group: Media
+            widget:
+              custom:
+                key: "${READARR_API_KEY}"
+          traefik:
+            enabled: true
+            entrypoints:
+              - websecure
     credentials:
       s3:
         type: s3
