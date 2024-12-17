@@ -13,28 +13,28 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
-  values:
-    ingress:
-      main:
-        enabled: true
-        hosts:
-          - host: tautulli.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
+values:
+  ingress:
+    main:
+      enabled: true
+      hosts:
+        - host: tautulli.${DOMAIN_0}
+          paths:
+            - path: /
+              pathType: Prefix
       tls:
         - hosts:
             - tautulli.${DOMAIN_0}
           secretName: tautulli-tls
-      integrations:
+    integrations:
+      enabled: true
+      certManager:
         enabled: true
-        certManager:
-          enabled: true
-          certificateIssuer: "domain-0-le-prod"
-        traefik:
-          enabled: true
-          entrypoints:
-            - websecure
+        certificateIssuer: "domain-0-le-prod"
+      traefik:
+        enabled: true
+        entrypoints:
+          - websecure
     credentials:
       s3:
         type: s3
