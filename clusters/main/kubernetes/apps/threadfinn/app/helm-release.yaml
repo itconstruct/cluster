@@ -54,6 +54,7 @@ spec:
         encrKey: "${S3KEY}"
     persistence:
       config:
+        enabled: true
         mountPath: /home/threadfin/conf
         volsync:
           - name: b2
