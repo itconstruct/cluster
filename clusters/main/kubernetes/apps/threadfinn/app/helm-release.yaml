@@ -22,7 +22,6 @@ spec:
       tag: 1.2.21@sha256:53d7efb4dcc3cc70b35073091dee6f6e30432a9e5e1ba1d5a8cbe9a9f898c327
     service:
       main:
-        type: ClusterIP
         ports:
           main:
             port: 34400
@@ -40,10 +39,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-              - threadfinn.${DOMAIN_0}
-            secretName: threadfinn-tls
     credentials:
       s3:
         type: s3
@@ -69,9 +64,6 @@ spec:
       temp:
         enabled: true
         mountPath: /tmp/xteve
-    portal:
-      open:
-        enabled: true
     securityContext:
       container:
         readOnlyRootFilesystem: false
