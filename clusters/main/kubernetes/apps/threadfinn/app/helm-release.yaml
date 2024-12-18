@@ -22,6 +22,8 @@ spec:
       tag: 1.2.21@sha256:53d7efb4dcc3cc70b35073091dee6f6e30432a9e5e1ba1d5a8cbe9a9f898c327
     service:
       main:
+        type: LoadBalancer
+        loadBalancerIP: "${THREADFINN_IP}"
         ports:
           main:
             port: 34400
