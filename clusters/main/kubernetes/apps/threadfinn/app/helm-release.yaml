@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: threadfinn
+  namespace: threadfinn
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.21.1155
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  values:
+    image:
+      repository: fyb3roptik/threadfin
+      pullPolicy: IfNotPresent
+      tag: 1.2.21@sha256:53d7efb4dcc3cc70b35073091dee6f6e30432a9e5e1ba1d5a8cbe9a9f898c327
+    service:
+      main:
+        type: clusterIP
+        ports:
+          main:
+            port: 34400
+    ingress:
+      main:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: threadfinn.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - threadfinn.${DOMAIN_0}
+            secretName: threadfinn-tls
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-threadfinn"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      config:
+        mountPath: /home/threadfin/conf
+        volsync:
+          - name: b2
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 1Gi
+            src:
+              enabled: true
+              cacheCapacity: 1Gi
+      temp:
+        enabled: true
+        mountPath: /tmp/xteve
+    portal:
+      open:
+        enabled: true
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
