@@ -65,7 +65,7 @@ spec:
               cacheCapacity: 1Gi
       temp:
         enabled: true
-        mountPath: /tmp/xteve
+        mountPath: /tmp/threadfinn
     securityContext:
       container:
         readOnlyRootFilesystem: false
