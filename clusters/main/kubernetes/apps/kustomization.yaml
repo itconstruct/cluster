@@ -15,5 +15,4 @@ resources:
   - grafana/ks.yaml
   - paperless/ks.yaml
   - immich/ks.yaml
-  - threadfinn/ks.yaml
   - threadfin/ks.yaml
