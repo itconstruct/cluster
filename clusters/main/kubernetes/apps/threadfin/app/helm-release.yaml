@@ -3,8 +3,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: threadfinn
-  namespace: threadfinn
+  name: threadfin
+  namespace: threadfin
 spec:
   interval: 15m
   chart:
@@ -23,7 +23,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: "${THREADFINN_IP}"
+        loadBalancerIP: "${THREADFIN_IP}"
         ports:
           main:
             port: 34400
@@ -37,7 +37,7 @@ spec:
             enabled: true
             certificateIssuer: domain-0-le-prod
         hosts:
-          - host: threadfinn.${DOMAIN_0}
+          - host: threadfin.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
@@ -45,7 +45,7 @@ spec:
       s3:
         type: s3
         url: "${S3URL}"
-        bucket: "${S3PREFIX}-threadfinn"
+        bucket: "${S3PREFIX}-threadfin"
         accessKey: "${S3ID}"
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
@@ -65,7 +65,4 @@ spec:
               cacheCapacity: 1Gi
       temp:
         enabled: true
-        mountPath: /tmp/threadfinn
-    securityContext:
-      container:
-        readOnlyRootFilesystem: false
+        mountPath: /tmp/threadfin
