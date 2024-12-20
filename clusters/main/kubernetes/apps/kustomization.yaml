@@ -16,3 +16,4 @@ resources:
   - paperless/ks.yaml
   - immich/ks.yaml
   - threadfinn/ks.yaml
+  - threadfin/ks.yaml
