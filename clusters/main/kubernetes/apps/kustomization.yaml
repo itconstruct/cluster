@@ -12,7 +12,6 @@ resources:
   - tailscale/ks.yaml
   - tautulli/ks.yaml
   - uptime-kuma/ks.yaml
-  - grafana/ks.yaml
   - paperless/ks.yaml
   - immich/ks.yaml
   - threadfin/ks.yaml
