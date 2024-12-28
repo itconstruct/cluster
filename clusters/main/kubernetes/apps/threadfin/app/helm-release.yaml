@@ -9,17 +9,13 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
-      version: 14.3.0
+      chart: threadfin
+      version: 1.2.21
       sourceRef:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
   values:
-    image:
-      repository: fyb3roptik/threadfin
-      pullPolicy: IfNotPresent
-      tag: 1.2.21@sha256:53d7efb4dcc3cc70b35073091dee6f6e30432a9e5e1ba1d5a8cbe9a9f898c327
     service:
       main:
         type: LoadBalancer
@@ -52,7 +48,6 @@ spec:
     persistence:
       config:
         enabled: true
-        mountPath: /home/threadfin/conf
         volsync:
           - name: b2
             type: restic
@@ -63,6 +58,5 @@ spec:
             src:
               enabled: true
               cacheCapacity: 1Gi
-      temp:
-        enabled: true
-        mountPath: /tmp/threadfin
+              trigger:
+                schedule: 40 16 * * *

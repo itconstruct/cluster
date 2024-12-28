@@ -72,6 +72,12 @@ spec:
         backups:
           enabled: true
           credentials: s3
+          scheduledBackups:
+            - name: daily-backup
+              schedule: "25 12 0 * * *"
+              backupOwnerReference: self
+              immediate: true
+              suspend: false
           # revision: 1
         recovery:
           method: object_store

@@ -50,6 +50,7 @@ spec:
             src:
               enabled: true
               cacheCapacity: 10Gi
+              schedule: 40 14 * * *
     addons:
       codeserver:
         enabled: true
