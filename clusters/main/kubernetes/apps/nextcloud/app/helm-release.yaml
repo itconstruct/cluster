@@ -67,6 +67,7 @@ spec:
             src:
               enabled: true
               cacheCapacity: 10Gi
+              schedule: 40 13 * * *
       html:
         volsync:
           - name: r2
@@ -78,6 +79,7 @@ spec:
             src:
               enabled: true
               CacheCapacity: 2Gi
+              schedule: 40 13 * * *
       data:
         type: nfs
         server: ${NAS_IP}
@@ -91,6 +93,12 @@ spec:
           enabled: true
           credentials: s3
           revision: "1"
+          scheduledBackups:
+            - name: daily-backup
+              schedule: "0 5 0 * * *"
+              backupOwnerReference: self
+              immediate: true
+              suspend: false
         recovery:
           method: object_store
           credentials: s3

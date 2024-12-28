@@ -43,6 +43,7 @@ spec:
             src:
               enabled: true
               cacheCapacity: 10Gi
+              schedule: 0 18 * * *
     env:
       PGADMIN_DEFAULT_EMAIL: "${DOMAIN_0_EMAIL}"
       PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_PASS}"
