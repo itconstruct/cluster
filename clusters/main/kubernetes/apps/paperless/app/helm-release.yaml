@@ -78,11 +78,11 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
-          revision: 2
+          revision: "2"
         recovery:
           method: object_store
           credentials: s3
-          revision: 2
+          revision: "2"
     workload:
       main:
         podSpec:
