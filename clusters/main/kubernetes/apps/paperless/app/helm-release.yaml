@@ -82,11 +82,10 @@ spec:
         recovery:
           method: object_store
           credentials: s3
-          revision: "1"
     workload:
       main:
         podSpec:
           containers:
             main:
               env:
-                PAPERLESS_URL: "https://paperless.itconstruct.net.au"
+                PAPERLESS_URL: "paperless.${DOMAIN_0}"
