@@ -89,4 +89,4 @@ spec:
           containers:
             main:
               env:
-                PAPERLESS_URL: "paperless.${DOMAIN_0}"
+                PAPERLESS_URL: "https://paperless.${DOMAIN_0}"
