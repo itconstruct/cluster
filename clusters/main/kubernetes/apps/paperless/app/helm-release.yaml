@@ -22,7 +22,7 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-  timeout: 20m
+  timeout: 90m
   values:
     ingress:
       main:
