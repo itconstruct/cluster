@@ -22,7 +22,7 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-  timeout: 90m
+  timeout: 20m
   values:
     ingress:
       main:
@@ -43,7 +43,7 @@ spec:
       s3:
         type: s3
         url: "${S3URL}"
-        bucket: "${S3PREFIX}-paperless2"
+        bucket: "${S3PREFIX}-paperless"
         accessKey: "${S3ID}"
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
