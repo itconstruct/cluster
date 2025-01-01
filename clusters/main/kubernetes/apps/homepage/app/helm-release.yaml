@@ -20,12 +20,13 @@ spec:
         integrations:
           traefik:
             enabled: true
-        tls:
-          - hosts:
-              - homepage.${DOMAIN_0}
-            clusterIssuer: domain-0-wildcard
+            entrypoints:
+            - websecure
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
         hosts:
-          - host: homepage.${DOMAIN_0}
+          - host: home.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
@@ -50,7 +51,8 @@ spec:
             src:
               enabled: true
               cacheCapacity: 10Gi
-              schedule: 40 14 * * *
+              trigger:
+                schedule: 40 14 * * *
     addons:
       codeserver:
         enabled: true
@@ -59,7 +61,11 @@ spec:
           integrations:
             certManager:
               enabled: true
-              certificateIssuer: domain-0-wildcard
+              certificateIssuer: domain-0-le-prod
+            traefik:
+              enabled: true
+              entrypoints:
+              - websecure
           hosts:
-            - host: homepage.codeserver.${DOMAIN_0}
+            - host: home.code.${DOMAIN_0}
 
