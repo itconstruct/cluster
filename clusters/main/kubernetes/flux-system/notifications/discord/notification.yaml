@@ -112,7 +112,7 @@ spec:
       name: "*"
       namespace: snapshot-controller
     - kind: HelmRelease
-      name: "*"      
+      name: "*"
       namespace: spegel
     - kind: HelmRelease
       name: "*"
@@ -140,7 +140,7 @@ spec:
       namespace: kube-system
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/alert-notification-v1beta3.json
-apiVersion: notification.toolkit.fluxcd.io/v1beta2
+apiVersion: notification.toolkit.fluxcd.io/v2
 kind: Alert
 metadata:
   name: discord-kustomization
