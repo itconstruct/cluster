@@ -14,14 +14,6 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
-    service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: "${NEXTCLOUD_IP}"
-        ports:
-          main:
-            port: 9000
-            targetPort: 9000
     ingress:
       main:
         enabled: true
