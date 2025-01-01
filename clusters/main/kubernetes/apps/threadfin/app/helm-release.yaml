@@ -20,15 +20,14 @@ spec:
       main:
         type: LoadBalancer
         loadBalancerIP: "${THREADFIN_IP}"
-        ports:
-          main:
-            port: 34400
     ingress:
       main:
         enabled: true
         integrations:
           traefik:
             enabled: true
+            entrypoints:
+            - websecure
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
