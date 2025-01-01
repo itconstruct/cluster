@@ -28,10 +28,11 @@ spec:
         integrations:
           traefik:
             enabled: true
-        tls:
-          - hosts:
-              - prowlarr.${DOMAIN_0}
-            clusterIssuer: domain-0-wildcard
+            entrypoints:
+            - websecure
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
         hosts:
           - host: prowlarr.${DOMAIN_0}
             paths:
