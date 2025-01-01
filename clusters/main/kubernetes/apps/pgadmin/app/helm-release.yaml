@@ -14,15 +14,22 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
-    service:
+    ingress:
       main:
-        type: LoadBalancer
-        loadBalancerIP: "${IT_TOOLS_SHAREDIP}"
-        sharedKey: it-tools-shared
-        ports:
-          main:
-            port: 10024
-            targetPort: 80
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+            entrypoints:
+            - websecure
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: pgadmin.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
     credentials:
       s3:
         type: s3
