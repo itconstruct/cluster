@@ -131,6 +131,9 @@ spec:
       namespace: external-service
     - kind: HelmRelease
       name: "*"
+      namespace: external-service
+    - kind: HelmRelease
+      name: "*"
       namespace: kube-node-lease
     - kind: HelmRelease
       name: "*"
@@ -138,6 +141,8 @@ spec:
     - kind: HelmRelease
       name: "*"
       namespace: kube-system
+    - kind: HelmRelease
+      name: "*"
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/alert-notification-v1beta3.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta3
