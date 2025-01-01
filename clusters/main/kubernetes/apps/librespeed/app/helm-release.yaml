@@ -29,10 +29,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    service:
+    ingress:
       main:
-        type: LoadBalancer
-        loadBalancerIP: "${LIBRESPEED_IP}"
-        ports:
-          main:
-            port: 80
+        enabled: true
+        hosts:
+          - host: librespeed.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
