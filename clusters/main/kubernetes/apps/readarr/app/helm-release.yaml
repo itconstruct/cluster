@@ -86,8 +86,6 @@ spec:
             dest:
               enabled: true
               cacheCapacity: 10Gi
-              trigger:
-                manual: restore
             src:
               enabled: false
               cacheCapacity: 10Gi
