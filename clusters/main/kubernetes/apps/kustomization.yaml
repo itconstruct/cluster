@@ -15,4 +15,3 @@ resources:
   - threadfin/ks.yaml
   - cloudflared/ks.yaml
   - paperless/ks.yaml
-  - readarr/ks.yaml
