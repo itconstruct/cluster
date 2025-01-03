@@ -76,8 +76,10 @@ spec:
             dest:
               enabled: true
               cacheCapacity: 10Gi
+              trigger:
+                manual: restore
             src:
-              enabled: true
+              enabled: false
               cacheCapacity: 10Gi
               schedule: 40 17 * * *
     addons:
