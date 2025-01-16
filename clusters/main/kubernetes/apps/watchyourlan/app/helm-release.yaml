@@ -60,7 +60,6 @@ spec:
         mode: standalone
         # standalone
         # Set to 'recovery' when recovery from S3, also change the revisions
-        password: "${WATCHYOURLAN_PG_PASS}"
         backups:
           enabled: true
           credentials: s3
