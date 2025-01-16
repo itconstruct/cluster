@@ -19,3 +19,4 @@ resources:
   - gaps/ks.yaml
   - myspeed/ks.yaml
   - watchyourlan/ks.yaml
+  - ollama/ks.yaml
