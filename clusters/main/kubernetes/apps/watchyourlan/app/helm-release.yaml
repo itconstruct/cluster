@@ -16,6 +16,11 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: "${IT_TOOLS_SHAREDIP}"
+        sharedKey: it-tools-shared
     ingress:
       main:
         enabled: true
