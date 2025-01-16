@@ -17,5 +17,4 @@ resources:
   - paperless/ks.yaml
   - readarr/ks.yaml
   - gaps/ks.yaml
-  - watchyourlan/ks.yaml
   - myspeed/ks.yaml
