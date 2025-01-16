@@ -16,3 +16,4 @@ resources:
   - cloudflared/ks.yaml
   - paperless/ks.yaml
   - readarr/ks.yaml
+  - gaps/ks.yaml
