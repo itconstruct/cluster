@@ -32,7 +32,7 @@ spec:
     dnsPolicy: ClusterFirstWithHostNet
     env:
       - name: IFACES
-        value: "eth0,cilium_host,cilium_net"
+        value: "eth0"
     securityContext:
       privileged: true
       runAsNonRoot: false
