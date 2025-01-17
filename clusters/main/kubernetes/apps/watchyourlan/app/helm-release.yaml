@@ -22,10 +22,18 @@ spec:
       - name: IFACES
         value: "eth0"
     securityContext:
+      privileged: true
+      runAsNonRoot: false
+      runAsUser: 0
       capabilities:
         add:
           - NET_ADMIN
           - NET_RAW
+          - CHOWN
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
     ingress:
       main:
         enabled: true
