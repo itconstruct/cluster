@@ -16,6 +16,16 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
+    env:
+      - name: IFACES
+        value: "eth0"
+    securityContext:
+      capabilities:
+        add:
+          - NET_ADMIN
+          - NET_RAW
     ingress:
       main:
         enabled: true
