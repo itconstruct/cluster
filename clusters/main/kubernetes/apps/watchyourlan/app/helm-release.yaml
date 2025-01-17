@@ -41,11 +41,6 @@ spec:
         add:
           - NET_ADMIN
           - NET_RAW
-          - CHOWN
-          - DAC_OVERRIDE
-          - FOWNER
-          - SETGID
-          - SETUID
     ingress:
       main:
         enabled: true
