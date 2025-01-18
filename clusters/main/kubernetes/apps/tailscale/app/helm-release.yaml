@@ -43,6 +43,11 @@ spec:
     ingress:
       main:
         enabled: true
+        hosts:
+          - host: tailscale.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
         integrations:
           homepage:
             enabled: true
