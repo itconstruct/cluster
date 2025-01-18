@@ -42,6 +42,7 @@ spec:
       advertise_as_exit_node: true
     ingress:
       integrations:
+        enabled: true
         homepage:
           enabled: true
           group: Infra
