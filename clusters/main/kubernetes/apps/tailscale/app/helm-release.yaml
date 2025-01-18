@@ -41,8 +41,8 @@ spec:
       dest_ip: ""
       advertise_as_exit_node: true
     ingress:
+      enabled: true
       integrations:
-        enabled: true
         homepage:
           enabled: true
           group: Infra
