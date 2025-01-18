@@ -28,9 +28,6 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: "domain-0-le-prod"
-          homepage:
-            enabled: true
-            group: Apps
           traefik:
             enabled: true
             entrypoints:
