@@ -40,15 +40,3 @@ spec:
       routes: 192.168.1.0/24
       dest_ip: ""
       advertise_as_exit_node: true
-    ingress:
-      main:
-        enabled: true
-        hosts:
-          - host: tailscale.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
-        integrations:
-          homepage:
-            enabled: true
-            group: Infra
