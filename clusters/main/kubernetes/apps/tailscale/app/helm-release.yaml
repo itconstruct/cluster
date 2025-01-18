@@ -40,3 +40,8 @@ spec:
       routes: 192.168.1.0/24
       dest_ip: ""
       advertise_as_exit_node: true
+    ingress:
+      integrations:
+        homepage:
+          enabled: true
+          group: Infra
