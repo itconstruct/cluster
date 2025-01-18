@@ -15,7 +15,28 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
+      interval: 15m
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false  
   values:
+    global:
+      stopAll: false
+    service:
+      main:
+        type: ClusterIP
+        ports:
+          main:
+            port: 5216
     ingress:
       main:
         enabled: true
@@ -24,6 +45,9 @@ spec:
             enabled: true
             entrypoints:
             - websecure
+          homepage:
+            enabled: true
+            group: Apps
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
