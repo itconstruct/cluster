@@ -20,3 +20,4 @@ resources:
   - watchyourlan/ks.yaml
   - ollama/ks.yaml
   - myspeed/ks.yaml
+  - kms/ks.yaml
