@@ -8,7 +8,6 @@ resources:
   - nextcloud/ks.yaml
   - pgadmin/ks.yaml
   - prowlarr/ks.yaml
-  - tailscale/ks.yaml
   - tautulli/ks.yaml
   - uptime-kuma/ks.yaml
   - immich/ks.yaml
