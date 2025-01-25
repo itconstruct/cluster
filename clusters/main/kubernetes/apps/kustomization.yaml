@@ -21,3 +21,4 @@ resources:
   - myspeed/ks.yaml
   - kms/ks.yaml
   - tailscale/ks.yaml
+  - it-tools/ks.yaml
