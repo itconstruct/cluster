@@ -52,6 +52,9 @@ spec:
       logs:
         enabled: true
         mountPath: /app/logs
+      data:
+        enabled: true
+        mountPath: /app/
     command:
       - /bin/sh
       - -c
