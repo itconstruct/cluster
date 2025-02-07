@@ -49,3 +49,14 @@ spec:
       downloads:
         enabled: true        
         mountPath: /app/downloads
+      logs:
+        enabled: true
+        mountPath: /app/logs
+    command:
+      - /bin/sh
+      - -c
+    args:
+      - |
+        mkdir -p /app/logs
+        ln -sf /app/logs/flask_server.log /app/flask_server.log
+        python /app/app.py
