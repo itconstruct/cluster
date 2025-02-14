@@ -86,18 +86,3 @@ spec:
           recoveryTarget:
             targetTime: "2025-02-09 23:59:59+11:00"
           #revision: 1
-    addons:
-      codeserver:
-        enabled: true
-        ingress:
-          enabled: true
-          integrations:
-            certManager:
-              enabled: true
-              certificateIssuer: domain-0-le-prod
-            traefik:
-              enabled: true
-              entrypoints:
-              - websecure
-          hosts:
-            - host: imm.code.${DOMAIN_0}
