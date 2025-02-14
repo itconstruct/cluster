@@ -59,11 +59,21 @@ spec:
         server: "${NAS_IP}"
         path: /mnt/docker/talos_apps/immich/profile
         mountPath: /usr/src/app/upload/profile
+      thumbs:
+        type: nfs
+        server: "${NAS_IP}"
+        path: /mnt/docker/talos_apps/immich/thumbs
+        mountPath: /usr/src/app/upload/encoded-video
       uploads:
         type: nfs
         server: "${NAS_IP}"
         path: /mnt/docker/talos_apps/immich/uploads
         mountPath: /usr/src/app/upload/upload
+      video:
+        type: nfs
+        server: "${NAS_IP}"
+        path: /mnt/docker/talos_apps/immich/encoded-video
+        mountPath: /usr/src/app/upload/encoded-video
     cnpg:
       main:
         mode: recovery
