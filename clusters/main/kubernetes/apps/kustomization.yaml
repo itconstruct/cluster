@@ -21,4 +21,3 @@ resources:
   - kms/ks.yaml
   - tailscale/ks.yaml
   - it-tools/ks.yaml
-  - immich/ks.yaml

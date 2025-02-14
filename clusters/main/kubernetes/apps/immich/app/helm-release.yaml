@@ -63,7 +63,7 @@ spec:
         type: nfs
         server: "${NAS_IP}"
         path: /mnt/docker/talos_apps/immich/thumbs
-        mountPath: /usr/src/app/upload/encoded-video
+        mountPath: /usr/src/app/upload/thumbs
       uploads:
         type: nfs
         server: "${NAS_IP}"
