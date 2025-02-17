@@ -27,7 +27,7 @@ spec:
             enabled: true
             certificateIssuer: domain-0-le-prod
         hosts:
-          - host: uptime-kuma.${DOMAIN_0}
+          - host: uptime.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
