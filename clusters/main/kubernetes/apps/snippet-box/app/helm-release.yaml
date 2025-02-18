@@ -32,10 +32,7 @@ spec:
             traefik:
               enabled: true
               entrypoints:
-              - websecure
-            certManager:
-              enabled: true
-              certificateIssuer: domain-0-le-prod
+              - web
           hosts:
             - host: codesnip.${DOMAIN_0}
               paths:
