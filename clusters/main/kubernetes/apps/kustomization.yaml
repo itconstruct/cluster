@@ -22,4 +22,3 @@ resources:
   - tailscale/ks.yaml
   - it-tools/ks.yaml
   - immich/ks.yaml
-  - snippet-box/ks.yaml
