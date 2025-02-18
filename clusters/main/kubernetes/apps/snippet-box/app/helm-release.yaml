@@ -38,6 +38,8 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
+                  service:
+                    port: 5039
       credentials:
         s3:
           type: s3
