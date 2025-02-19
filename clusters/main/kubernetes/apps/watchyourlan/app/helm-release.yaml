@@ -15,6 +15,11 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
+  storage:
+    pvcTemplate:
+      resources:
+        requests:
+          storage: 20Gi
   timeout: 20m
   maxHistory: 3
   install:
@@ -82,13 +87,13 @@ spec:
                 schedule: 50 16 * * *
     cnpg:
       main:
-        mode: standalone
+        mode: recovery
         # standalone
         # Set to 'recovery' when recovery from S3, also change the revisions
         backups:
           enabled: true
           credentials: s3
-            #revision: "2"
+            revision: "1"
           scheduledBackups:
             - name: daily-backup
               schedule: "0 5 20 * * *"

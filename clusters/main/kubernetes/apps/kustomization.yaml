@@ -22,3 +22,4 @@ resources:
   - it-tools/ks.yaml
   - immich/ks.yaml
   - snippet-box/ks.yaml
+  - watchyourlan/ks.yaml
