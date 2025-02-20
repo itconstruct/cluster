@@ -20,8 +20,9 @@ spec:
       pullPolicy: IfNotPresent
     service:
       main:
+        type: clusterIP
         ports:
-          http:
+          main:
             port: 5000
             targetPort: 5000
     ingress:
