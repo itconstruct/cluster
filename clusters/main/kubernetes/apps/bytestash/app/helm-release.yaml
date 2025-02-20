@@ -20,7 +20,7 @@ spec:
       pullPolicy: IfNotPresent
     service:
       main:
-        type: clusterIP
+        type: ClusterIP
         ports:
           main:
             port: 5000
