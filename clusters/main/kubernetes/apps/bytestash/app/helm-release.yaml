@@ -22,6 +22,7 @@ spec:
       main:
         ports:
           port: 5000
+          targetPort: 5000
     ingress:
       main:
         enabled: true
