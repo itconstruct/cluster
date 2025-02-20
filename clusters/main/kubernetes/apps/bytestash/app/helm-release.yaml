@@ -21,8 +21,9 @@ spec:
     service:
       main:
         ports:
-          port: 5000
-          targetPort: 5000
+          http:
+            port: 5000
+            targetPort: 5000
     ingress:
       main:
         enabled: true
