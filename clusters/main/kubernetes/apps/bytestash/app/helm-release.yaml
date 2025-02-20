@@ -21,8 +21,7 @@ spec:
     service:
       main:
         ports:
-          http:
-            port: 5000
+          port: 5000
     ingress:
       main:
         enabled: true
