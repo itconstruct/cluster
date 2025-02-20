@@ -1,0 +1,91 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bytestash
+  namespace: bytestash
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  values:
+    image:
+      repository: ghcr.io/jordan-dalby/bytestash
+      tag: 1.5.6
+      pullPolicy: IfNotPresent
+    service:
+      main:
+        ports:
+          http:
+            port: 5000
+    ingress:
+      main:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+            entrypoints:
+              - websecure
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: bytestash.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-bytestash"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      snippets:
+        mountPath: /data/snippets
+        volsync:
+          - name: snippets
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 5Gi
+            src:
+              enabled: true
+              cacheCapacity: 5Gi
+    portal:
+      open:
+        enabled: true
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+    env:
+      BASE_PATH: ""
+      JWT_SECRET: "${BYTESTASH_JWT}"
+      TOKEN_EXPIRY: "24h"
+      ALLOW_NEW_ACCOUNTS: "false"
+      DEBUG: "false"
+      DISABLE_ACCOUNTS: "false"
+      DISABLE_INTERNAL_ACCOUNTS: "false"
+      OIDC_ENABLED: "false"
+      OIDC_DISPLAY_NAME: ""
+      OIDC_ISSUER_URL: ""
+      OIDC_CLIENT_ID: ""
+      OIDC_CLIENT_SECRET: ""
+      OIDC_SCOPES: ""
+    probes:
+      liveness:
+        enabled: true
+        type: http
+        path: /
+      readiness:
+        enabled: true
+        type: http
+        path: /
