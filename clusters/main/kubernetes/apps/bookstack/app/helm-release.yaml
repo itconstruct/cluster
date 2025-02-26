@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bookstack
+  namespace: bookstack
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: bookstack
+      version: 15.14.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  values:
+    ingress:
+      main:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: docs.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-bookstack"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      config:
+        volsync:
+          - name: config
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+              cacheCapacity: 20Gi
+            src:
+              enabled: true
+              cacheCapacity: 20Gi
+              schedule: 20 45 * * *
+    mariadb:
+      mariadbUsername: "${BOOKSTACK_DB_USER}"
+      mariadbDatabase: "${BOOKSTACK_DB_NAME}"
+      password: "${BOOKSTACK_DB_PASS}"
+      main:
+        backups:
+          enabled: true
+          schedule: "0 2 * * *"  # Daily backup at 2 AM
+          retention:
+            time: 720h  # Keep backups for 7 days
+          storage:
+            s3:
+              bucket: "${S3PREFIX}-bookstack"
+              endpoint: "${S3URL}"
+              accessKeyId: "${S3ID}"
+              secretAccessKey: "${S3KEY}"
+        recovery:
+          enabled: false  # Set to true when recovery is needed
+          backupName: ""  # Specify the backup to restore from when needed
+          targetRecoveryTime: ""  # Optional: for point-in-time recovery
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                DB_USERNAME: "${BOOKSTACK_DB_USER}"
+                DB_DATABASE: "${BOOKSTACK_DB_NAME}"
+                DB_PASSWORD: "${BOOKSTACK_DB_PASS}"
+                APP_KEY:
+                  secretKeyRef:
+                    name: secrets
+                    key: APP_KEY
