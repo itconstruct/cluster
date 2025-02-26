@@ -1,4 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-    name: bookstack
+  name: bookstack
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    topolvm.io/webhook: ignore
