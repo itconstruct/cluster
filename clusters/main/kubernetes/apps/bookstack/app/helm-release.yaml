@@ -52,9 +52,6 @@ spec:
               cacheCapacity: 20Gi
               schedule: 20 45 * * *
     mariadb:
-      mariadbUsername: "${BOOKSTACK_DB_USER}"
-      mariadbDatabase: "${BOOKSTACK_DB_NAME}"
-      password: "${BOOKSTACK_DB_PASS}"
       main:
         backups:
           enabled: true
@@ -71,16 +68,3 @@ spec:
           enabled: false  # Set to true when recovery is needed
           backupName: ""  # Specify the backup to restore from when needed
           targetRecoveryTime: ""  # Optional: for point-in-time recovery
-    workload:
-      main:
-        podSpec:
-          containers:
-            main:
-              env:
-                DB_USERNAME: "${BOOKSTACK_DB_USER}"
-                DB_DATABASE: "${BOOKSTACK_DB_NAME}"
-                DB_PASSWORD: "${BOOKSTACK_DB_PASS}"
-                APP_KEY:
-                  secretKeyRef:
-                    name: secrets
-                    key: APP_KEY
