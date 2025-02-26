@@ -30,6 +30,13 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                APP_URL: "docs.${DOMAIN_0}"
     credentials:
       s3:
         type: s3
