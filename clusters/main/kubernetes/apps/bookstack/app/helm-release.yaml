@@ -71,7 +71,7 @@ spec:
               bucket: "${S3PREFIX}-bookstack"
               endpoint: "${S3URL}"
               accessKeyId: "${S3ID}"
-              secretAccessKey: "$S2KEY}"
+              secretAccessKey: "$S3KEY}"
         recovery:
           enabled: false  # Set to true when recovery is needed
           backupName: ""  # Specify the backup to restore from when needed
