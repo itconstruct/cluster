@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: ghcr.io/jordan-dalby/bytestash
-      tag: 1.5.6
+      tag: 1.5.7
       pullPolicy: IfNotPresent
     service:
       main:
