@@ -36,12 +36,12 @@ spec:
           containers:
             main:
               env:
-                APP_URL: "docs.${DOMAIN_0}"
+                APP_URL: "https://docs.${DOMAIN_0}"
     credentials:
       s3:
         type: s3
         url: "${S3URL}"
-        bucket: "${S3PREFIX}-bookstack"
+        bucket: "${S4PREFIX}-bookstack"
         accessKey: "${S3ID}"
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
@@ -59,6 +59,7 @@ spec:
               cacheCapacity: 20Gi
               schedule: 20 45 * * *
     mariadb:
+      password: "${BOOKSTACK_DB_PASS}"
       main:
         backups:
           enabled: true
@@ -70,7 +71,7 @@ spec:
               bucket: "${S3PREFIX}-bookstack"
               endpoint: "${S3URL}"
               accessKeyId: "${S3ID}"
-              secretAccessKey: "${S3KEY}"
+              secretAccessKey: "$S2KEY}"
         recovery:
           enabled: false  # Set to true when recovery is needed
           backupName: ""  # Specify the backup to restore from when needed
