@@ -36,8 +36,19 @@ spec:
       stopAll: false
     defaultCertificate: "domain-0-wildcard"
     service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: ${TRAEFIK_DASHBOARD}
       tcp:
         loadBalancerIP: ${TRAEFIK_IP}
+    ingress:
+      main:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: traefik-dash.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
