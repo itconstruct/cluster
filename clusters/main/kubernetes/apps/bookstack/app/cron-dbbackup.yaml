@@ -1,0 +1,36 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: bookstack-db-backup
+  namespace: bookstack
+spec:
+  schedule: "0 2 * * *"  # Run daily at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: mariadb-backup
+            image: mariadb:10.5  # Use the same version as your Bookstack MariaDB
+            command:
+            - /bin/sh
+            - -c
+            - |
+              mysqldump -h bookstack-mariadb -u root -p${MARIADB_ROOT_PASSWORD} --all-databases | gzip > /backup/bookstack-db-$(date +%Y%m%d-%H%M%S).sql.gz
+            env:
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookstack-mariadb
+                  key: mariadb-root-password
+            volumeMounts:
+            - name: backup
+              mountPath: /backup
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup
+            nfs:
+              server: your-nfs-server.example.com
+              path: "/path/to/nfs/share"
+
