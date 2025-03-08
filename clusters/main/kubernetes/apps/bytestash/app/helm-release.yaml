@@ -52,6 +52,10 @@ spec:
         encrKey: "${S3KEY}"
     persistence:
       data:
+        mountPath: "/tmp/data"
+      snippets:
+        enabled: true
+        mountPath: "/data/snippets"
         volsync:
           - name: snippets
             type: restic
@@ -62,5 +66,6 @@ spec:
             src:
               enabled: true
               cacheCapacity: 5Gi
+
     env:
       JWT_SECRET: "${BYTESTASH_JWT}"
