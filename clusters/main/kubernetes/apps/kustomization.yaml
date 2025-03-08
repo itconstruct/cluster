@@ -24,4 +24,3 @@ resources:
   - watchyourlan/ks.yaml
   - hass/ks.yaml
   - bookstack/ks.yaml
-  - bytestash/ks.yaml
