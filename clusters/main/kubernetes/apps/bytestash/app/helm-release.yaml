@@ -7,24 +7,13 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
-      version: 14.5.2
+      chart: bytestash
+      version: 1.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
   values:
-    image:
-      repository: ghcr.io/jordan-dalby/bytestash
-      tag: 1.5.7
-      pullPolicy: IfNotPresent
-    service:
-      main:
-        type: ClusterIP
-        ports:
-          main:
-            port: 5000
-            targetPort: 5000
     ingress:
       main:
         enabled: true
@@ -51,8 +40,6 @@ spec:
         encrKey: "${S3KEY}"
     persistence:
       snippets:
-        enabled: true
-        mountPath: /data/snippets
         volsync:
           - name: snippets
             type: restic
@@ -63,32 +50,5 @@ spec:
             src:
               enabled: true
               cacheCapacity: 5Gi
-    portal:
-      open:
-        enabled: true
-    securityContext:
-      container:
-        readOnlyRootFilesystem: false
     env:
-      BASE_PATH: ""
       JWT_SECRET: "${BYTESTASH_JWT}"
-      TOKEN_EXPIRY: "24h"
-      ALLOW_NEW_ACCOUNTS: "false"
-      DEBUG: "false"
-      DISABLE_ACCOUNTS: "false"
-      DISABLE_INTERNAL_ACCOUNTS: "false"
-      OIDC_ENABLED: "false"
-      OIDC_DISPLAY_NAME: ""
-      OIDC_ISSUER_URL: ""
-      OIDC_CLIENT_ID: ""
-      OIDC_CLIENT_SECRET: ""
-      OIDC_SCOPES: ""
-    probes:
-      liveness:
-        enabled: true
-        type: http
-        path: /
-      readiness:
-        enabled: true
-        type: http
-        path: /
