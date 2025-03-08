@@ -22,7 +22,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: rollback
   uninstall:
     keepHistory: false  
   values:
@@ -52,10 +51,6 @@ spec:
         encrKey: "${S3KEY}"
     persistence:
       data:
-        mountPath: "/tmp/data"
-      snippets:
-        enabled: true
-        mountPath: "/data/snippets"
         volsync:
           - name: snippets
             type: restic
