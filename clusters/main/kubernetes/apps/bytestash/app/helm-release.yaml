@@ -53,6 +53,7 @@ spec:
     persistence:
       snippets:
         enabled: true
+        mountPath: "/data/snippets"
         volsync:
           - name: snippets
             type: restic
