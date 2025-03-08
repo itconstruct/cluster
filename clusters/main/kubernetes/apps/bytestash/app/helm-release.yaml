@@ -51,9 +51,7 @@ spec:
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
     persistence:
-      snippets:
-        enabled: true
-        mountPath: "/data/snippets"
+      data:
         volsync:
           - name: snippets
             type: restic
