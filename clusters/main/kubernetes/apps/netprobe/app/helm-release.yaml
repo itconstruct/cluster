@@ -54,22 +54,24 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-    credentials:
-      s3:
-        type: s3
-        url: "${S3URL}"
-        bucket: "${S3PREFIX}-netprobe"
-        accessKey: "${S3ID}"
-        secretKey: "${S3KEY}"
-        encrKey: "${S3KEY}"
+    #credentials:
+    # s3:
+    #    type: s3
+    #    url: "${S3URL}"
+    #    bucket: "${S3PREFIX}-netprobe"
+    #    accessKey: "${S3ID}"
+    #    secretKey: "${S3KEY}"
+    #    encrKey: "${S3KEY}"
     persistence:
       grafana:
         enabled: true
+        mountPath: /var/lib/grafana
         targetSelector:
           grafana:
-            mountPath: /var/lib/grafana
+            grafana: {}
       netprobe:
         enabled: true
+        mountPath: /netprobe_lite
       prometheus:
         enabled: true
         targetSelector:
@@ -79,9 +81,10 @@ spec:
             mountPath: /etc/prometheus/prometheus.yml
       redis:
         enabled: true
+        mountPath: /etc/redis/redis.conf
         targetSelector:
           redis:
-            mountPath: /etc/redis/redis.conf
+            redis: {}
     portal:
       open:
         enabled: true
