@@ -25,4 +25,3 @@ resources:
   - hass/ks.yaml
   - bookstack/ks.yaml
   - bytestash/ks.yaml
-  - netprobe/ks.yaml
