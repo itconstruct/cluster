@@ -1,0 +1,178 @@
+apiVersion: helm.toolkit.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: netprobe
+  namespace: netprobe
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 14.5.2
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  values:
+    main:
+      repository: plaintextpackets/netprobe
+      #repository: ghcr.io/plaintextpackets/netprobe_lite
+      tag: 1.4.3
+      pullPolicy: IfNotPresent
+    grafana:
+      repository: grafana/grafana-enterprise
+      tag: 11.5.2
+    prometheus:
+      repository: prom/prometheus
+      tag: 3.2.1
+      pullPolicy: IfNotPresent
+    redis:
+      repository: public.ecr.aws/bitnami/redis
+      tag: 7.4.2@sha256:66b3b67e07a6537145e14d483d0e93c79793ea7ee4fdbf41b35e1080acc5f4c4
+      pullPolicy: IfNotPresent
+
+    service:
+      main:
+        type: ClusterIP
+        ports:
+          main:
+            port: 3001
+            targetPort: 3000
+    ingress:
+      main:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+            entrypoints:
+              - websecure
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: netprobe.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-netprobe"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      grafana:
+        enabled: true
+        targetSelector:
+          grafana:
+            mountPath: /var/lib/grafana
+      netprobe:
+        enabled: true
+      prometheus:
+        enabled: true
+        targetSelector:
+          prometheus:
+            mountPath: /prometheus
+          prometheus_config:
+            mountPath: /etc/prometheus/prometheus.yml
+      redis:
+        enabled: true
+        targetSelector:
+          redis:
+            mountPath: /etc/redis/redis.conf
+    portal:
+      open:
+        enabled: true
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+    env:
+      - name: MODULE
+        value: "NETPROBE"
+    additionalContainers:
+      - name: redis
+        volumeMounts:
+          - name: redis-config
+            mountPath: /etc/redis
+        dnsConfig:
+          nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+      - name: prometheus
+        image: prom/prometheus:latest
+        volumeMounts:
+          - name: prometheus-config
+            mountPath: /etc/prometheus
+          - name: prometheus-data
+            mountPath: /prometheus
+        command:
+          - '--config.file=/etc/prometheus/prometheus.yml'
+          - '--storage.tsdb.path=/prometheus'
+          - '--storage.tsdb.retention.time=30d'
+        dnsConfig:
+          nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+      - name: grafana
+        image: grafana/grafana-enterprise:latest
+        volumeMounts:
+          - name: grafana-datasources
+            mountPath: /etc/grafana/provisioning/datasources
+          - name: grafana-dashboards
+            mountPath: /etc/grafana/provisioning/dashboards
+          - name: grafana-data
+            mountPath: /var/lib/grafana
+        ports:
+          - containerPort: 3000
+        dnsConfig:
+          nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+      - name: speedtest
+        image: plaintextpackets/netprobe:latest
+        volumeMounts:
+          - name: netprobe-data
+            mountPath: /netprobe_lite
+        env:
+          - name: MODULE
+            value: "SPEEDTEST"
+        dnsConfig:
+          nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+      - name: presentation
+        image: plaintextpackets/netprobe:latest
+        volumeMounts:
+          - name: netprobe-data
+            mountPath: /netprobe_lite
+        env:
+          - name: MODULE
+            value: "PRESENTATION"
+        dnsConfig:
+          nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+    volumes:
+      - name: redis-config
+        configMap:
+          name: redis-config
+      - name: prometheus-config
+        configMap:
+          name: prometheus-config
+      - name: prometheus-data
+        persistentVolumeClaim:
+          claimName: prometheus-pvc
+      - name: grafana-datasources
+        configMap:
+          name: grafana-datasources
+      - name: grafana-dashboards
+        configMap:
+          name: grafana-dashboards
+      - name: grafana-data
+        persistentVolumeClaim:
+          claimName: grafana-pvc
+      - name: netprobe-data
+        persistentVolumeClaim:
+          claimName: netprobe-pvc
