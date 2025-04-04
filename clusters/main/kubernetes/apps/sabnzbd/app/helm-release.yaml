@@ -69,13 +69,13 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
-          homepage:
-            enabled: true
-            group: "Arr"
-            weight: 4
-            widget:
-              custom:
-                key: "${HP_API_SABNZBD}"
+              #homepage:
+              #enabled: true
+              #group: "Arr"
+              # weight: 4
+              #widget:
+              #custom:
+              #  key: "${HP_API_SABNZBD}"
         hosts:
           - host: sabnzbd.${DOMAIN_0}
             paths:
