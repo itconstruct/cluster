@@ -77,7 +77,7 @@ spec:
               #custom:
               #  key: "${HP_API_SABNZBD}"
         hosts:
-          - host: sab.${DOMAIN_0}
+          - host: sabnzbd.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
