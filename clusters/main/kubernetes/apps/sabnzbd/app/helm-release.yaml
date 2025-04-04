@@ -46,6 +46,7 @@ spec:
                 SABNZBD__DIRSCAN_DIR: "/Media/Downloads/nzb"
                 SABNZBD__WEB_DIR: "Glitter"
                 SABNZBD__WEB_COLOR: "Auto"
+                SABNZBD__URL_BASE: "/sabnzbd"
                 SABNZBD__HISTORY_LIMIT: "10"
                 SABNZBD__DIRECT_UNPACK: "0"
                 SABNZBD__NUM_DECODERS: "3"
