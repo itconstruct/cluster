@@ -23,12 +23,12 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-    timeout: 20m  # Moved here
+    timeout: 20m
   upgrade:
     crds: CreateReplace
     remediation:
       retries: 3
-    timeout: 20m  # Moved here
+    timeout: 20m
   uninstall:
     keepHistory: false  
   values:
@@ -39,6 +39,17 @@ spec:
             main:
               env:
                 SABNZBD__HOST_WHITELIST_ENTRIES: "sabnzbd.${DOMAIN_0}, sabnzbd.sabnzbd.svc"
+                SABNZBD__PORT: "38080"
+                SABNZBD__API_KEY: "cfb48d320fb44178b6c794bf6dee378c"
+                SABNZBD__NZB_KEY: "eb48622cba0a48a8b2fe8de255ded38e"
+                SABNZBD__INCOMPLETE_DIR: "/Media/Downloads/incomplete"
+                SABNZBD__COMPLETEDIR: "/Media/Downloads/complete"
+                SABNZBD__DIRSCAN_DIR: "/Media/Downloads/nzb"
+                SABNZBD__WEB_DIR: "Glitter"
+                SABNZBD__WEB_COLOR: "Auto"
+                SABNZBD__HISTORY_LIMIT: "10"
+                SABNZBD__DIRECT_UNPACK: "0"
+                SABNZBD__NUM_DECODERS: "3"
     portal:
       open:
         enabled: false
