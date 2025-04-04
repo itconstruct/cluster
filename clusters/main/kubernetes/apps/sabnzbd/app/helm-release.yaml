@@ -14,7 +14,11 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
-      interval: 5m
+      interval: 15m
+    timeout: 20m
+  maxHistory: 3
+  driftDetection:
+    mode: warn
   install:
     createNamespace: true
     crds: CreateReplace
@@ -24,8 +28,16 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-  timeout: 20m  
+  uninstall:
+    keepHistory: false  
   values:
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                SABNZBD__HOST_WHITELIST_ENTRIES: "sabnzbd.${DOMAIN_0}, sabnzbd.sabnzbd.svc"
     portal:
       open:
         enabled: false
@@ -56,6 +68,13 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
+          homepage:
+            enabled: true
+            group: "Arr"
+            weight: 4
+            widget:
+              custom:
+                key: "${HP_API_SABNZBD}"
         hosts:
           - host: sabnzbd.${DOMAIN_0}
             paths:
@@ -64,15 +83,15 @@ spec:
     persistence:
       config:
         volsync:
-        - name: config
-          type: restic
-          credentials: s3
-          dest:
-            enabled: true
-          src:
-            enabled: true
-            trigger:
-              schedule: 40 0 * * *
+         - name: config
+           type: restic
+           credentials: s3
+           dest:
+             enabled: true
+           src:
+             enabled: true
+             trigger:
+               schedule: 40 0 * * *
       media:
         enabled: true
         type: nfs
