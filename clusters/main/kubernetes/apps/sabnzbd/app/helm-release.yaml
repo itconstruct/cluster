@@ -39,8 +39,6 @@ spec:
             main:
               env:
                 SABNZBD__HOST_WHITELIST_ENTRIES: "sabnzbd.${DOMAIN_0}, sabnzbd.sabnzbd.svc"
-                SABNZBD__API_KEY: "cfb48d320fb44178b6c794bf6dee378c"
-                SABNZBD__NZB_KEY: "eb48622cba0a48a8b2fe8de255ded38e"
                 SABNZBD__INCOMPLETE_DIR: "/Media/Downloads/incomplete"
                 SABNZBD__COMPLETEDIR: "/Media/Downloads/complete"
                 SABNZBD__DIRSCAN_DIR: "/Media/Downloads/nzb"
