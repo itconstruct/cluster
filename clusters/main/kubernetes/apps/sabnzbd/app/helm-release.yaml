@@ -15,7 +15,6 @@ spec:
         name: truecharts
         namespace: flux-system
       interval: 15m
-    timeout: 20m
   maxHistory: 3
   driftDetection:
     mode: warn
@@ -24,10 +23,12 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
+    timeout: 20m  # Moved here
   upgrade:
     crds: CreateReplace
     remediation:
       retries: 3
+    timeout: 20m  # Moved here
   uninstall:
     keepHistory: false  
   values:
@@ -83,18 +84,19 @@ spec:
     persistence:
       config:
         volsync:
-         - name: config
-           type: restic
-           credentials: s3
-           dest:
-             enabled: true
-           src:
-             enabled: true
-             trigger:
-               schedule: 40 0 * * *
+          - name: config
+            type: restic
+            credentials: s3
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: "40 0 * * *"
       media:
         enabled: true
         type: nfs
         server: "192.168.1.223"  # Replace with your NFS server IP
         path: "/mnt/docker/Media"
         mountPath: "/Media"
+
