@@ -113,4 +113,14 @@ spec:
         server: "192.168.1.223"  # Replace with your NFS server IP
         path: "/mnt/docker/Media"
         mountPath: "/Media"
-
+    addons:
+      vpn:
+        type: gluetun
+        killSwitch: true
+        excludedNetworks_IPv4:
+        - 192.168.1.0/24
+        env:            
+          VPN_SERVICE_PROVIDER: privado 
+          OPENVPN_USER: ${P_VPN_USER}
+          OPENVPN_PASSWORD: ${P_VPN_PASS}
+          SERVER_COUNTRIES: Mexico
