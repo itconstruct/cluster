@@ -35,8 +35,6 @@ spec:
                 key: "${NEXTCLOUD_API_KEY}"
           traefik:
             enabled: false
-            entrypoints:
-              - websecure
     credentials:
       s3:
         type: s3
