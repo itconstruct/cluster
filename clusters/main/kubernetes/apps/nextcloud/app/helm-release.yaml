@@ -74,6 +74,8 @@ spec:
         path: /mnt/docker/talos_apps/nextcloud/data
     cnpg:
       main:
+        cluster:
+          singleNode: true
         mode: recovery
         # standalone
         # Set to 'recovery' when recovery from S3, also change the revisions
@@ -94,7 +96,7 @@ spec:
     nextcloud:
       general:
         default_phone_region: AU
-        accessIP: ${TRAEFIK_IP}
+        accessIP: ${NGINX_INTERNAL_IP}
       previews:
         providers:
           - BMP
