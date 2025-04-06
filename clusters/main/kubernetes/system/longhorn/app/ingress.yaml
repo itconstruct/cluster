@@ -6,10 +6,6 @@ metadata:
   annotations:
       cert-manager.io/cluster-issuer: domain-0-le-prod
       cert-manager.io/private-key-rotation-policy: Always
-      traefik.frontend.passHostHeader: "false"
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure
-      traefik.ingress.kubernetes.io/router.middlewares: traefik-chain-basic@kubernetescrd
-      traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
   - host: longhorn.${DOMAIN_0}
@@ -26,7 +22,3 @@ spec:
     - hosts:
       - longhorn.${DOMAIN_0}
       secretName: longhorn-tls-0
-status:
-    loadBalancer:
-      ingress:
-      - ip: ${TRAEFIK_IP}

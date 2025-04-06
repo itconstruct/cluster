@@ -35,6 +35,7 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: internal
         hosts:
           - host: readarr.${DOMAIN_0}
             paths:
@@ -51,7 +52,7 @@ spec:
               custom:
                 key: "${READARR_API_KEY}"
           traefik:
-            enabled: true
+            enabled: false
             entrypoints:
               - websecure
     credentials:

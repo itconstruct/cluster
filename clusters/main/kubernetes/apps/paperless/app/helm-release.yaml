@@ -27,9 +27,10 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: internal
         integrations:
           traefik:
-            enabled: true
+            enabled: false
             entrypoints:
             - websecure
           certManager:

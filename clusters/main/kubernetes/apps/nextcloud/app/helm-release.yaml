@@ -17,6 +17,7 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: internal
         hosts:
           - host: cloud.${DOMAIN_0}
             paths:
@@ -33,10 +34,7 @@ spec:
               custom:
                 key: "${NEXTCLOUD_API_KEY}"
           traefik:
-            enabled: true
-#            middlewares:
-#              - name: auth
-#                namespace: traefik
+            enabled: false
             entrypoints:
               - websecure
     credentials:
