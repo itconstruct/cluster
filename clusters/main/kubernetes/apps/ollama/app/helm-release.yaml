@@ -19,6 +19,7 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: internal
         hosts:
           - host: ai.${DOMAIN_0}
             paths:
@@ -29,7 +30,7 @@ spec:
             enabled: true
             certificateIssuer: "domain-0-le-prod"
           traefik:
-            enabled: true
+            enabled: false
             entrypoints:
               - websecure
     credentials:

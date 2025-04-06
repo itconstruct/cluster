@@ -22,6 +22,13 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: internal
+        integrations:
+          traefik:
+            enabled: false
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
         hosts:
           - host: kms.${DOMAIN_0}
             paths:

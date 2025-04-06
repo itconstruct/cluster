@@ -80,7 +80,7 @@ spec:
     ingress:
       main:
         enabled: true
-        #ingressClassName: internal
+        ingressClassName: internal
         #annotations:
           #nginx.ingress.kubernetes.io/auth-method: 'GET'
           #nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
@@ -88,7 +88,7 @@ spec:
           #nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
         integrations:
           traefik:
-            enabled: true
+            enabled: false
             entrypoints:
             - websecure
           certManager:
