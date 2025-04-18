@@ -29,6 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    nameOverride: nginx-external
     controller:
       replicaCount: 2
       service:
