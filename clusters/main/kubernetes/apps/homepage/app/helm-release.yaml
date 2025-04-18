@@ -13,6 +13,16 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3  
   values:
     ingress:
       main:
@@ -21,8 +31,6 @@ spec:
         integrations:
           traefik:
             enabled: false
-            entrypoints:
-            - websecure
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
@@ -66,14 +74,12 @@ spec:
               certificateIssuer: domain-0-le-prod
             traefik:
               enabled: false
-              entrypoints:
-              - websecure
           hosts:
             - host: home.code.${DOMAIN_0}
-  workload:
-    main:
-      podSpec:
-        containers:
-          main:
-            env:
-              HOMEPAGE_ALLOWED_HOSTS: home.${DOMAIN_0}
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                HOMEPAGE_ALLOWED_HOSTS: home.${DOMAIN_0}
