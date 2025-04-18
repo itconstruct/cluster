@@ -1,6 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-    name: blocky
-    labels:
-        topolvm.io/webhook: ignore
+  name: blocky
