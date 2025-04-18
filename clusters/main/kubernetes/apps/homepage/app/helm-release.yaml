@@ -59,20 +59,21 @@ spec:
         enabled: true
         ingress:
           enabled: true
+          ingressClassName: internal
           integrations:
             certManager:
               enabled: true
               certificateIssuer: domain-0-le-prod
             traefik:
-              enabled: true
+              enabled: false
               entrypoints:
               - websecure
           hosts:
             - host: home.code.${DOMAIN_0}
-    workload:
-      main:
-        podSpec:
-          containers:
-            main:
-              env:
-                HOMEPAGE_ALLOWED_HOSTS: home.${DOMAIN_0}
+  workload:
+    main:
+      podSpec:
+        containers:
+          main:
+            env:
+              HOMEPAGE_ALLOWED_HOSTS: home.${DOMAIN_0}
