@@ -7,7 +7,6 @@ metadata:
       cert-manager.io/cluster-issuer: domain-0-le-prod
       cert-manager.io/private-key-rotation-policy: Always
 spec:
-  ingressClassName: internal
   rules:
   - host: longhorn.${DOMAIN_0}
     http:
