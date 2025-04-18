@@ -69,4 +69,10 @@ spec:
               - websecure
           hosts:
             - host: home.code.${DOMAIN_0}
-
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                HOMEPAGE_ALLOWED_HOSTS: home.${DOMAIN_0}
