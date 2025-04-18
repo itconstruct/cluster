@@ -19,14 +19,16 @@ spec:
         name: home-ops-mirror
         namespace: flux-system
       interval: 15m
-  timeout: 20m
+  timeout: 30m
   maxHistory: 3
   driftDetection:
     mode: warn
   install:
+    timeout: 30m
     remediation:
       retries: 3
   upgrade:
+    timeout: 30m
     cleanupOnFail: true
     remediation:
       retries: 3
