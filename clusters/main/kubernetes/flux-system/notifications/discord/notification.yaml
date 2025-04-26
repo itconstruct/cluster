@@ -131,9 +131,6 @@ spec:
       namespace: external-service
     - kind: HelmRelease
       name: "*"
-      namespace: external-service
-    - kind: HelmRelease
-      name: "*"
       namespace: kube-node-lease
     - kind: HelmRelease
       name: "*"
@@ -143,6 +140,66 @@ spec:
       namespace: kube-system
     - kind: HelmRelease
       name: "*"
+    - kind: HelmRelease
+      name: "*"
+      namespace: bookstack
+    - kind: HelmRelease
+      name: "*"
+      namespace: bytestash
+    - kind: HelmRelease
+      name: "*"
+      namespace: cilium-secrets
+    - kind: HelmRelease
+      name: "*"
+      namespace: gaps
+    - kind: HelmRelease
+      name: "*"
+      namespace: hass
+    - kind: HelmRelease
+      name: "*"
+      namespace: immich
+    - kind: HelmRelease
+      name: "*"
+      namespace: kms
+    - kind: HelmRelease
+      name: "*"
+      namespace: librespeed
+    - kind: HelmRelease
+      name: "*"
+      namespace: metube
+    - kind: HelmRelease
+      name: "*"
+      namespace: myspeed
+    - kind: HelmRelease
+      name: "*"
+      namespace: ollama
+    - kind: HelmRelease
+      name: "*"
+      namespace: paperless
+    - kind: HelmRelease
+      name: "*"
+      namespace: pgadmin
+    - kind: HelmRelease
+      name: "*"
+      namespace: prowlarr
+    - kind: HelmRelease
+      name: "*"
+      namespace: readarr
+    - kind: HelmRelease
+      name: "*"
+      namespace: sabnzbd
+    - kind: HelmRelease
+      name: "*"
+      namespace: tailscale
+    - kind: HelmRelease
+      name: "*"
+      namespace: tautulli
+    - kind: HelmRelease
+      name: "*"
+      namespace: threadfin
+    - kind: HelmRelease
+      name: "*"
+      namespace: watchyourlan
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/alert-notification-v1beta3.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta3
@@ -157,3 +214,4 @@ spec:
   eventSources:
     - kind: Kustomization
       name: "*"
+
