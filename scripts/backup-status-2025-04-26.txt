@@ -1,0 +1,127 @@
+[1;36m🔍 Checking Kubernetes backup configuration (VolSync & CNPG)...[0m
+
+[1;36m📦 Namespace: bytestash[0m
+  🔹 VolSync:
+    [0;32m- Source: bytestash-data-snippets | Last Sync: 2025-04-18T00:24:19Z | AEST: 2025-04-18 10:24:19[0m
+    [0;32m- Destination: bytestash-data-snippets-dest | Last Sync: 2025-03-08T21:18:15Z | AEST: 2025-03-09 07:18:15[0m
+
+[1;36m📦 Namespace: gaps[0m
+  🔹 VolSync:
+    [0;32m- Source: gaps-data-data | Last Sync: 2025-04-17T17:25:00Z | AEST: 2025-04-18 03:25:00[0m
+    [0;32m- Destination: gaps-data-data-dest | Last Sync: 2025-01-16T06:52:05Z | AEST: 2025-01-16 16:52:05[0m
+
+[1;36m📦 Namespace: hass[0m
+  🔹 VolSync:
+    [0;32m- Source: hass-home-assistant-backup-b2 | Last Sync: 2025-04-18T00:20:55Z | AEST: 2025-04-18 10:20:55[0m
+    [0;32m- Source: hass-home-assistant-config-b2 | Last Sync: 2025-04-18T00:24:51Z | AEST: 2025-04-18 10:24:51[0m
+    [0;32m- Destination: hass-home-assistant-backup-b2-dest | Last Sync: 2025-02-27T11:52:08Z | AEST: 2025-02-27 21:52:08[0m
+    [0;32m- Destination: hass-home-assistant-config-b2-dest | Last Sync: 2025-02-27T11:52:01Z | AEST: 2025-02-27 21:52:01[0m
+  🔹 CNPG Backups:
+    [0;32m- ScheduledBackup: hass-home-assistant-cnpg-main-sched-backup-daily-backup | NextScheduled: 2025-04-27T00:00:00Z | AEST: 2025-04-27 10:00:00[0m
+
+[1;36m📦 Namespace: homepage[0m
+  🔹 VolSync:
+    [0;32m- Source: homepage-config-b2 | Last Sync: 2025-04-17T14:44:55Z | AEST: 2025-04-18 00:44:55[0m
+    [0;32m- Destination: homepage-config-b2-dest | Last Sync: 2024-11-22T11:17:10Z | AEST: 2024-11-22 21:17:10[0m
+
+[1;36m📦 Namespace: immich[0m
+  🔹 VolSync:
+  🔹 CNPG Backups:
+    [0;32m- ScheduledBackup: immich-cnpg-main-sched-backup-daily-backup | NextScheduled: 2025-04-27T00:15:00Z | AEST: 2025-04-27 10:15:00[0m
+
+[1;36m📦 Namespace: it-tools[0m
+  🔹 VolSync:
+    [0;90m- No volumes attached to this namespace[0m
+
+[1;36m📦 Namespace: metube[0m
+  🔹 VolSync:
+    [0;32m- Source: metube-config-b2 | Last Sync: 2025-04-17T14:24:51Z | AEST: 2025-04-18 00:24:51[0m
+    [0;32m- Destination: metube-config-b2-dest | Last Sync: 2024-11-17T08:29:56Z | AEST: 2024-11-17 18:29:56[0m
+
+[1;36m📦 Namespace: myspeed[0m
+  🔹 VolSync:
+    [0;32m- Source: myspeed-data-data | Last Sync: 2025-04-18T00:23:04Z | AEST: 2025-04-18 10:23:04[0m
+    [0;32m- Destination: myspeed-data-data-dest | Last Sync: 2025-01-18T07:14:48Z | AEST: 2025-01-18 17:14:48[0m
+
+[1;36m📦 Namespace: nextcloud[0m
+  🔹 VolSync:
+    [0;32m- Source: nextcloud-config-b2 | Last Sync: 2025-04-18T00:23:43Z | AEST: 2025-04-18 10:23:43[0m
+    [0;32m- Source: nextcloud-html-r2 | Last Sync: 2025-04-18T00:28:36Z | AEST: 2025-04-18 10:28:36[0m
+    [0;32m- Destination: nextcloud-config-b2-dest | Last Sync: 2024-11-29T23:27:05Z | AEST: 2024-11-30 09:27:05[0m
+    [0;32m- Destination: nextcloud-html-r2-dest | Last Sync: 2024-11-29T23:27:08Z | AEST: 2024-11-30 09:27:08[0m
+  🔹 CNPG Backups:
+    [0;32m- ScheduledBackup: nextcloud-cnpg-main-sched-backup-daily-backup | NextScheduled: 2025-04-13T00:05:00Z | AEST: 2025-04-13 10:05:00[0m
+
+[1;36m📦 Namespace: paperless[0m
+  🔹 VolSync:
+  🔹 CNPG Backups:
+    [0;32m- ScheduledBackup: paperless-paperless-ngx-cnpg-main-sched-backup-daily-backup | NextScheduled: 2025-04-27T00:12:25Z | AEST: 2025-04-27 10:12:25[0m
+
+[1;36m📦 Namespace: pgadmin[0m
+  🔹 VolSync:
+    [0;32m- Source: pgadmin-config-b2 | Last Sync: 2025-04-18T00:22:17Z | AEST: 2025-04-18 10:22:17[0m
+    [0;32m- Destination: pgadmin-config-b2-dest | Last Sync: 2024-11-26T11:50:27Z | AEST: 2024-11-26 21:50:27[0m
+
+[1;36m📦 Namespace: prometheus-operator[0m
+  🔹 VolSync:
+    [0;90m- No volumes attached to this namespace[0m
+
+[1;36m📦 Namespace: prowlarr[0m
+  🔹 VolSync:
+    [0;32m- Source: prowlarr-config-b2 | Last Sync: 2025-04-18T00:23:16Z | AEST: 2025-04-18 10:23:16[0m
+    [0;32m- Destination: prowlarr-config-b2-dest | Last Sync: 2024-11-26T10:44:23Z | AEST: 2024-11-26 20:44:23[0m
+
+[1;36m📦 Namespace: readarr[0m
+  🔹 VolSync:
+    [0;32m- Source: readarr-config-b2 | Last Sync: 2025-04-18T00:23:42Z | AEST: 2025-04-18 10:23:42[0m
+    [0;32m- Destination: readarr-config-b2-dest | Last Sync: 2025-01-03T01:57:56Z | AEST: 2025-01-03 11:57:56[0m
+
+[1;36m📦 Namespace: sabnzbd[0m
+  🔹 VolSync:
+    [0;32m- Source: sabnzbd-config-config | Last Sync: 2025-04-18T00:46:54Z | AEST: 2025-04-18 10:46:54[0m
+    [0;32m- Destination: sabnzbd-config-config-dest | Last Sync: 2025-04-04T12:56:27Z | AEST: 2025-04-04 22:56:27[0m
+
+[1;36m📦 Namespace: tailscale[0m
+  🔹 VolSync:
+    [0;90m- No volumes attached to this namespace[0m
+
+[1;36m📦 Namespace: tautulli[0m
+  🔹 VolSync:
+    [0;32m- Source: tautulli-config-b2 | Last Sync: 2025-04-14T00:45:51Z | AEST: 2025-04-14 10:45:51[0m
+    [0;32m- Destination: tautulli-config-b2-dest | Last Sync: 2024-11-25T10:50:35Z | AEST: 2024-11-25 20:50:35[0m
+
+[1;36m📦 Namespace: threadfin[0m
+  🔹 VolSync:
+    [0;32m- Source: threadfin-config-b2 | Last Sync: 2025-04-17T16:44:47Z | AEST: 2025-04-18 02:44:47[0m
+    [0;32m- Destination: threadfin-config-b2-dest | Last Sync: 2024-12-28T20:09:04Z | AEST: 2024-12-29 06:09:04[0m
+
+[1;36m📦 Namespace: uptime-kuma[0m
+  🔹 VolSync:
+    [0;32m- Source: uptime-kuma-config-b2 | Last Sync: 2025-03-05T01:17:41Z | AEST: 2025-03-05 11:17:41[0m
+    [0;32m- Destination: uptime-kuma-config-b2-dest | Last Sync: 2024-11-25T08:01:17Z | AEST: 2024-11-25 18:01:17[0m
+
+[1;36m📦 Namespace: volsync[0m
+  🔹 VolSync:
+    [0;90m- No volumes attached to this namespace[0m
+
+[1;36m📋 Backup Summary:[0m
+  hass                           ✅ OK
+  prometheus-operator            ✅ OK
+  gaps                           ✅ OK
+  homepage                       ✅ OK
+  tautulli                       ✅ OK
+  readarr                        ✅ OK
+  pgadmin                        ✅ OK
+  uptime-kuma                    ✅ OK
+  bytestash                      ✅ OK
+  metube                         ✅ OK
+  immich                         ✅ OK
+  prowlarr                       ✅ OK
+  volsync                        ✅ OK
+  tailscale                      ✅ OK
+  myspeed                        ✅ OK
+  nextcloud                      ✅ OK
+  threadfin                      ✅ OK
+  sabnzbd                        ✅ OK
+  it-tools                       ✅ OK
+  paperless                      ✅ OK
