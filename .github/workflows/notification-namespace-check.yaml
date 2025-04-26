@@ -1,0 +1,80 @@
+name: "Namespace Alert Check"
+
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  workflow_dispatch:     # Allow manual runs
+
+jobs:
+  namespace-check:
+    name: Check Notification Namespaces
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install kubectl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y kubectl
+
+      - name: Setup Kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Fetch Current Namespaces
+        run: |
+          kubectl get ns -o jsonpath='{.items[*].metadata.name}' | tr ' ' '\n' | sort > namespaces.txt
+          cat namespaces.txt
+
+      - name: Extract Configured Namespaces from notification.yaml
+        run: |
+          grep -E 'namespace: ' clusters/main/kubernetes/flux-system/notifications/discord/notification.yaml | awk '{print $2}' | sort > config_namespaces.txt
+          cat config_namespaces.txt
+
+      - name: Compare Namespaces
+        id: diffcheck
+        run: |
+          if diff namespaces.txt config_namespaces.txt; then
+            echo "No update needed."
+            echo "update_needed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Namespaces differ!"
+            echo "update_needed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update notification.yaml (Patch Script)
+        if: steps.diffcheck.outputs.update_needed == 'true'
+        run: |
+          # Basic logic to generate the correct eventSources block
+          ns_list=$(cat namespaces.txt | sed "s/^/    - kind: HelmRelease\n      name: \"*\"\n      namespace: /")
+          awk '
+            BEGIN {print_line=1}
+            /eventSources:/ {print_line=0}
+            print_line {print}
+            /eventSources:/ {
+              print "eventSources:"
+              while ((getline line < "namespaces.txt") > 0) {
+                printf("    - kind: HelmRelease\n      name: \"*\"\n      namespace: %s\n", line);
+              }
+              print_line=0
+            }
+          ' clusters/main/kubernetes/flux-system/notifications/discord/notification.yaml > temp.yaml
+          mv temp.yaml clusters/main/kubernetes/flux-system/notifications/discord/notification.yaml
+
+      - name: Create Pull Request
+        if: steps.diffcheck.outputs.update_needed == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "fix: sync notification.yaml with current namespaces"
+          branch: "namespace-sync-patch"
+          title: "fix: sync notification.yaml with current namespaces"
+          body: "This PR updates the eventSources block in notification.yaml to reflect all active namespaces."
+          author: "GitHub Actions <actions@github.com>"
+

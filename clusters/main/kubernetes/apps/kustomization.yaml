@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - homepage/ks.yaml
   - kubernetes-dashboard/ks.yaml
-  - librespeed/ks.yaml
   - metube/ks.yaml
   - nextcloud/ks.yaml
   - pgadmin/ks.yaml
@@ -15,14 +14,10 @@ resources:
   - paperless/ks.yaml
   - readarr/ks.yaml
   - gaps/ks.yaml
-  - ollama/ks.yaml
   - myspeed/ks.yaml
-  - kms/ks.yaml
   - tailscale/ks.yaml
   - it-tools/ks.yaml
   - immich/ks.yaml
-  - watchyourlan/ks.yaml
   - hass/ks.yaml
-  - bookstack/ks.yaml
   - bytestash/ks.yaml
   - sabnzbd/ks.yaml
