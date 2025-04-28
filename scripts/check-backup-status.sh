@@ -25,14 +25,12 @@ declare -A namespace_states
 DISCORD_SUMMARY=()
 
 update_namespace_state() {
-  local ns=$1
-  local new_state=$2
+  local ns=$1 new_state=$2
   local current=${namespace_states["$ns"]:-"OK"}
-
   case "$current" in
-    "ERROR") return ;; # already maxed out
-    "WARN") [[ "$new_state" == "ERROR" ]] && namespace_states["$ns"]="ERROR" ;;
-    "OK") namespace_states["$ns"]="$new_state" ;;
+    ERROR) return ;;
+    WARN) [[ "$new_state" == "ERROR" ]] && namespace_states["$ns"]="ERROR" ;;
+    OK) namespace_states["$ns"]="$new_state" ;;
   esac
 }
 
@@ -47,7 +45,7 @@ check_volsync_health() {
     local dur=$(( ($(date +%s) - $(date -d "$start" +%s)) / 60 ))
     if (( dur > HANG_THRESHOLD_MINUTES )); then
       echo -e "${RED}  ❌ HANG: $ns/$src syncing for ${dur}m${RESET}"
-      update_namespace_state "$ns" "WARN"
+      update_namespace_state "$ns" "ERROR"
       DISCORD_SUMMARY+=("VolSync | $ns | $src | HANG: ${dur}m | ERROR")
       return
     fi
@@ -78,9 +76,8 @@ for ns in $namespaces; do
   done
   [[ "$skip" == true ]] && continue
 
-  ns_state="OK"
   echo "📆 Namespace: $ns"
-  namespace_states["$ns"]="$ns_state"
+  update_namespace_state "$ns" "OK"
 
   nfs_mounts=$(kubectl get pods -n "$ns" -o json 2>/dev/null | jq -r '
   .items[]?.spec.volumes[]? | select(.nfs != null) | "\(.nfs.server):\(.nfs.path)"' | sort -u)
@@ -132,9 +129,10 @@ for ns in $namespaces; do
       local_aest=$(TZ=$AEST_TZ date -d "$time" "+%Y-%m-%d %H:%M:%S %Z")
       echo "    - $name: $time UTC / $local_aest AEST"
     done
-    echo "$volsync_json" | jq -r '.items[].metadata.name' | while read -r src; do
+    while read -r src; do
       check_volsync_health "$ns" "$src"
-    done
+    done < <(echo "$volsync_json" | jq -r '.items[].metadata.name')
+
   fi
 
   uses_pg=false
@@ -147,47 +145,57 @@ for ns in $namespaces; do
   if [[ "$uses_pg" == true ]]; then
     echo "  🔹 CNPG Backup Info:"
     scheds=$(kubectl get scheduledbackup -n "$ns" -o json 2>/dev/null || echo '{}')
-    echo "$scheds" | jq -r '.items[] | [.metadata.name, .status.lastScheduleTime] | @tsv' | while IFS=$'\t' read -r name last; do
+    while IFS=$'\t' read -r name last; do
       if [[ "$last" != "null" && -n "$last" ]]; then
-        diff_hr=$(( ($(date +%s) - $(date -d "$last" +%s)) / 3600 ))
-        aest=$(TZ=$AEST_TZ date -d "$last" "+%Y-%m-%d %H:%M:%S %Z")
-        echo "    - ScheduledBackup: $name | Last Schedule Time: $last UTC / $aest AEST"
-        if (( diff_hr > RETENTION_THRESHOLD_HOURS )); then
-          echo -e "    ${YELLOW}⚠️ WARNING: CNPG backup is older than $RETENTION_THRESHOLD_HOURS hours${RESET}"
-          update_namespace_state "$ns" "WARN"
-          DISCORD_SUMMARY+=("CNPG | $ns | $name | ${diff_hr}h ago | WARNING")
-        else
-          DISCORD_SUMMARY+=("CNPG | $ns | $name | $aest | OK")
-        fi
+        last_epoch=$(date -d "$last" +%s)
+        now_epoch=$(date +%s)
+        diff_hr=$(( (now_epoch - last_epoch) / 3600 ))
+        last_aest=$(TZ=$AEST_TZ date -d "$last" "+%Y-%m-%d %H:%M:%S %Z")
+        echo "    - ScheduledBackup: $name | Last Schedule Time: $last UTC / $last_aest AEST"
+
+      if (( diff_hr > RETENTION_THRESHOLD_HOURS )); then
+        echo -e "    ${YELLOW}  WARNING: CNPG backup is older than $RETENTION_THRESHOLD_HOURS hours${RESET}"
+        namespace_states["$ns"]="WARN"
+        DISCORD_SUMMARY+=("CNPG | $ns | $name | ${diff_hr}h ago | WARNING")
+      else
+        DISCORD_SUMMARY+=("CNPG | $ns | $name | $last_aest | OK")
       fi
-    done
+    fi
+done < <(echo "$scheds" | jq -r '.items[] | [.metadata.name, .status.lastScheduleTime] | @tsv')
+
   fi
 
 done  # ← This is the end of the namespace loop
 
-warn_count=0
-error_count=0
+# Categorize backup results
+any_warn_or_error=false
 
-for line in "${DISCORD_SUMMARY[@]}"; do
-  IFS='|' read -r _ _ _ _ state <<< "$line"
-  [[ "$state" == "WARNING" ]] && ((warn_count++))
-  [[ "$state" == "ERROR" ]] && ((error_count++))
+echo "🔍 DISCORD_SUMMARY contains ${#DISCORD_SUMMARY[@]} entries"
+
+for entry in "${DISCORD_SUMMARY[@]}"; do
+  # Use IFS to safely split and trim
+  IFS='|' read -r _ _ _ _ raw_state <<< "$entry"
+  state=$(echo "$raw_state" | xargs)  # Trim leading/trailing whitespace
+
+  echo "🧪 Evaluating backup status state: '$state'"  # Debug line
+
+  if [[ "$state" == "WARN" || "$state" == "WARNING" || "$state" == "ERROR" ]]; then
+    any_warn_or_error=true
+    break
+  fi
 done
 
-if (( warn_count > 0 || error_count > 0 )); then
-  echo -e "\n🚨 **Discord-Friendly Backup Alert Summary:**"
+
+if [[ "$any_warn_or_error" == true ]]; then
+  echo -e "\n🚨 **Discord-Friendly Backup Summary:**"
   echo -e "\n\`\`\`markdown"
   printf "%-10s | %-15s | %-35s | %-22s | %-8s\n" "Type" "Namespace" "Resource" "Last Run" "State"
   printf -- "%-10s-+-%-15s-+-%-35s-+-%-22s-+-%-8s\n" "----------" "---------------" "-----------------------------------" "----------------------" "--------"
-
   for line in "${DISCORD_SUMMARY[@]}"; do
     IFS='|' read -r type ns res info state <<< "$line"
-    if [[ "$state" != "OK" ]]; then
-      printf "%-10s | %-15s | %-35s | %-22s | %-8s\n" "$type" "$ns" "$res" "$info" "$state"
-    fi
+    printf "%-10s | %-15s | %-35s | %-22s | %-8s\n" "$type" "$ns" "$res" "$info" "$state"
   done
   echo "\`\`\`"
-  echo -e "\n⚠️  $warn_count warnings | ❌ $error_count errors"
 else
   echo -e "\n✅ All backups appear healthy. No warnings or errors to report."
 fi
