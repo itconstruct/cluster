@@ -49,6 +49,6 @@ spec:
               enabled: true
               cacheCapacity: 10Gi
             src:
-              enabled: true
+              enabled: false
               cacheCapacity: 10Gi
               schedule: 20 17 * * *
