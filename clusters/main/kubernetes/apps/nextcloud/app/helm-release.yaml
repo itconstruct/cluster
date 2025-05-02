@@ -92,7 +92,7 @@ spec:
         # standalone
         # Set to 'recovery' when recovery from S3, also change the revisions
         backups:
-          enabled: true
+          enabled: false
           credentials: s3
           revision: "2"
           scheduledBackups:
@@ -104,7 +104,7 @@ spec:
         recovery:
           method: object_store
           credentials: s3
-          revision: "1"
+          revision: "2"
     nextcloud:
       general:
         default_phone_region: AU
