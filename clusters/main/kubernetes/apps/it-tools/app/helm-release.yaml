@@ -32,8 +32,6 @@ spec:
           integrations:
             traefik:
               enabled: false
-              entrypoints:
-              - websecure
             certManager:
               enabled: true
               certificateIssuer: domain-0-le-prod

@@ -82,7 +82,7 @@ spec:
         # recovery
         # Set to 'recovery' when recovery from S3, also change the revisions
         backups:
-          enabled: true
+          enabled: false
           credentials: s3
           scheduledBackups:
             - name: daily-backup
@@ -94,6 +94,6 @@ spec:
         recovery:
           method: object_store
           credentials: s3
-          recoveryTarget:
-            targetTime: "2025-02-09 23:59:59+11:00"
-          #revision: 1
+          #recoveryTarget:
+            #targetTime: "2025-02-09 23:59:59+11:00"
+          revision: "1"
