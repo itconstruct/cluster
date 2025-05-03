@@ -39,6 +39,7 @@ spec:
             fieldPath: spec.nodeName
     args:
       - --node=$(NODE)
-      - --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --tag=$(TALOS_VERSION)
+      #- --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
       ## Reenable if your setup REALLY needs full reboots
       # - --powercycle
