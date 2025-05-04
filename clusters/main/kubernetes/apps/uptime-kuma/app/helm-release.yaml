@@ -5,6 +5,7 @@ metadata:
   namespace: uptime-kuma
 spec:
   interval: 15m
+  timeout: 20m
   chart:
     spec:
       chart: uptime-kuma

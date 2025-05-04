@@ -48,8 +48,6 @@ spec:
         integrations:
           traefik:
             enabled: false
-            entrypoints:
-            - websecure
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
@@ -90,7 +88,7 @@ spec:
         storage:
           size: 20Gi 
         backups:
-          enabled: true
+          enabled: false
           credentials: s3
           revision: "1"
           scheduledBackups:
@@ -102,4 +100,4 @@ spec:
         recovery:
           method: object_store
           credentials: s3
-            #revision: "1"
+          revision: "1"

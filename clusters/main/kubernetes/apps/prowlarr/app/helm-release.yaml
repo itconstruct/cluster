@@ -5,10 +5,11 @@ metadata:
   namespace: prowlarr
 spec:
   interval: 15m
+  timeout: 20m
   chart:
     spec:
       chart: prowlarr
-      version: 18.20.1
+      version: 18.21.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -29,8 +30,6 @@ spec:
         integrations:
           traefik:
             enabled: false
-            entrypoints:
-            - websecure
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod

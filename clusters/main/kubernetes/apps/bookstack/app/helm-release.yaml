@@ -15,6 +15,7 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
+  timeout: 15m
   values:
     ingress:
       main:
