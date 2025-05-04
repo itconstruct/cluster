@@ -5,6 +5,7 @@ metadata:
   namespace: metube
 spec:
   interval: 15m
+  timeout: 20m
   chart:
     spec:
       chart: metube
