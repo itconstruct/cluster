@@ -22,7 +22,5 @@ resources:
   - librespeed/ks.yaml
   - ollama/ks.yaml
   - watchyourlan/ks.yaml
-  - bookstack/ks.yaml
   - myspeed/ks.yaml
-  - readarr/ks.yaml
   - uptime-kuma/ks.yaml
