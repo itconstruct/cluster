@@ -88,7 +88,7 @@ spec:
       main:
         mode: recovery
         backups:
-          enabled: false
+          enabled: true
           credentials: s3
           scheduledBackups:
             - name: daily-backup
@@ -96,6 +96,7 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
+          revision: "1"
         recovery:
           method: object_store
           credentials: s3
