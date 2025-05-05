@@ -1,6 +1,8 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-    name: myspeed
-    labels:
-      pod-security.kubernetes.io/enforce: privileged
+  name: myspeed
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+  annotations:
+    volsync.backube/privileged-movers: "true"
