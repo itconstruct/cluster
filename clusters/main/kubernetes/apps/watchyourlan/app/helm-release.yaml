@@ -88,9 +88,9 @@ spec:
         storage:
           size: 20Gi 
         backups:
-          enabled: false
+          enabled: true
           credentials: s3
-          revision: "1"
+          #revision: "1"
           scheduledBackups:
             - name: daily-backup
               schedule: "0 5 20 * * *"
@@ -100,4 +100,4 @@ spec:
         recovery:
           method: object_store
           credentials: s3
-          revision: "1"
+          #revision: "1"
