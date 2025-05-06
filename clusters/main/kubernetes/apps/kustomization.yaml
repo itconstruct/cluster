@@ -25,3 +25,4 @@ resources:
   - myspeed/ks.yaml
   - uptime-kuma/ks.yaml
   - readarr/ks.yaml
+  - bookstack/ks.yaml

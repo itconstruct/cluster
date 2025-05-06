@@ -1,4 +1,3 @@
----
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -22,8 +21,8 @@ spec:
             - name: MARIADB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: bookstack-mariadb
-                  key: mariadb-root-password
+                  name: bookstack  # name of the Secret
+                  key: BOOKSTACK_DB_PASS  # key within the Secret
             volumeMounts:
             - name: backup
               mountPath: /backup
@@ -31,6 +30,5 @@ spec:
           volumes:
           - name: backup
             nfs:
-              server: your-nfs-server.example.com
-              path: "/path/to/nfs/share"
-
+              server: NAS_IP
+              path: "/mnt/docker/backups/bookstack/db"
