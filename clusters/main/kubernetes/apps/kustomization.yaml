@@ -24,4 +24,3 @@ resources:
   - watchyourlan/ks.yaml
   - myspeed/ks.yaml
   - uptime-kuma/ks.yaml
-  - readarr/ks.yaml
