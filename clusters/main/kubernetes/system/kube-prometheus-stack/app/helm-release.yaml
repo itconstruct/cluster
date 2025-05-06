@@ -115,11 +115,14 @@ spec:
         main:
           enabled: true
           ingressClassName: internal
+          annotations:
+            cert-manager.io/cluster-issuer: domain-0-le-prod
           hosts:
-            - host: grafana.${DOMAIN_0}
-          integrations:
-            traefik:
-              enabled: false
-            certManager:
-              enabled: true
-              certificateIssuer: cloudflare
+            - grafana.${DOMAIN_0}
+          paths:
+            - /
+          pathType: Prefix
+          tls:
+            - hosts:
+                - grafana.${DOMAIN_0}
+              secretName: grafana-tls
