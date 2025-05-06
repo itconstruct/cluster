@@ -111,3 +111,15 @@ spec:
       forceDeployDashboards: true
       defaultDashboardsEnabled: true
       forceDeployDatasources: true
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: internal
+          hosts:
+            - host: grafana.${BASE_DOMAIN}
+          integrations:
+            traefik:
+              enabled: false
+            certManager:
+              enabled: true
+              certificateIssuer: cloudflare
