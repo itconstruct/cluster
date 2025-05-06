@@ -4,3 +4,4 @@ resources:
   - external-service-truenas/ks.yaml
   - external-service-vsphere/ks.yaml
   - external-service-ilo/ks.yaml
+  - external-service-esx/ks.yaml
