@@ -111,12 +111,15 @@ spec:
       forceDeployDashboards: true
       defaultDashboardsEnabled: true
       forceDeployDatasources: true
+      grafana.ini:
+        server:
+          root_url: https://grafana.${DOMAIN_0}
       ingress:
-        main:
           enabled: true
           ingressClassName: internal
           annotations:
             cert-manager.io/cluster-issuer: domain-0-le-prod
+            nginx.ingress.kubernetes.io/rewrite-target: /
           hosts:
             - grafana.${DOMAIN_0}
           paths:
