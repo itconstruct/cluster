@@ -116,7 +116,7 @@ spec:
           enabled: true
           ingressClassName: internal
           hosts:
-            - host: grafana.${BASE_DOMAIN}
+            - host: grafana.${DOMAIN_0}
           integrations:
             traefik:
               enabled: false
