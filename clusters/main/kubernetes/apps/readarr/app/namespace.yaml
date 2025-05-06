@@ -4,3 +4,4 @@ metadata:
   name: readarr
   annotations:
     volsync.backube/privileged-movers: "true"
+    volsync.backube/restore-snapshot: 
