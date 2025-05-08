@@ -12,7 +12,6 @@ resources:
   - cloudflared/ks.yaml
   - paperless/ks.yaml
   - gaps/ks.yaml
-  - tailscale/ks.yaml
   - it-tools/ks.yaml
   - immich/ks.yaml
   - hass/ks.yaml
