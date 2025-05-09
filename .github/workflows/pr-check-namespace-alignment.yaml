@@ -21,4 +21,4 @@ jobs:
           chmod +x /usr/local/bin/yq
 
       - name: Check namespace alignment
-        run: ./scripts/check-namespace-alignment.sh
+        run: .github/workflows/scripts/check-namespace-alignment.sh

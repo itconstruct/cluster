@@ -133,7 +133,7 @@ jobs:
         run: |
           CHANGED=$(echo '${{ steps.list-changed.outputs.CHANGED_CHARTS }}' | jq --raw-output '.[]')
           # If the github.base_ref is empty (eg it runs outside of a PR) it fails back to origin/master
-          .github/scripts/tc-lint.sh '${{ steps.list-changed.outputs.CHANGED_CHARTS }}' "origin/${{ github.base_ref }}"
+          .github/workflows/scripts/tc-lint.sh '${{ steps.list-changed.outputs.CHANGED_CHARTS }}' "origin/${{ github.base_ref }}"
 
       - name: Create/Update comment
         if: steps.list-changed.outputs.detected == 'true'
