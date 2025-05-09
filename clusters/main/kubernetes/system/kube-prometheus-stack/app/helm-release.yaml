@@ -45,7 +45,20 @@ spec:
       enabled: false
     prometheus:
       ingress:
-        enabled: false
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          cert-manager.io/cluster-issuer: domain-0-le-prod
+          nginx.ingress.kubernetes.io/rewrite-target: /
+        hosts:
+          - prometheus.${DOMAIN_0}
+        paths:
+          - /
+        pathType: Prefix
+        tls:
+          - hosts:
+              - prometheus.${DOMAIN_0}
+            secretName: grafana-tls
       prometheusSpec:
         disableCompaction: true
         podMonitorSelectorNilUsesHelmValues: false
