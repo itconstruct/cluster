@@ -11,7 +11,10 @@ log() {
   fi
 }
 
-log "🔍 Checking for orphaned, duplicate, or broken ks.yaml references..."
+# Only show during manual use (non-CI)
+if [[ -z "${CI:-}" ]]; then
+  echo "🔍 Checking for orphaned, duplicate, or broken ks.yaml references..."
+fi
 
 # Collect referenced ks.yaml paths
 referenced_files=$(grep -rh --include=kustomization.yaml '^- ' clusters/main/kubernetes \
@@ -59,6 +62,15 @@ if [[ -n "$missing" ]]; then
   log "$missing"
   exit_code=1
 fi
+
+if [[ -n "${orphans}" || -n "${broken}" || -n "${duplicates}" ]]; then
+  echo "❌ Issues found in ks.yaml references:"
+  [[ -n "${orphans}" ]] && echo -e "\n🔸 Orphaned:\n${orphans}"
+  [[ -n "${broken}" ]] && echo -e "\n🔸 Broken:\n${broken}"
+  [[ -n "${duplicates}" ]] && echo -e "\n🔸 Duplicates:\n${duplicates}"
+  exit 1
+fi
+
 
 exit $exit_code
 
