@@ -1,23 +1,33 @@
-# .yamllint.yaml
-
 extends: default
 
 rules:
-  line-length: disable              # Long Helm values, annotations, or base64 values
-  truthy: disable                   # Allow 'yes'/'no' and 'on'/'off' without quotes
-  comments:
-    require-starting-space: true
-  comments-indentation: enable
+  # Allow document start marker `---`
   document-start:
-    present: false                  # Don't require `---` at the start of every file
+    present: false
+
+  # Allow blank lines for visual clarity
   empty-lines:
-    max: 1                          # Allow 1 blank line for readability
+    max: 2
+    max-start: 2
+    max-end: 2
+
+  # Relax indentation requirements
   indentation:
-    spaces: consistent              # Ensure consistent indentation (2 or 4 is OK)
-    indent-sequences: consistent
-  trailing-spaces: disable          # Disable if you want less noisy diffs
-  braces:
-    min-spaces-inside: 0
-    max-spaces-inside: 1           # Allow single space if used intentionally
+    spaces: consistent
+    indent-sequences: false
+    check-multi-line-strings: false
+
+  # Allow missing spaces after `#`
+  comments:
+    require-starting-space: false
+
+  # Don't enforce alignment of inline comments
+  comments-indentation: disable
+
+  # Ignore multiple spaces after commas
   commas:
-    max-spaces-after: 1            # Allow a single space after commas
+    max-spaces-after: -1  # No limit
+
+  # Disable new-line-at-end-of-file rule entirely
+  new-line-at-end-of-file: disable
+
