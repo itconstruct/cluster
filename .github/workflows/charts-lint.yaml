@@ -124,6 +124,9 @@ jobs:
           CHANGED=$(echo '${{ steps.list-changed.outputs.CHANGED_CHARTS }}' | jq --raw-output '.[]')
           ./temp/clustertool charts deps ${CHANGED}
 
+      - name: Ensure tc-lint.sh is executable
+        run: chmod +x .github/workflows/scripts/tc-lint.sh
+
       - name: Run Chart Linting
         continue-on-error: true
         id: lint
