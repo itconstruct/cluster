@@ -1,0 +1,158 @@
+name: "Charts: Lint"
+
+on:
+  workflow_call:
+    inputs:
+      checkoutCommit:
+        required: true
+        type: string
+      chartChangesDetected:
+        required: true
+        type: string
+      modifiedFiles:
+        required: true
+        type: string
+      modifiedCharts:
+        required: true
+        type: string
+
+jobs:
+  lint-and-verify:
+    name: Lint Charts and Verify Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout [master]
+        if: inputs.chartChangesDetected == 'true'
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 1
+          ref: master
+
+      - name: Checkout [commit]
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 1
+          ref: ${{ inputs.checkoutCommit }}
+
+      - name: Setting repo parent dir as safe safe.directory
+        if: inputs.chartChangesDetected == 'true'
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Install go-yq
+        if: inputs.chartChangesDetected == 'true'
+        run: |
+          mkdir -p $HOME/.local/bin
+          wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_amd64 -O $HOME/.local/bin/go-yq && \
+          chmod +x $HOME/.local/bin/go-yq
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Install pre-commit, yamale and yamllint
+        if: inputs.chartChangesDetected == 'true'
+        run: |
+          pip3 install --no-cache-dir pre-commit yamale yamllint
+
+      - name: Install Helm
+        if: inputs.chartChangesDetected == 'true'
+        uses: azure/setup-helm@b9e51907a09c216f16ebe8536097933489208112 # v4
+        with:
+          version: v3.14.0
+
+      - name: Install ./clustertool
+        shell: bash
+        run: |
+          VERSION="2.0.0-BETA-17"
+          FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
+          URL="https://github.com/truecharts/public/releases/download/v${VERSION}/${FILENAME}"
+
+          mkdir -p temp
+          cd temp
+          # Download the archive
+          curl -L -o "$FILENAME" "$URL"
+
+          # Extract the archive
+          tar -xzf "$FILENAME"
+
+          cd ..
+
+      - name: Prep Helm
+        if: inputs.chartChangesDetected == 'true'
+        run: |
+          helm repo add jetstack https://charts.jetstack.io
+          helm repo add vmwaretanzu https://vmware-tanzu.github.io/helm-charts
+          helm repo add cnpg https://cloudnative-pg.github.io/charts
+          helm repo add metallb https://metallb.github.io/metallb
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add  openebs https://openebs.github.io/charts
+          helm repo add  csi-driver-smb https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+          helm repo add  csi-driver-nfs https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+          helm repo update
+
+      - name: Collect changes (branch-based)
+        id: list-changed
+        if: inputs.chartChangesDetected == 'true'
+        shell: bash
+        run: |
+          CHARTS="${{ inputs.modifiedCharts }}"
+          echo "Modified Charts: ${CHARTS}"
+
+          EXCLUDED_JSON=$(go-yq eval -o=json '.excluded-charts // []' .github/ct-lint.yaml)
+          CHARTS_JSON=$(echo "${CHARTS}" | jq --raw-input '.' | jq --compact-output --slurp '.')
+          OUTPUT_JSON=$(echo "{\"excluded\": ${EXCLUDED_JSON}, \"all\": ${CHARTS_JSON}}" | jq --compact-output '.all-.excluded')
+
+          echo CHANGED_CHARTS=${OUTPUT_JSON} >> "$GITHUB_OUTPUT"
+          if [[ $(echo ${OUTPUT_JSON} | jq --compact-output '. | length') -gt 0 ]]; then
+            echo "detected=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Test and Fix Pre-Commit Issues
+        shell: bash
+        # TODO: Only run pre-commit on changed files
+        # TODO: Commit fixes
+        if: inputs.chartChangesDetected == 'true'
+        run: |
+          echo "Running pre-commit test-and-cleanup..."
+          # Fix sh files to always be executable
+          find . -name '*.sh' | xargs chmod +x
+          pre-commit run --all || pre-commit run --all
+
+      - name: Fetch and Verify dependencies
+        shell: bash
+        if: steps.list-changed.outputs.detected == 'true'
+        env:
+          charts_path: "./"
+        run: |
+          CHANGED=$(echo '${{ steps.list-changed.outputs.CHANGED_CHARTS }}' | jq --raw-output '.[]')
+          ./temp/clustertool charts deps ${CHANGED}
+
+      - name: Run Chart Linting
+        continue-on-error: true
+        id: lint
+        if: steps.list-changed.outputs.detected == 'true'
+        env:
+          result_file: /tmp/lint_result.txt
+        run: |
+          CHANGED=$(echo '${{ steps.list-changed.outputs.CHANGED_CHARTS }}' | jq --raw-output '.[]')
+          # If the github.base_ref is empty (eg it runs outside of a PR) it fails back to origin/master
+          .github/scripts/tc-lint.sh '${{ steps.list-changed.outputs.CHANGED_CHARTS }}' "origin/${{ github.base_ref }}"
+
+      - name: Create/Update comment
+        if: steps.list-changed.outputs.detected == 'true'
+        continue-on-error: true
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3
+        with:
+          file-path: /tmp/lint_result.txt
+          comment-tag: lint_results
+          mode: recreate
+          github-token: ${{ github.token }}
+
+      - name: Lint Result
+        if: steps.list-changed.outputs.detected == 'true'
+        shell: bash
+        run: |
+          if [ "${{ steps.lint.outcome }}" != "success" ]; then
+            echo "❌ Linting failed ❌"
+            echo '###############################################################'
+            echo '## 👀 Expand [Run Chart Linting] step to view the results 👀 ##'
+            echo '###############################################################'
+            exit 1
+          fi
