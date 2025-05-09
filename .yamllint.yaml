@@ -21,5 +21,3 @@ rules:
     max-spaces-inside: 1           # Allow single space if used intentionally
   commas:
     max-spaces-after: 1            # Allow a single space after commas
-  new-line-at-end-of-file:
-    present: true                  # Ensure a clean EOF newline (default)
