@@ -1,3 +1,5 @@
+---
+
 name: PR - Orphaned Resource Check
 
 on:
@@ -15,4 +17,3 @@ jobs:
 
       - name: Check for orphaned manifests
         run: ./scripts/check-orphans.sh
-
