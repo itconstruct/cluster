@@ -1,0 +1,7 @@
+# .yamllint.yaml
+extends: default
+
+rules:
+  line-length: disable        # Optional: disable line length warnings
+  truthy: disable             # Optional: allow 'yes'/'no' without quotes
+
