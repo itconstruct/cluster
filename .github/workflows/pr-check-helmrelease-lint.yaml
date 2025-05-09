@@ -1,0 +1,27 @@
+---
+
+name: PR - HelmRelease Lint
+
+on:
+  pull_request:
+    paths:
+      - '**/helm-release.yaml'
+
+jobs:
+  helm-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.13.0
+
+      - name: Lint HelmRelease manifests
+        run: |
+          for hr in $(find . -name helm-release.yaml); do
+            echo "Linting $hr..."
+            helm lint $(dirname "$hr")
+          done

@@ -1,0 +1,92 @@
+name: "Charts: Lint"
+
+on:
+  pull_request:
+    paths:
+      - "charts/**"
+      - ".github/workflows/charts-lint.yaml"
+      - ".github/workflows/scripts/**"
+
+jobs:
+  lint-and-verify:
+    name: Lint Charts and Verify Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed for git diff
+
+      - name: Set up environment
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Install tools
+        run: |
+          mkdir -p $HOME/.local/bin
+          wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_amd64 -O $HOME/.local/bin/go-yq
+          chmod +x $HOME/.local/bin/go-yq
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          pip3 install --no-cache-dir pre-commit yamale yamllint
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.14.0
+
+      - name: Download and Extract clustertool
+        run: |
+          VERSION="2.0.0-BETA-17"
+          FILENAME="clustertool_${VERSION}_linux_amd64.tar.gz"
+          URL="https://github.com/truecharts/public/releases/download/v${VERSION}/${FILENAME}"
+          mkdir -p temp
+          cd temp
+          curl -L -o "$FILENAME" "$URL"
+          tar -xzf "$FILENAME"
+          cd ..
+
+      - name: Prep Helm Repos
+        run: |
+          helm repo add jetstack https://charts.jetstack.io
+          helm repo add vmwaretanzu https://vmware-tanzu.github.io/helm-charts
+          helm repo add cnpg https://cloudnative-pg.github.io/charts
+          helm repo add metallb https://metallb.github.io/metallb
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add openebs https://openebs.github.io/charts
+          helm repo add csi-driver-smb https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+          helm repo add csi-driver-nfs https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+          helm repo update
+
+      - name: Detect changed charts
+        id: detect
+        run: |
+          MODIFIED=$(git diff --name-only origin/${{ github.base_ref }}...${{ github.sha }} | grep 'charts/.*/Chart.yaml' || true)
+          CHARTS=$(echo "$MODIFIED" | xargs -n1 dirname | sort -u | jq -R . | jq -s .)
+          echo "CHANGED_CHARTS=$CHARTS" >> "$GITHUB_ENV"
+          echo "::set-output name=changed::$CHARTS"
+
+      - name: Run Chart Linting
+        if: steps.detect.outputs.changed != '[]'
+        env:
+          result_file: /tmp/lint_result.txt
+        run: |
+          .github/workflows/scripts/tc-lint.sh "$CHANGED_CHARTS" "origin/${{ github.base_ref }}"
+
+      - name: Comment on PR
+        if: steps.detect.outputs.changed != '[]'
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          file-path: /tmp/lint_result.txt
+          comment-tag: lint_results
+          mode: recreate
+          github-token: ${{ github.token }}
+
+      - name: Final Lint Result
+        if: steps.detect.outputs.changed != '[]'
+        run: |
+          if grep -q ':heavy_multiplication_x:' /tmp/lint_result.txt; then
+            echo "❌ Linting failed"
+            exit 1
+          else
+            echo "✅ Linting passed"
+          fi
+
