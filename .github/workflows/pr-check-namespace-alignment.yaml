@@ -1,0 +1,23 @@
+name: PR - Namespace Consistency Check
+
+on:
+  pull_request:
+    paths:
+      - '**/helm-release.yaml'
+      - '**/kustomization.yaml'
+
+jobs:
+  namespace-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          curl -sL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
+      - name: Check namespace alignment
+        run: ./scripts/check-namespace-alignment.sh
+

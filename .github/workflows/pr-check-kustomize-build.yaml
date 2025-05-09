@@ -1,0 +1,25 @@
+name: PR - Kustomize Build
+
+on:
+  pull_request:
+    paths:
+      - 'clusters/**'
+
+jobs:
+  kustomize-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Kustomize
+        run: |
+          curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Run kustomize build
+        run: |
+          for cluster in clusters/*; do
+            echo "Building $cluster..."
+            kustomize build "$cluster" | tee /dev/null
+        done
