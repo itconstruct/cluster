@@ -1,45 +1,64 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "🔍 Checking for orphaned, duplicate, or broken ks.yaml references..."
+is_ci=${CI:-false}
+exit_code=0
 
-root="clusters/main/kubernetes"
+# Function for printing only when not in CI
+log() {
+  if [[ "$is_ci" != "true" ]]; then
+    echo "$@"
+  fi
+}
 
-# Find all ks.yaml files and normalize to <subfolder>/<name>/ks.yaml
-all_files=$(find "$root" -type f -name ks.yaml | sed -E "s|^$root/([^/]+/[^/]+/ks.yaml)|\1|" | sort)
+log "🔍 Checking for orphaned, duplicate, or broken ks.yaml references..."
 
-# Extract all referenced paths from any kustomization.yaml
-referenced_files=$(grep -rh --include=kustomization.yaml '^- ' "$root" \
-  | sed -E 's/^- +//' \
-  | grep 'ks.yaml$' \
+# Collect referenced ks.yaml paths
+referenced_files=$(grep -rh --include=kustomization.yaml '^- ' clusters/main/kubernetes \
+  | awk '{print $2}' \
+  | sed 's|/ks.yaml||' \
+  | sort \
+  | uniq)
+
+# Find all ks.yaml files relative to the kustomization folders
+all_files=$(find clusters/main/kubernetes -name ks.yaml \
+  | sed 's|clusters/main/kubernetes/||' \
+  | sed 's|/ks.yaml||' \
   | sort)
 
-# Normalize references (remove folder prefix like apps/, core/, etc.)
-normalized_references=$(echo "$referenced_files" | sed -E 's|^([^/]+/[^/]+/ks.yaml)|\1|' | sort)
+# Orphaned = in filesystem but not referenced
+orphans=$(comm -23 <(echo "$all_files") <(echo "$referenced_files"))
+if [[ -n "$orphans" ]]; then
+  log "❌ Orphaned ks.yaml files not referenced in any kustomization.yaml:"
+  log "$orphans"
+  exit_code=1
+fi
 
-# Find orphaned (in all_files but not referenced)
-orphans=$(comm -23 <(echo "$all_files") <(echo "$normalized_references"))
+# Duplicates = referenced more than once
+duplicates=$(grep -rh --include=kustomization.yaml '^- ' clusters/main/kubernetes \
+  | awk '{print $2}' \
+  | sort \
+  | uniq -d)
 
-# Find broken references (in referenced list but file doesn't exist)
-broken=$(comm -23 <(echo "$normalized_references") <(echo "$all_files"))
+if [[ -n "$duplicates" ]]; then
+  log "⚠️ Duplicate ks.yaml references found:"
+  log "$duplicates"
+  exit_code=1
+fi
 
-# Find duplicates (paths appearing more than once in referenced list)
-duplicates=$(echo "$referenced_files" | sort | uniq -d)
+# Broken = referenced but file does not exist
+missing=""
+for path in $referenced_files; do
+  if [[ ! -f "clusters/main/kubernetes/$path" ]]; then
+    missing+="$path"$'\n'
+  fi
+done
 
-# Output
-[[ -n "$orphans" ]] && {
-  echo -e "\n❌ Orphaned ks.yaml files not referenced in any kustomization.yaml:"
-  echo "$orphans"
-}
+if [[ -n "$missing" ]]; then
+  log "🚫 Broken ks.yaml references (file does not exist):"
+  log "$missing"
+  exit_code=1
+fi
 
-[[ -n "$broken" ]] && {
-  echo -e "\n🚫 Broken ks.yaml references (referenced but file not found):"
-  echo "$broken"
-}
+exit $exit_code
 
-[[ -n "$duplicates" ]] && {
-  echo -e "\n⚠️ Duplicate ks.yaml references:"
-  echo "$duplicates"
-}
-
-[[ -z "$orphans" && -z "$broken" && -z "$duplicates" ]] && echo "✅ All ks.yaml references are valid and used!"
