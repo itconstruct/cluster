@@ -1,7 +1,25 @@
 # .yamllint.yaml
+
 extends: default
 
 rules:
-  line-length: disable        # Optional: disable line length warnings
-  truthy: disable             # Optional: allow 'yes'/'no' without quotes
-
+  line-length: disable              # Long Helm values, annotations, or base64 values
+  truthy: disable                   # Allow 'yes'/'no' and 'on'/'off' without quotes
+  comments:
+    require-starting-space: true
+  comments-indentation: enable
+  document-start:
+    present: false                  # Don't require `---` at the start of every file
+  empty-lines:
+    max: 1                          # Allow 1 blank line for readability
+  indentation:
+    spaces: consistent              # Ensure consistent indentation (2 or 4 is OK)
+    indent-sequences: consistent
+  trailing-spaces: disable          # Disable if you want less noisy diffs
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1           # Allow single space if used intentionally
+  commas:
+    max-spaces-after: 1            # Allow a single space after commas
+  new-line-at-end-of-file:
+    present: true                  # Ensure a clean EOF newline (default)
