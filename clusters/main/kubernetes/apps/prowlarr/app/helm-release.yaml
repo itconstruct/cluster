@@ -65,6 +65,3 @@ spec:
               enabled: true
               cacheCapacity: 10Gi
               schedule: 40 19 * * *
-    addons:
-      exportarr:
-        enabled: false
