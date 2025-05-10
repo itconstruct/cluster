@@ -5,3 +5,5 @@ resources:
   - external-service-vsphere/ks.yaml
   - external-service-ilo/ks.yaml
   - external-service-esx/ks.yaml
+  - external-service-radarr/ks.yaml
+  - external-service-sonarr/ks.yaml
