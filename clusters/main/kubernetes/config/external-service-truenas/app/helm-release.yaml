@@ -37,6 +37,10 @@ spec:
             enabled: true
             port: 443
             protocol: https
+          smb:
+            enabled: true
+            port: 445
+            protocol: tcp
         type: ExternalIP
     ingress:
       main:
