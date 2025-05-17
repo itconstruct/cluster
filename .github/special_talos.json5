@@ -19,8 +19,19 @@
       "description": ["Block automerge for Kubelet and Talos version Major"],
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true,
+      "automerge": false,
       "matchPackageNames": ["ghcr.io/siderolabs/kubelet", "ghcr.io/siderolabs/installer"],
       "labels": ["type/major", "system-upgrade"]
+    },
+    {
+      "description": ["Require manual approval for Cilium chart updates"],
+      "matchDatasources": ["helm"],
+      "matchPackageNames": ["cilium"],
+      "versioning": "semver",
+      "updateTypes": ["major", "minor", "patch"],
+      "dependencyDashboardApproval": true,
+      "automerge": false,
+      "labels": ["type/manual", "helm/cilium"]
     }
   ]
 }
