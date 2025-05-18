@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function check_version() {
-    chart_path=${1:?"No chart path provided to [Version Check]"}
-    target_branch=${2:?"No target branch provided to [Version Check]"}
+    chart_path=${1:?'No chart path provided to [Version Check]'}
+    target_branch=${2:?'No target branch provided to [Version Check]'}
 
     # If only docs changed, skip version check
     # git diff target_branch, filter only on $chart_path and invert match for $chart_path/docs
@@ -29,7 +29,7 @@ function check_version() {
         echo -e "\t🔙 Old Chart Version: $old"
         echo -e "\t🆕 New Chart Version: $new"
 
-        if [[ $(echo "$new\n$old" | sort -V -r | head -n1) != "$old" ]]; then
+        if [[ $(echo -e "$new\n$old" | sort -V -r | head -n1) != "$old" ]]; then
             echo -e "\t✅ Chart version: Bumped"
         else
             echo -e "\t❌ Chart version: Not bumped or downgraded"
@@ -41,7 +41,7 @@ function check_version() {
 export -f check_version
 
 function check_chart_schema() {
-    chart_path=${1:?"No chart path provided to [Chart.yaml lint]"}
+    chart_path=${1:?'No chart path provided to [Chart.yaml lint]'}
 
     yamale_output=$(yamale --schema .github/chart_schema.yaml "$chart_path/Chart.yaml")
     yamale_exit_code=$?
@@ -62,9 +62,13 @@ function check_chart_schema() {
 export -f check_chart_schema
 
 function helm_lint() {
-    chart_path=${1:?"No chart path provided to [Helm lint]"}
+    chart_path=${1:?'No chart path provided to [Helm lint]'}
 
-    # Print only errors and warnings
+    if [ ! -f "$chart_path/Chart.yaml" ]; then
+        echo -e "\t⚠️ Skipping [$chart_path]: Chart.yaml not found"
+        return
+    fi
+
     helm_lint_output=$(helm lint --strict --quiet "$chart_path" 2>&1)
     helm_lint_exit_code=$?
     while IFS= read -r line; do
@@ -75,7 +79,7 @@ function helm_lint() {
 
     # TODO: If there are ci/*values.yaml files, lint those
     # and skip linting the top-level values.yaml.
-    if [[ ! $(ls $chart_path/ci/*values.yaml) ]]; then
+    if [[ ! $(ls $chart_path/ci/*values.yaml 2>/dev/null) ]]; then
         if echo "$helm_lint_output" | grep -q "Fail:"; then
             helm_lint_exit_code=1
         fi
@@ -92,7 +96,7 @@ function helm_lint() {
 export -f helm_lint
 
 function helm_template() {
-    chart_path=${1:?"No chart path provided to [Helm template]"}
+    chart_path=${1:?'No chart path provided to [Helm template]'}
     values=${2:-}
 
     if [[ -n "$values" ]]; then
@@ -119,7 +123,7 @@ function helm_template() {
 export -f helm_template
 
 function yaml_lint() {
-    file_path=${1:?"No file path provided to [YAML lint]"}
+    file_path=${1:?'No file path provided to [YAML lint]'}
 
     yaml_lint_output=$(yamllint --config-file .github/yaml-lint-conf.yaml "$file_path")
     yaml_lint_exit_code=$?
@@ -140,9 +144,9 @@ function yaml_lint() {
 export -f yaml_lint
 
 function lint_chart() {
-    chart_path=${1:?"No chart path provided to [Lint Chart]"}
-    target_branch=${2:?"No target branch provided to [Lint Chart]"}
-    status_file=${3:?"No status file provided to [Lint Chart]"}
+    chart_path=${1:?'No chart path provided to [Lint Chart]'}
+    target_branch=${2:?'No target branch provided to [Lint Chart]'}
+    status_file=${3:?'No status file provided to [Lint Chart]'}
 
     curr_result_file=/tmp/$(basename "$chart_path")
     curr_result=0
@@ -155,7 +159,7 @@ function lint_chart() {
         echo "👣 Helm Lint - [$chart_path]"
         helm_lint "$chart_path"
 
-        # FIXME: Comment out for now as it requires deps installed in linting.
+	# FIXME: Comment out for now as it requires deps installed in linting.
         # if [[ ! $(ls $chart_path/ci/*values.yaml) ]]; then
         #     echo "👣 Helm Template - [$chart_path]"
         #     helm_template "$chart_path"
@@ -167,7 +171,7 @@ function lint_chart() {
         #         helm_template "$chart_path" "$values"
         #     fi
         # done
-
+	
         echo "👣 Chart Version - [$chart_path] against [$target_branch]"
         check_version "$chart_path" "$target_branch"
 
@@ -200,44 +204,36 @@ function lint_chart() {
         echo ''
     } >"$curr_result_file"
     cat "$curr_result_file"
-    # $curr_result starts with 0, and it gets set to 1 only when a linting step fails
     echo $curr_result >>"$status_file"
 }
 export -f lint_chart
-
-# Start of script
 
 charts=$1
 target_branch=${2:-"origin/master"}
 status_file="/tmp/status"
 exit_code=0
 
-result_file=${result_file:?"No result file provided"}
+result_file=${result_file:?'No result file provided'}
 
-rm -f "$status_file"
 rm -f "$status_file"
 
 command -v yamale >/dev/null 2>&1 || {
-    printf >&2 "%s\n" "yamale (https://github.com/23andMe/Yamale#pip) is not installed. Aborting."
-    printf >&2 "%s\n" "Install it with 'pip install yamale'"
+    echo "yamale not installed. Install with: pip install yamale"
     exit 1
 }
 
 command -v yamllint >/dev/null 2>&1 || {
-    printf >&2 "%s\n" "yamllint (https://yamllint.readthedocs.io/en/stable/quickstart.html#installing-yamllint) is not installed. Aborting."
-    printf >&2 "%s\n" "Install it with 'pip install yamllint'"
+    echo "yamllint not installed. Install with: pip install yamllint"
     exit 1
 }
 
 command -v helm >/dev/null 2>&1 || {
-    printf >&2 "%s\n" "helm (https://helm.sh/docs/intro/install) is not installed. Aborting."
-    printf >&2 "%s\n" "Install it with 'curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash'"
+    echo "helm not installed. Install from: https://helm.sh/docs/intro/install"
     exit 1
 }
 
 command -v parallel >/dev/null 2>&1 || {
-    printf >&2 "%s\n" "parallel (https://www.gnu.org/software/parallel) is not installed. Aborting."
-    printf >&2 "%s\n" "Install it with 'sudo apt install parallel'"
+    echo "parallel not installed. Install with: sudo apt install parallel"
     exit 1
 }
 
@@ -246,7 +242,7 @@ changed=$(echo $charts | jq --raw-output '.[]')
 echo "📂 Charts to lint:"
 for chart in $changed; do
     echo -e "\t- 📄 $chart"
-done
+    done
 echo ''
 
 start_time=$(date +%s)
@@ -259,7 +255,6 @@ end_time=$(date +%s)
 diff_time=$((end_time - start_time))
 
 echo '------------------------------------'
-
 # Print summary
 sorted=$(cat "$result_file" | sort)
 sorted=$(echo "$sorted" | sed 's/✅/:heavy_check_mark:/g')
