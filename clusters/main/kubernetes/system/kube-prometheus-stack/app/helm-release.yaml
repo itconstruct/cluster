@@ -29,6 +29,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      defaultDashboardsEnabled: true
+      forceDeployDatasources: true
     crds:
       enabled: true
       upgradeJob:
@@ -37,28 +42,22 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       enabled: false
-    kubeEtcd:
-      service:
-        selector:
-          component: kube-apiserver
     kubeProxy:
       enabled: false
+    kubeEtcd:
+      service:
+        port: 2379
+        targetPort: 2379
+        selector:
+          component: kube-apiserver
+      serviceMonitor:
+        scheme: https
+        insecureSkipVerify: false
+        serverName: "localhost"
+        caFile: "/etc/prometheus/secrets/etcd-client-cert/etcd-ca.crt"
+        certFile: "/etc/prometheus/secrets/etcd-client-cert/etcd-client.crt"
+        keyFile: "/etc/prometheus/secrets/etcd-client-cert/etcd-client-key.key"
     prometheus:
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        annotations:
-          cert-manager.io/cluster-issuer: domain-0-le-prod
-          nginx.ingress.kubernetes.io/rewrite-target: /
-        hosts:
-          - prometheus.${DOMAIN_0}
-        paths:
-          - /
-        pathType: Prefix
-        tls:
-          - hosts:
-              - prometheus.${DOMAIN_0}
-            secretName: grafana-tls
       prometheusSpec:
         disableCompaction: true
         podMonitorSelectorNilUsesHelmValues: false
@@ -92,7 +91,21 @@ spec:
         #       resources:
         #         requests:
         #           storage: 60Gi
-
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          cert-manager.io/cluster-issuer: domain-0-le-prod
+          cert-manager.io/private-key-rotation-policy: Always
+        hosts:
+          - prometheus.${DOMAIN_0}
+        paths:
+          - /
+        pathType: Prefix
+        tls:
+          - secretName: prometheus-general-tls
+            hosts:
+              - prometheus.${DOMAIN_0}
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
@@ -119,26 +132,3 @@ spec:
               replacement: $1
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
-    grafana:
-      enabled: true
-      forceDeployDashboards: true
-      defaultDashboardsEnabled: true
-      forceDeployDatasources: true
-      grafana.ini:
-        server:
-          root_url: https://grafana.${DOMAIN_0}
-      ingress:
-          enabled: true
-          ingressClassName: internal
-          annotations:
-            cert-manager.io/cluster-issuer: domain-0-le-prod
-            nginx.ingress.kubernetes.io/rewrite-target: /
-          hosts:
-            - grafana.${DOMAIN_0}
-          paths:
-            - /
-          pathType: Prefix
-          tls:
-            - hosts:
-                - grafana.${DOMAIN_0}
-              secretName: grafana-tls
