@@ -15,6 +15,7 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
+    TZ: Australia/Sydney
     service:
       main:
         type: LoadBalancer
