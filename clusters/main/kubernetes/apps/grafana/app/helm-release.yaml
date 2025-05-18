@@ -42,7 +42,7 @@ spec:
             enabled: false
           certManager:
             enabled: true
-            certificateIssuer: cloudflare
+            certificateIssuer: domain-0-le-prod
     cnpg:
       main:
         cluster:
