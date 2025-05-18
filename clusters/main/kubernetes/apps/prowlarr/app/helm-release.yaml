@@ -23,15 +23,6 @@ spec:
         ports:
           main:
             port: 9696
-      metrics:
-        enabled: true
-        type: ClusterIP
-        ports:
-          metrics:
-            port: 9697
-        controller: exportarr
-        labels:
-          service.name: metrics
     ingress:
       main:
         enabled: true
