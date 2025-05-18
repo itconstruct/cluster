@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0  # needed for git diff
 
@@ -29,7 +29,7 @@ jobs:
           pip3 install --no-cache-dir pre-commit yamale yamllint
 
       - name: Install Helm
-        uses: azure/setup-helm@v4
+        uses: azure/setup-helm@b9e51907a09c216f16ebe8536097933489208112 # v4
         with:
           version: v3.14.0
 
@@ -73,7 +73,7 @@ jobs:
 
       - name: Comment on PR
         if: steps.detect.outputs.changed != '[]'
-        uses: thollander/actions-comment-pull-request@v3
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3
         with:
           file-path: /tmp/lint_result.txt
           comment-tag: lint_results
