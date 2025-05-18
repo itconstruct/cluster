@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 70.10.0
+      version: 72.5.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -46,18 +46,24 @@ spec:
       enabled: false
     kubeEtcd:
       service:
-        port: 2379
-        targetPort: 2379
         selector:
           component: kube-apiserver
-      serviceMonitor:
-        scheme: https
-        insecureSkipVerify: false
-        serverName: "localhost"
-        caFile: "/etc/prometheus/secrets/etcd-client-cert/etcd-ca.crt"
-        certFile: "/etc/prometheus/secrets/etcd-client-cert/etcd-client.crt"
-        keyFile: "/etc/prometheus/secrets/etcd-client-cert/etcd-client-key.key"
     prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          cert-manager.io/cluster-issuer: domain-0-le-prod
+          cert-manager.io/private-key-rotation-policy: Always
+        hosts:
+          - prometheus.${DOMAIN_0}
+        paths:
+          - /
+        pathType: Prefix
+        tls:
+          - secretName: prometheus-general-tls
+            hosts:
+              - prometheus.${DOMAIN_0}
       prometheusSpec:
         disableCompaction: true
         podMonitorSelectorNilUsesHelmValues: false
@@ -91,21 +97,7 @@ spec:
         #       resources:
         #         requests:
         #           storage: 60Gi
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        annotations:
-          cert-manager.io/cluster-issuer: domain-0-le-prod
-          cert-manager.io/private-key-rotation-policy: Always
-        hosts:
-          - prometheus.${DOMAIN_0}
-        paths:
-          - /
-        pathType: Prefix
-        tls:
-          - secretName: prometheus-general-tls
-            hosts:
-              - prometheus.${DOMAIN_0}
+
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
