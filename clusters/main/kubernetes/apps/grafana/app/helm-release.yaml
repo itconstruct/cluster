@@ -48,5 +48,7 @@ spec:
         cluster:
           singleNode: true
     configmap:
+      dashboard-certmanager:
+        enabled: true
       dashboard-nginx:
         enabled: true
