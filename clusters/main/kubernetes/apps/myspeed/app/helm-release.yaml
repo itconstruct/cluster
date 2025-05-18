@@ -29,6 +29,10 @@ spec:
   uninstall:
     keepHistory: false  
   values:
+    metrics:
+      main:
+        prometheusRule:
+          enabled: true
     global:
       stopAll: false
     service:
