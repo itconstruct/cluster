@@ -35,8 +35,14 @@ spec:
       stopAll: false
     metrics:
       main:
+        enabled: true
+        type: "servicemonitor"
         endpoints:
-          - path: /metrics
+          - port: main
+            path: /api/prometheus/metrics
+        targetSelector: main
+        prometheusRule:
+          enabled: false    
     ingress:
       main:
         enabled: true
