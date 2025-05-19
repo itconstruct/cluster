@@ -29,24 +29,8 @@ spec:
   uninstall:
     keepHistory: false  
   values:
-    metrics:
-      main:
-        enabled: true
-        type: "servicemonitor"
-        endpoints:
-          - port: main
-            path: /metrics
-        targetSelector: main
-        prometheusRule:
-          enabled: false
     global:
       stopAll: false
-    service:
-      main:
-        type: ClusterIP
-        ports:
-          main:
-            port: 5216
     ingress:
       main:
         enabled: true
@@ -54,8 +38,6 @@ spec:
         integrations:
           traefik:
             enabled: false
-            entrypoints:
-            - websecure
           homepage:
             enabled: true
             group: Apps
@@ -88,3 +70,17 @@ spec:
               enabled: true
               cacheCapacity: 10Gi
               schedule: 40 23 * * *
+      config:
+        enabled: true
+        type: configMap
+        name: myspeed-config
+        mountPath: /myspeed/config
+        readOnly: true
+    configmap:
+      myspeed-config:
+        enabled: true
+        data:
+          config.yml: |
+            integrations:
+              prometheus:
+                enabled: true
