@@ -31,6 +31,10 @@ spec:
   values:
     global:
       stopAll: false
+    metrics:
+      main:
+        endpoints:
+          - path: /metrics
     ingress:
       main:
         enabled: true
