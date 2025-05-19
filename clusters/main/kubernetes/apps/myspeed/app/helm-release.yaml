@@ -72,7 +72,7 @@ spec:
               schedule: 40 23 * * *
       config:
         enabled: true
-        type: configMap
+        type: configmap
         name: myspeed-config
         mountPath: /myspeed/config
         readOnly: true
