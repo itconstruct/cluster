@@ -73,6 +73,7 @@ spec:
       config:
         enabled: true
         type: configmap
+        objectName: myspeed-config
         name: myspeed-config
         mountPath: /myspeed/config
         readOnly: true
