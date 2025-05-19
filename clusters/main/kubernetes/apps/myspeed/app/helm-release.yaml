@@ -29,6 +29,8 @@ spec:
   uninstall:
     keepHistory: false  
   values:
+    env:
+      PROMETHEUS_ENABLED: "true"
     global:
       stopAll: false
     metrics:
@@ -74,18 +76,3 @@ spec:
               enabled: true
               cacheCapacity: 10Gi
               schedule: 40 23 * * *
-      config:
-        enabled: true
-        type: configmap
-        objectName: myspeed-config
-        name: myspeed-config
-        mountPath: /myspeed/config
-        readOnly: true
-    configmap:
-      myspeed-config:
-        enabled: true
-        data:
-          config.yml: |
-            integrations:
-              prometheus:
-                enabled: true
