@@ -26,3 +26,4 @@ resources:
   - readarr/ks.yaml
   - bookstack/ks.yaml
   - tailscale/ks.yaml
+  - grafana/ks.yaml
