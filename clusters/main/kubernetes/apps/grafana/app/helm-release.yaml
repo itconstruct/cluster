@@ -63,14 +63,13 @@ spec:
     persistence:
       data:
         volsync:
-          enabled: true
-          type: restic
-          target: data
-          src:
-            enabled: true
-            cacheCapacity: 5Gi
-          dest:
-            enabled: true
-            cacheCapacity: 5Gi
-          credentials: s3
-
+          - name: data
+            type: restic
+            target: data
+            credentials: s3
+            src:
+              enabled: true
+              cacheCapacity: 5Gi
+            dest:
+              enabled: true
+              cacheCapacity: 5Gi
