@@ -61,7 +61,7 @@ spec:
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
     persistence:
-      data:
+      grafana-data:
         volsync:
           - name: data
             type: restic
