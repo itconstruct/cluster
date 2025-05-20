@@ -61,8 +61,8 @@ spec:
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
     persistence:
-      volsync:
-        data:
+      data:
+        volsync:
           enabled: true
           type: restic
           target: data
