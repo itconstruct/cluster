@@ -52,3 +52,25 @@ spec:
         enabled: true
       dashboard-nginx:
         enabled: true
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-grafana"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      volsync:
+        data:
+          enabled: true
+          type: restic
+          target: data
+          src:
+            enabled: true
+            cacheCapacity: 5Gi
+          dest:
+            enabled: true
+            cacheCapacity: 5Gi
+          credentials: s3
+
