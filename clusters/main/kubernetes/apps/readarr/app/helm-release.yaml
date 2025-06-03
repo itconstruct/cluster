@@ -54,8 +54,7 @@ spec:
           traefik:
             enabled: false
     metrics:
-      enabled: true
-      serviceMonitor:
+      main:
         enabled: true
     credentials:
       s3:
