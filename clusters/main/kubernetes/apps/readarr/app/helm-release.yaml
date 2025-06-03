@@ -65,14 +65,14 @@ spec:
       downloads:
         enabled: true
         type: nfs
-        server: "192.168.1.223"  # Replace with your NFS server IP
-        path: "/mnt/docker/talos_apps/readarr/downloads"
+        server: "${NAS_IP}"
+        path: "/mnt/docker/Media/downloads/readarr"
         mountPath: "/downloads"
       ebooks:
         enabled: true
         type: nfs
-        server: "192.168.1.223" #NFS IP
-        path: "/mnt/docker/talos_apps/readarr/ebooks"
+        server: "${NAS_IP}"
+        path: "/mnt/docker/Media/books"
         mountPath: "/ebooks"
       config:
         mountPath: /config
@@ -89,4 +89,4 @@ spec:
               schedule: 40 17 * * *
     addons:
       exportarr:
-        enabled: false
+        enabled: true
