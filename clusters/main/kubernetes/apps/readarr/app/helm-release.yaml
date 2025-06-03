@@ -53,6 +53,10 @@ spec:
                 key: "${READARR_API_KEY}"
           traefik:
             enabled: false
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
     credentials:
       s3:
         type: s3
