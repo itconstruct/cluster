@@ -31,8 +31,6 @@ spec:
             certificateIssuer: "domain-0-le-prod"
           traefik:
             enabled: false
-            entrypoints:
-              - websecure
     credentials:
       s3:
         type: s3
