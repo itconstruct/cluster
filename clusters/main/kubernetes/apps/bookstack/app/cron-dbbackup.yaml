@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: mariadb-backup
-            image: mariadb:11.7  # Use the same version as your Bookstack MariaDB
+            image: mariadb:11.8  # Use the same version as your Bookstack MariaDB
             command:
             - /bin/sh
             - -c
