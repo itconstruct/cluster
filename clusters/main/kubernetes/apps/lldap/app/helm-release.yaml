@@ -80,7 +80,7 @@ spec:
         volsync:
           - name: data
             type: restic
-            credentials: minio
+            credentials: s3
             dest: #VolSync Destination (Restore)
               enabled: true
             src: #VolSync Source (Backup)
