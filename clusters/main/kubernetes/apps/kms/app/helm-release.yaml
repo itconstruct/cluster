@@ -34,4 +34,4 @@ spec:
         type: secret
         mountPath: /certs
         secret:
-          name: kms-cert
+          objectName: kms-cert
