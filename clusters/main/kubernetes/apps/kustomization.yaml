@@ -28,4 +28,3 @@ resources:
   - tailscale/ks.yaml
   - grafana/ks.yaml
   - kavita/ks.yaml
-  - lldap/ks.yaml
