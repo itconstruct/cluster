@@ -86,6 +86,8 @@ spec:
 
     cnpg:
       main:
+        annotations:
+          cnpg.io/skipEmptyWalArchiveCheck: "enabled"
         mode: recovery
         backups:
           enabled: true
