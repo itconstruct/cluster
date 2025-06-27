@@ -51,7 +51,7 @@ spec:
         mountPath: "/downloads"
       config:
         volsync:
-          - name: config
+          - name: b2
             type: restic
             credentials: s3
             dest:
