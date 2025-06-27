@@ -40,6 +40,13 @@ nodes:
               gateway: ${GATEWAY}
           vip:
             ip: ${VIP}
+      schematic:
+        customization:
+          systemExtensions:
+            officialExtensions:
+              - siderolabs/util-linux-tools
+              - siderolabs/iscsi-tools
+              - siderolabs/vmtoolsd-guest-agent
 controlPlane:
     patches:
         - '@./patches/controlplane.yaml'
