@@ -44,7 +44,7 @@ spec:
       downloads:
         enabled: true
         type: nfs
-        server: "192.168.1.223"  # Replace with your NFS server IP
+        server: "${NAS_IP}"
         path: "/mnt/docker/talos_apps/metube/downloads"
         mountPath: "/downloads"
       config:
