@@ -28,7 +28,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    TZ: Australia/Sydney
     global:
       stopAll: false
     workload:
