@@ -3,6 +3,8 @@ kind: HelmRelease
 metadata:
   name: metube
   namespace: metube
+  annotations:
+    truecharts.io/force-sync: "timestamp-20250627T2230"
 spec:
   interval: 15m
   timeout: 20m
