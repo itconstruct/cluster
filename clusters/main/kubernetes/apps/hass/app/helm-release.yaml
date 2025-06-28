@@ -96,7 +96,9 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
-          revision: "1"
+          revision: "2"
         recovery:
           method: object_store
           credentials: s3
+          revision: "1"
+          targetTime: "2024-06-24T23:59:00Z"
