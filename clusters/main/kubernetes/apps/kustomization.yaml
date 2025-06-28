@@ -28,5 +28,4 @@ resources:
   - grafana/ks.yaml
   - kavita/ks.yaml
   - lldap/ks.yaml
-  - authelia/ks.yaml
   - bytestash/ks.yaml
