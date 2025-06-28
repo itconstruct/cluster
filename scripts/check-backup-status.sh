@@ -160,23 +160,25 @@ for ns in $namespaces; do
   echo ""
 done
 
-# Discord-style summary
+# Discord-style summary (always print full summary)
+echo -e "\n📊 **Discord-Friendly Backup Summary:**"
+echo -e "\n\`\`\`markdown"
+printf "%-10s | %-15s | %-35s | %-22s | %-8s\n" "Type" "Namespace" "Resource" "Last Run" "State"
+printf -- "%-10s-+-%-15s-+-%-35s-+-%-22s-+-%-8s\n" "----------" "---------------" "-----------------------------------" "----------------------" "--------"
+for line in "${DISCORD_SUMMARY[@]}"; do
+  IFS='|' read -r type ns res info state <<< "$line"
+  printf "%-10s | %-15s | %-35s | %-22s | %-8s\n" "$type" "$ns" "$res" "$info" "$state"
+done
+echo "\`\`\`"
+
+# Show simple pass/fail footer
 any_warn_or_error=false
 for entry in "${DISCORD_SUMMARY[@]}"; do
   [[ "$entry" == *"ERROR"* || "$entry" == *"WARN"* || "$entry" == *"WARNING"* ]] && any_warn_or_error=true && break
 done
 
 if [[ "$any_warn_or_error" == true ]]; then
-  echo -e "\n🚨 **Discord-Friendly Backup Summary:**"
-  echo -e "\n\`\`\`markdown"
-  printf "%-10s | %-15s | %-35s | %-22s | %-8s\n" "Type" "Namespace" "Resource" "Last Run" "State"
-  printf -- "%-10s-+-%-15s-+-%-35s-+-%-22s-+-%-8s\n" "----------" "---------------" "-----------------------------------" "----------------------" "--------"
-  for line in "${DISCORD_SUMMARY[@]}"; do
-    IFS='|' read -r type ns res info state <<< "$line"
-    printf "%-10s | %-15s | %-35s | %-22s | %-8s\n" "$type" "$ns" "$res" "$info" "$state"
-  done
-  echo "\`\`\`"
+  echo -e "\n🚨 One or more backup issues detected. Please review the summary above."
 else
-  echo -e "\n✅ All backups appear healthy. No warnings or errors to report."
+  echo -e "\n✅ All VolSync and CNPG backups are healthy and up-to-date."
 fi
-
