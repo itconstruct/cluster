@@ -94,7 +94,7 @@ spec:
         backups:
           enabled: true
           credentials: s3
-          #revision: "2"
+          revision: "1"
           scheduledBackups:
             - name: daily-backup
               schedule: "0 5 0 * * *"
