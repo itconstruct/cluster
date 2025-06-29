@@ -29,4 +29,3 @@ resources:
   - authelia/ks.yaml
   - uptime-kuma/ks.yaml
   - nextcloud/ks.yaml
-  - hass/ks.yaml
