@@ -4,31 +4,33 @@ metadata:
   name: bookstack-db-backup
   namespace: bookstack
 spec:
-  schedule: "0 2 * * *"  # Run daily at 2 AM
+  schedule: "30 15 * * *"  # Runs daily at 01:30 AEDT / 00:30 AEST
   jobTemplate:
     spec:
       template:
         spec:
+          restartPolicy: OnFailure
           containers:
           - name: mariadb-backup
-            image: mariadb:11.8  # Use the same version as your Bookstack MariaDB
+            image: mariadb:11.8
             command:
             - /bin/sh
             - -c
             - |
-              mysqldump -h bookstack-mariadb -u root -p${MARIADB_ROOT_PASSWORD} --all-databases | gzip > /backup/bookstack-db-$(date +%Y%m%d-%H%M%S).sql.gz
+              mysqldump -h bookstack-mariadb -u root -p${MARIADB_ROOT_PASSWORD} --all-databases \
+              | gzip > /backup/bookstack-db-\$(date +%Y%m%d-%H%M%S).sql.gz
             env:
             - name: MARIADB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: bookstack  # name of the Secret
-                  key: BOOKSTACK_DB_PASS  # key within the Secret
+                  name: bookstack
+                  key: BOOKSTACK_DB_PASS
             volumeMounts:
             - name: backup
               mountPath: /backup
-          restartPolicy: OnFailure
           volumes:
           - name: backup
             nfs:
-              server: {{ .Values.NAS_IP }}
+              server: ${NAS_IP}
               path: "/mnt/docker/backups/bookstack/db"
+
