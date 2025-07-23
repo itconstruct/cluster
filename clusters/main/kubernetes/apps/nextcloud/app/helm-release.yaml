@@ -104,8 +104,6 @@ spec:
         recovery:
           method: object_store
           credentials: s3
-            #revision: "2"
-          targetTime: "2024-06-24T23:59:00Z"
     nextcloud:
       general:
         default_phone_region: AU
