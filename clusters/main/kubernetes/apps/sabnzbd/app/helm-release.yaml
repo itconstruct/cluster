@@ -77,7 +77,10 @@ spec:
       main:
         type: LoadBalancer
         loadBalancerIP: "${ARRs_IP}"
-        sharedKey: arrs-shared    
+        sharedKey: arrs-shared
+        integrations:
+          metallb:
+            enabled: true
     ingress:
       main:
         enabled: true
