@@ -124,16 +124,16 @@ spec:
         path: "/mnt/docker/Media"
         mountPath: "/Media"
     addons:
-      vpn:
+      gluetun:
         enabled: true
-        type: gluetun
         killSwitch: true
         excludedNetworks_IPv4:
           - 192.168.1.0/24
-        env:
-          FIREWALL: "on"
-          FIREWALL_OUTBOUND_SUBNETS: "192.168.178.0/24"          
-          VPN_SERVICE_PROVIDER: privado 
-          OPENVPN_USER: ${P_VPN_USER}
-          OPENVPN_PASSWORD: ${P_VPN_PASS}
-          SERVER_COUNTRIES: Netherlands
+        container:
+          env:
+            FIREWALL: "on"
+            FIREWALL_OUTBOUND_SUBNETS: "192.168.178.0/24"          
+            VPN_SERVICE_PROVIDER: privado 
+            OPENVPN_USER: ${P_VPN_USER}
+            OPENVPN_PASSWORD: ${P_VPN_PASS}
+            SERVER_COUNTRIES: Netherlands
