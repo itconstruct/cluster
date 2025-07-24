@@ -19,6 +19,9 @@ spec:
       main:
         type: LoadBalancer
         loadBalancerIP: "${KMS_IP}"
+        integrations:
+          matallb:
+            enabled: true
     ingress:
       main:
         enabled: false
