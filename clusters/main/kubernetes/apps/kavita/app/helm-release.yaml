@@ -48,8 +48,7 @@ spec:
             group: Apps
             widget:
               custom:
-                username: "${KAVITA_USER}"
-                password: "${KAVITA_PASS}"
+                key: "${KAVITA_KEY}"
         hosts:
           - host: books.${DOMAIN_0}
             paths:
