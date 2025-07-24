@@ -19,7 +19,6 @@ resources:
   - ollama/ks.yaml
   - myspeed/ks.yaml
   - readarr/ks.yaml
-  - bookstack/ks.yaml
   - tailscale/ks.yaml
   - grafana/ks.yaml
   - kavita/ks.yaml
