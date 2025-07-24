@@ -94,7 +94,6 @@ spec:
         backups:
           enabled: true
           credentials: s3
-          revision: "1"
           scheduledBackups:
             - name: daily-backup
               schedule: "0 5 0 * * *"
@@ -104,6 +103,7 @@ spec:
         recovery:
           method: object_store
           credentials: s3
+          revision: "1"
     nextcloud:
       general:
         default_phone_region: AU

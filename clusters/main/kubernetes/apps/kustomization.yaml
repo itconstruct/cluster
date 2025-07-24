@@ -26,3 +26,4 @@ resources:
   - bytestash/ks.yaml
   - uptime-kuma/ks.yaml
   - hass/ks.yaml
+  - nextcloud/ks.yaml
