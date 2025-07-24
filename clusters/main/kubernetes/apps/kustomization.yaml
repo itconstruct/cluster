@@ -17,7 +17,6 @@ resources:
   - kms/ks.yaml
   - librespeed/ks.yaml
   - ollama/ks.yaml
-  - watchyourlan/ks.yaml
   - myspeed/ks.yaml
   - readarr/ks.yaml
   - bookstack/ks.yaml
