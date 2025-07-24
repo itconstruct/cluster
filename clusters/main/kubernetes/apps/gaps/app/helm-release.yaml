@@ -17,6 +17,9 @@ spec:
         name: truecharts
         namespace: flux-system
   values:
+    resources:
+      requests:
+        cpu: 20m
     ingress:
       main:
         enabled: true

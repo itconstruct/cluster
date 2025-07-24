@@ -28,6 +28,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    resources:
+      requests:
+        cpu: 250m
     global:
       stopAll: false
     ingress:
