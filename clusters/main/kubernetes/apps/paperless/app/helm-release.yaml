@@ -24,6 +24,9 @@ spec:
       retries: 3
   timeout: 20m
   values:
+    resources:
+      requests:
+        cpu: 20m
     ingress:
       main:
         enabled: true
