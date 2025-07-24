@@ -21,6 +21,9 @@ spec:
       main:
         type: LoadBalancer
         loadBalancerIP: "${THREADFIN_IP}"
+        integrations:
+          metallb:
+            enabled: true
     ingress:
       main:
         enabled: true
