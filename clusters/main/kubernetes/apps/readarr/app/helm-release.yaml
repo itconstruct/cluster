@@ -28,6 +28,9 @@ spec:
       main:
         type: LoadBalancer
         loadBalancerIP: "${ARRs_IP}"
+        integrations:
+          metallb:
+            enabled: true
         sharedKey: arrs-shared
         ports:
           main:
