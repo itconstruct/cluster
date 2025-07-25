@@ -105,6 +105,9 @@ spec:
           method: object_store
           credentials: s3
           revision: "1"
+          recoveryTarget:
+            targetTimeline: 28
+            targetAction: promote
     nextcloud:
       general:
         default_phone_region: AU
