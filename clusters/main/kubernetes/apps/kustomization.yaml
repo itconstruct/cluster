@@ -25,7 +25,4 @@ resources:
   - bytestash/ks.yaml
   - uptime-kuma/ks.yaml
   - hass/ks.yaml
-  - authelia/ks.yaml
-  - bookstack/ks.yaml
-  - lldap/ks.yaml
   - nextcloud/ks.yaml
