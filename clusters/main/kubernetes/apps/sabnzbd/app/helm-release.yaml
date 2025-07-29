@@ -73,14 +73,6 @@ spec:
         accessKey: "${S3ID}"
         secretKey: "${S3KEY}"
         encrKey: "${S3KEY}"
-    service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: "${ARRs_IP}"
-        sharedKey: arrs-shared
-        integrations:
-          metallb:
-            enabled: true
     ingress:
       main:
         enabled: true

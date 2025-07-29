@@ -16,17 +16,6 @@ spec:
         namespace: flux-system
   values:
     TZ: Australia/Sydney
-    service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: "${ARRs_IP}"
-        integrations:
-          metallb:
-            enabled: true
-        sharedKey: arrs-shared
-        ports:
-          main:
-            port: 9696
     ingress:
       main:
         enabled: true

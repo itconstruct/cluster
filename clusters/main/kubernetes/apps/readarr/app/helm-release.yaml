@@ -24,17 +24,6 @@ spec:
       retries: 3
   timeout: 20m
   values:
-    service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: "${ARRs_IP}"
-        integrations:
-          metallb:
-            enabled: true
-        sharedKey: arrs-shared
-        ports:
-          main:
-            port: 8787
     ingress:
       main:
         enabled: true
