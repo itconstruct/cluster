@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: authelia
-      version: 28.0.6
+      version: 29.4.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -122,13 +122,3 @@ spec:
       regulation:
         find_time: 10m
         ban_time: 12h
-#      notifier:
-#        smtp:
-#          address: 'smtp://${SMTP_HOST}:587'
-#          username: ${SMTP_USER}
-#          password: ${SMTP_PASSWORD}
-#          sender: auth@${DOMAIN_0}
-#          startup_check_address: auth@${DOMAIN_0}
-#          disable_html_emails: true
-#          tls:
-#            server_name: ${SMTP_HOST}
