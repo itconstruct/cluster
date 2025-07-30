@@ -38,8 +38,6 @@ spec:
         enabled: true
         ingressClassName: internal
         integrations:
-          traefik:
-            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
@@ -51,9 +49,6 @@ spec:
                 key: "${KAVITA_KEY}"
         hosts:
           - host: books.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
     credentials:
       s3:
         type: s3

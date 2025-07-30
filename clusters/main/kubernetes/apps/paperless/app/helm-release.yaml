@@ -32,16 +32,11 @@ spec:
         enabled: true
         ingressClassName: internal
         integrations:
-          traefik:
-            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
         hosts:
           - host: paperless.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
     credentials:
       s3:
         type: s3
@@ -54,25 +49,25 @@ spec:
       consume:
         enabled: true
         type: nfs
-        server: "192.168.1.223"
+        server: "${NAS_IP}"
         path: "/mnt/docker/talos_apps/paperless/consume"
         mountPath: "/consume"
       media:
         enabled: true
         type: nfs
-        server: "192.168.1.223"
+        server: "${NAS_IP}"
         path: "/mnt/docker/talos_apps/paperless/media"
         mountPath: "/media"
       export:
         enabled: true
         type: nfs
-        server: "192.168.1.223"
+        server: "${NAS_IP}"
         path: "/mnt/docker/talos_apps/paperless/export"
         mountPath: "/export"
     cnpg:
       main:
         mode: recovery
-        # Set to 'recovery' when recovery from S3, also change the revisions
+        # Set to 'recovery' when recovery from S3
         backups:
           enabled: true
           credentials: s3
@@ -82,11 +77,9 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
-          #revision: "1"
         recovery:
           method: object_store
           credentials: s3
-          revision: "1"
     workload:
       main:
         podSpec:

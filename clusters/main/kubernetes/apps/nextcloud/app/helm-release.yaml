@@ -32,9 +32,6 @@ spec:
         ingressClassName: internal
         hosts:
           - host: cloud.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
         integrations:
           certManager:
             enabled: true
@@ -45,8 +42,6 @@ spec:
             widget:
               custom:
                 key: "${NEXTCLOUD_API_KEY}"
-          traefik:
-            enabled: false
     credentials:
       s3:
         type: s3
@@ -90,7 +85,7 @@ spec:
           singleNode: true
         mode: recovery
         # standalone
-        # Set to 'recovery' when recovery from S3, also change the revisions
+        # Set to 'recovery' when recovery from S3
         backups:
           enabled: true
           credentials: s3

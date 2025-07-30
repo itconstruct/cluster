@@ -30,15 +30,10 @@ spec:
         ingressClassName: internal
         hosts:
           - host: photos.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
         integrations:
           certManager:
             enabled: true
             certificateIssuer: "domain-0-le-prod"
-          traefik:
-            enabled: false
     credentials:
       s3:
         type: s3
@@ -78,7 +73,7 @@ spec:
         mode: recovery
         # standalone
         # recovery
-        # Set to 'recovery' when recovery from S3, also change the revisions
+        # Set to 'recovery' when recovery from S3
         backups:
           enabled: true
           credentials: s3
@@ -88,10 +83,6 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
-          revision: "2"
         recovery:
           method: object_store
           credentials: s3
-          #recoveryTarget:
-            #targetTime: "2025-02-09 23:59:59+11:00"
-          revision: "1"

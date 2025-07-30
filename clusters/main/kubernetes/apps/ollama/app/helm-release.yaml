@@ -22,15 +22,10 @@ spec:
         ingressClassName: internal
         hosts:
           - host: ai.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
         integrations:
           certManager:
             enabled: true
             certificateIssuer: "domain-0-le-prod"
-          traefik:
-            enabled: false
     credentials:
       s3:
         type: s3

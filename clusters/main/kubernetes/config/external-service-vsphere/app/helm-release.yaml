@@ -25,16 +25,11 @@ spec:
     remediation:
       retries: 3
   values:
-    portal:
-      open:
-        enabled: false
     service:
       main:
-        enabled: true
         externalIP: ${VSPHERE_IP}
         ports:
           main:
-            enabled: true
             port: 443
             protocol: https
         type: ExternalIP
@@ -44,18 +39,9 @@ spec:
         ingressClassName: internal
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          #nginx.ingress.kubernetes.io/auth-method: 'GET'
-          #nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
-          #nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_1}?rm=$request_method'
-          #nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
         hosts:
         - host: vsphere.${DOMAIN_0}
-          paths:
-          - path: /
-            pathType: Prefix
         integrations:
           certManager:
             certificateIssuer: domain-0-le-prod
             enabled: true
-          traefik:
-            enabled: false

@@ -42,12 +42,7 @@ spec:
         ingressClassName: external
         hosts:
           - host: auth.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
         integrations:
-          traefik:
-            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
@@ -67,7 +62,7 @@ spec:
       main:
         cluster:
           singleNode: true
-        # mode: recovery   # Set to 'recovery' when recovery from S3, also change the revisions
+        # mode: recovery   # Set to 'recovery' when recovery from S3
         backups:
           enabled: true
           credentials: s3
@@ -77,10 +72,8 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
-          # revision: "1"
         recovery:
           credentials: s3
-          # revision: "1"
     workload:
       main:
         replicas: 1

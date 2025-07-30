@@ -33,16 +33,11 @@ spec:
         enabled: true
         ingressClassName: internal
         integrations:
-          traefik:
-            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
         hosts:
           - host: home.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
     credentials:
       s3:
         type: s3
@@ -76,8 +71,6 @@ spec:
             certManager:
               enabled: true
               certificateIssuer: domain-0-le-prod
-            traefik:
-              enabled: false
           hosts:
             - host: home.code.${DOMAIN_0}
     workload:

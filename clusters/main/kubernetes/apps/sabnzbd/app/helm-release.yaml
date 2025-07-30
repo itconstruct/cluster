@@ -83,8 +83,6 @@ spec:
           #nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_1}?rm=$request_method'
           #nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
         integrations:
-          traefik:
-            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
@@ -97,9 +95,6 @@ spec:
                 key: "${SABNZBD_API_KEY}"
         hosts:
           - host: sabnzbd.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
     persistence:
       config:
         volsync:
@@ -115,7 +110,7 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: "192.168.1.223"  # Replace with your NFS server IP
+        server: "${NAS_IP}"  # Replace with your NFS server IP
         path: "/mnt/docker/Media"
         mountPath: "/Media"
     addons:

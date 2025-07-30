@@ -64,12 +64,7 @@ spec:
         ingressClassName: internal
         hosts:
           - host: lldap.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
         integrations:
-          traefik:
-            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod

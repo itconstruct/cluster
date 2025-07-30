@@ -30,9 +30,6 @@ spec:
         ingressClassNage: internal
         hosts:
           - host: readarr.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
         integrations:
           certManager:
             enabled: true
@@ -43,8 +40,6 @@ spec:
             widget:
               custom:
                 key: "${READARR_API_KEY}"
-          traefik:
-            enabled: false
     metrics:
       main:
         enabled: true
