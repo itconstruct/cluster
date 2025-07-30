@@ -11,3 +11,4 @@ resources:
   - volsync/ks.yaml
   - spegel/ks.yaml
   - snapshot-controller/ks.yaml
+  - system-upgrade-controller/ks.yaml
