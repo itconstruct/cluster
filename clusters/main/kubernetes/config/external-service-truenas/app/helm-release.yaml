@@ -30,9 +30,11 @@ spec:
         externalIP: ${NAS_IP}
         ports:
           main:
+            enabled: true
             port: 443
             protocol: https
           smb:
+            enabled: true
             port: 445
             protocol: tcp
         type: ExternalIP
