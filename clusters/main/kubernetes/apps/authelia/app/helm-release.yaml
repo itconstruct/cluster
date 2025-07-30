@@ -42,12 +42,7 @@ spec:
         ingressClassName: external
         hosts:
           - host: auth.${DOMAIN_0}
-            paths:
-              - path: /
-                pathType: Prefix
         integrations:
-          traefik:
-            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
@@ -77,10 +72,8 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
-          # revision: "1"
         recovery:
           credentials: s3
-          # revision: "1"
     workload:
       main:
         replicas: 1
@@ -129,13 +122,3 @@ spec:
       regulation:
         find_time: 10m
         ban_time: 12h
-#      notifier:
-#        smtp:
-#          address: 'smtp://${SMTP_HOST}:587'
-#          username: ${SMTP_USER}
-#          password: ${SMTP_PASSWORD}
-#          sender: auth@${DOMAIN_0}
-#          startup_check_address: auth@${DOMAIN_0}
-#          disable_html_emails: true
-#          tls:
-#            server_name: ${SMTP_HOST}
