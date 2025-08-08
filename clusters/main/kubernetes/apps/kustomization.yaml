@@ -25,3 +25,4 @@ resources:
   - hass/ks.yaml
   - immich/ks.yaml
   - readarr/ks.yaml
+  - grafana/ks.yaml

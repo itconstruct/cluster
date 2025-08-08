@@ -53,7 +53,6 @@ spec:
       main:
         cluster:
           singleNode: true
-          instances: 1
     configmap:
       dashboard-certmanager:
         enabled: true
