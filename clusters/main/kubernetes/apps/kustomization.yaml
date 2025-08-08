@@ -25,3 +25,4 @@ resources:
   - nextcloud/ks.yaml
   - hass/ks.yaml
   - immich/ks.yaml
+  - readarr/ks.yaml
