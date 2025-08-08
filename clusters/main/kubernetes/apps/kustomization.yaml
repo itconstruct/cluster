@@ -18,7 +18,6 @@ resources:
   - ollama/ks.yaml
   - myspeed/ks.yaml
   - tailscale/ks.yaml
-  - grafana/ks.yaml
   - kavita/ks.yaml
   - bytestash/ks.yaml
   - uptime-kuma/ks.yaml
