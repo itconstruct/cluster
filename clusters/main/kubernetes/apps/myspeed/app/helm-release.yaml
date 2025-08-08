@@ -79,30 +79,28 @@ spec:
               schedule: 40 23 * * *
     podOptions:
       initContainers:
-        - name: restore-sqlite
+        - name: cleanup-sqlite
           image: alpine:3.19
-          imagePullPolicy: IfNotPresent
           command:
             - sh
             - -c
             - |
-              apk add sqlite
+              set -eux
+              apk add --no-cache sqlite
               DB="/myspeed/data/storage.db"
-              restore_if_exists() {
-                table="$1"
-                backup="${table}_backup"
-                if sqlite3 "$DB" ".tables" | grep -q "^$backup$"; then
-                  echo "Restoring $backup to $table"
-                  sqlite3 "$DB" "DROP TABLE IF EXISTS $table;"
-                  sqlite3 "$DB" "ALTER TABLE $backup RENAME TO $table;"
-                fi
-              }
-              if [ -f "$DB" ]; then
-                restore_if_exists recommendations
-                restore_if_exists speedtests
-                restore_if_exists integration_data
-                restore_if_exists config
+              if [ ! -f "$DB" ]; then
+                echo "No DB file found at $DB"
+                exit 0
               fi
+
+              for tbl in recommendations speedtests integration_data config; do
+                backup="${tbl}_backup"
+                echo "Dropping $backup if it exists"
+                echo "DROP TABLE IF EXISTS $backup;" | sqlite3 "$DB"
+              done
+
+              echo "✅ Cleanup complete"
           volumeMounts:
             - name: data
               mountPath: /myspeed/data
+
