@@ -7,3 +7,5 @@ resources:
   - external-service-esx/ks.yaml
   - external-service-radarr/ks.yaml
   - external-service-sonarr/ks.yaml
+  - external-service-jetkvm/ks.yaml
+  - external-service-omv/ks.yaml
