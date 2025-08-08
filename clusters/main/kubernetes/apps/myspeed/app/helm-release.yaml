@@ -77,3 +77,32 @@ spec:
               enabled: true
               cacheCapacity: 10Gi
               schedule: 40 23 * * *
+    podOptions:
+      initContainers:
+        - name: restore-sqlite
+          image: alpine:3.19
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              apk add sqlite
+              DB="/myspeed/data/storage.db"
+              restore_if_exists() {
+                table="$1"
+                backup="${table}_backup"
+                if sqlite3 "$DB" ".tables" | grep -q "^$backup$"; then
+                  echo "Restoring $backup to $table"
+                  sqlite3 "$DB" "DROP TABLE IF EXISTS $table;"
+                  sqlite3 "$DB" "ALTER TABLE $backup RENAME TO $table;"
+                fi
+              }
+              if [ -f "$DB" ]; then
+                restore_if_exists recommendations
+                restore_if_exists speedtests
+                restore_if_exists integration_data
+                restore_if_exists config
+              fi
+          volumeMounts:
+            - name: data
+              mountPath: /myspeed/data
