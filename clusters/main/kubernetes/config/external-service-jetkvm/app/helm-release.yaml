@@ -38,11 +38,11 @@ spec:
       main:
         enabled: true
         ingressClassName: internal
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          #annotations:
+          #nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
         - host: jetkvm.${DOMAIN_0}
-        integrations:
-          certManager:
-            certificateIssuer: domain-0-le-prod
-            enabled: true
+          #integrations:
+          #certManager:
+          #  certificateIssuer: domain-0-le-prod
+          #  enabled: true
