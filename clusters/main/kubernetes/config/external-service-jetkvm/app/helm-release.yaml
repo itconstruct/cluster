@@ -32,14 +32,14 @@ spec:
           main:
             enabled: true
             port: 80
-            protocol: https
+            protocol: http
         type: ExternalIP
     ingress:
       main:
         enabled: true
         ingressClassName: internal
         annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
         - host: jetkvm.${DOMAIN_0}
         integrations:
