@@ -51,8 +51,21 @@ spec:
             certificateIssuer: domain-0-le-prod
     cnpg:
       main:
+        mode: standalone
         cluster:
           singleNode: true
+        backups:
+          enabled: true
+          credentials: s3
+          scheduledBackups:
+            - name: daily-backup
+              schedule: "0 14 0 * * *"
+              backupOwnerReference: self
+              immediate: true
+              suspend: false
+        recovery:
+          method: object_store
+          credentials: s3 
     configmap:
       dashboard-certmanager:
         enabled: true
