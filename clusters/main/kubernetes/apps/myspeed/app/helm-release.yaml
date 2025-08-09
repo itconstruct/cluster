@@ -77,29 +77,55 @@ spec:
               enabled: true
               cacheCapacity: 10Gi
               schedule: 40 23 * * *
-    podOptions:
-      initContainers:
-        - name: cleanup-sqlite
-          image: alpine:3.22
-          command:
-            - sh
-            - -c
-            - |
-              set -eux
-              apk add --no-cache sqlite
-              DB="/myspeed/data/storage.db"
-              if [ ! -f "$DB" ]; then
-                echo "No DB file found at $DB"
-                exit 0
-              fi
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: myspeed
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: myspeed
+              spec:
+                template:
+                  spec:
+                    initContainers:
+                      - name: cleanup-sqlite
+                        image: docker.io/nouchka/sqlite3:latest
+                        imagePullPolicy: IfNotPresent
+                        command:
+                          - sh
+                          - -c
+                          - |
+                            set -eu
 
-              for tbl in recommendations speedtests integration_data config; do
-                backup="${tbl}_backup"
-                echo "Dropping $backup if it exists"
-                echo "DROP TABLE IF EXISTS $backup;" | sqlite3 "$DB"
-              done
+                            DB="/myspeed/data/storage.db"
+                            [ -f "$DB" ] || { echo "No DB at $DB, skipping"; exit 0; }
 
-              echo "✅ Cleanup complete"
+                            table_exists () {
+                              echo "SELECT name FROM sqlite_master WHERE type='table' AND name='$1';" \
+                                | sqlite3 "$DB" | grep -qx "$1"
+                            }
+
+                            for base in recommendations speedtests integration_data config; do
+                              bkp="${base}_backup"
+                              if table_exists "$bkp"; then
+                                if ! table_exists "$base"; then
+                                  echo "Restoring $bkp -> $base"
+                                  echo "ALTER TABLE \"$bkp\" RENAME TO \"$base\";" | sqlite3 "$DB" || true
+                                else
+                                  echo "Dropping leftover $bkp"
+                                  echo "DROP TABLE IF EXISTS \"$bkp\";" | sqlite3 "$DB" || true
+                                fi
+                              else
+                                echo "No $bkp table; nothing to do"
+                              fi
+                            done
+
+                            echo "SQLite cleanup complete."
+
           volumeMounts:
             - name: data
               mountPath: /myspeed/data
