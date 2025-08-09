@@ -103,26 +103,21 @@ spec:
 
                             DB="/myspeed/data/storage.db"
                             [ -f "$DB" ] || { echo "No DB at $DB, skipping"; exit 0; }
-
-                            table_exists () {
-                              echo "SELECT name FROM sqlite_master WHERE type='table' AND name='$1';" \
-                                | sqlite3 "$DB" | grep -qx "$1"
-                            }
-
-                            for base in recommendations speedtests integration_data config; do
-                              bkp="${base}_backup"
-                              if table_exists "$bkp"; then
-                                if ! table_exists "$base"; then
-                                  echo "Restoring $bkp -> $base"
-                                  echo "ALTER TABLE \"$bkp\" RENAME TO \"$base\";" | sqlite3 "$DB" || true
-                                else
-                                  echo "Dropping leftover $bkp"
-                                  echo "DROP TABLE IF EXISTS \"$bkp\";" | sqlite3 "$DB" || true
-                                fi
-                              else
-                                echo "No $bkp table; nothing to do"
-                              fi
-                            done
+                            echo "Looking for *_backup tables…"
+                            tables="$(sqlite3 "$DB" "SELECT name FROM sqlite_master WHERE type='table' AND name LIKE '%\\_backup';" || true)"
+                            if [ -z "$tables" ]; then
+                              echo "No *_backup tables found."
+                            else
+                              echo "Found:"
+                              echo "$tables" | sed 's/^/  - /'
+                              echo "$tables" | while read -r t; do
+                                [ -n "$t" ] || continue
+                                echo "Dropping table: $t"
+                                echo "DROP TABLE IF EXISTS \"$t\";" | sqlite3 "$DB" || true
+                              done
+                              echo "Running VACUUM to compact DB…"
+                              echo "VACUUM;" | sqlite3 "$DB" || true
+                            fi
 
                             echo "SQLite cleanup complete."
                         volumeMounts:
