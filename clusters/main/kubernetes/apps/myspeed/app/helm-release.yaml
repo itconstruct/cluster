@@ -125,8 +125,6 @@ spec:
                             done
 
                             echo "SQLite cleanup complete."
-
-          volumeMounts:
-            - name: data
-              mountPath: /myspeed/data
-
+                        volumeMounts:
+                          - name: data
+                            mountPath: /myspeed/data
