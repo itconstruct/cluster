@@ -27,7 +27,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassNage: internal
+        ingressClassName: internal
         hosts:
           - host: readarr.${DOMAIN_0}
         integrations:
