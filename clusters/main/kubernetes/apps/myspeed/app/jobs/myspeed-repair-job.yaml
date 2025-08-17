@@ -11,7 +11,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: fixer
-          image: alpine:3.19
+          image: alpine:3.22
           command:
             - sh
             - -c
