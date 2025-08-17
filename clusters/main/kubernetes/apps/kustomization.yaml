@@ -26,3 +26,6 @@ resources:
   - immich/ks.yaml
   - readarr/ks.yaml
   - grafana/ks.yaml
+  - authelia/ks.yaml
+  - bookstack/ks.yaml
+  - lldap/ks.yaml

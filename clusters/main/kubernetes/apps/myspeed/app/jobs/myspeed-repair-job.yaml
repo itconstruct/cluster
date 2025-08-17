@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: myspeed-sqlite-repair
+  namespace: myspeed
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 600
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: fixer
+          image: alpine:3.19
+          command:
+            - sh
+            - -c
+            - |
+              set -eux
+              apk add --no-cache sqlite
+              DB="/myspeed/data/storage.db"
+              if [ ! -f "$DB" ]; then
+                echo "No DB at $DB; nothing to do."
+                exit 0
+              fi
+
+              echo "Before:"
+              echo ".tables" | sqlite3 "$DB" || true
+              echo "PRAGMA user_version;" | sqlite3 "$DB" || true
+
+              # Drop exactly the tables you dropped manually
+              echo 'DROP TABLE IF EXISTS "recommendations_backup";' | sqlite3 "$DB" || true
+              echo 'DROP TABLE IF EXISTS "integration_data_backup";' | sqlite3 "$DB" || true
+              echo 'DROP TABLE IF EXISTS "speedtests_backup";' | sqlite3 "$DB" || true
+              echo 'DROP TABLE IF EXISTS "config_backup";' | sqlite3 "$DB" || true
+
+              echo "After:"
+              echo ".tables" | sqlite3 "$DB" || true
+              echo "VACUUM;" | sqlite3 "$DB" || true
+              echo "Done."
+          volumeMounts:
+            - name: data
+              mountPath: /myspeed/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: myspeed-data
+
