@@ -12,7 +12,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: fsck
-        image: alpine:3.20
+        image: alpine:3.22
         securityContext:
           privileged: true
         command:
