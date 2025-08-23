@@ -122,10 +122,8 @@ spec:
         container:
           env:
             FIREWALL: "on"
-            FIREWALL_OUTBOUND_SUBNETS: |
-              172.16.0.0/16     # Pod network
-              172.17.0.0/16     # Service network
-              192.168.1.0/24    # LAN          
+            # Pod Network, Service Network, LAN
+            FIREWALL_OUTBOUND_SUBNETS: "${PODNET},${SVCNET},${LAN}"
             VPN_SERVICE_PROVIDER: privado 
             OPENVPN_USER: ${P_VPN_USER}
             OPENVPN_PASSWORD: ${P_VPN_PASS}
