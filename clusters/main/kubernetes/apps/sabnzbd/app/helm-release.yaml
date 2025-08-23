@@ -122,8 +122,15 @@ spec:
         container:
           env:
             FIREWALL: "on"
-            FIREWALL_OUTBOUND_SUBNETS: "192.168.178.0/24"          
+            FIREWALL_OUTBOUND_SUBNETS: |
+              172.16.0.0/16     # Pod network
+              172.17.0.0/16     # Service network
+              192.168.1.0/24    # LAN          
             VPN_SERVICE_PROVIDER: privado 
             OPENVPN_USER: ${P_VPN_USER}
             OPENVPN_PASSWORD: ${P_VPN_PASS}
-            SERVER_COUNTRIES: Netherlands
+            OPENVPN_PROTOCOL: "tcp"
+            SERVER_COUNTRIES: Australia,Singapore,Japan,New Zealand
+            KEEP_NAMESERVER: "off"
+            DOT: "on"
+            FIREWALL_INPUT_PORTS: "10097"
