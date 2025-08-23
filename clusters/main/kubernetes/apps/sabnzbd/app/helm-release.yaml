@@ -128,8 +128,8 @@ spec:
             VPN_SERVICE_PROVIDER: privado 
             OPENVPN_USER: ${P_VPN_USER}
             OPENVPN_PASSWORD: ${P_VPN_PASS}
-            OPENVPN_PROTOCOL: "tcp"
-            SERVER_COUNTRIES: Germany,Hungary,Netherlands,United States
+            SERVER_HOSTNAMES: syd-012.vpn.privado.io
+            #SERVER_COUNTRIES: Germany,Hungary,Netherlands,United States
             KEEP_NAMESERVER: "off"
             DOT: "on"
             FIREWALL_INPUT_PORTS: "10097"
