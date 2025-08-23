@@ -128,7 +128,7 @@ spec:
             OPENVPN_USER: ${P_VPN_USER}
             OPENVPN_PASSWORD: ${P_VPN_PASS}
             OPENVPN_PROTOCOL: "tcp"
-            SERVER_COUNTRIES: Australia,Singapore,Japan,New Zealand
+            SERVER_COUNTRIES: Germany,Hungary,Netherlands,United States
             KEEP_NAMESERVER: "off"
             DOT: "on"
             FIREWALL_INPUT_PORTS: "10097"
