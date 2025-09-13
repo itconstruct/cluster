@@ -9,3 +9,4 @@ resources:
   - external-service-sonarr/ks.yaml
   - external-service-jetkvm/ks.yaml
   - external-service-omv/ks.yaml
+  - external-service-plex/ks.yaml
