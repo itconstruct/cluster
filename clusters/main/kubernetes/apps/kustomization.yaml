@@ -28,3 +28,4 @@ resources:
   - bookstack/ks.yaml
   - lldap/ks.yaml
   - paperless/ks.yaml
+  - grafana/ks.yaml
