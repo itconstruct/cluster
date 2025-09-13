@@ -9,7 +9,6 @@ resources:
   - tautulli/ks.yaml
   - threadfin/ks.yaml
   - cloudflared/ks.yaml
-  - paperless/ks.yaml
   - gaps/ks.yaml
   - it-tools/ks.yaml
   - sabnzbd/ks.yaml
