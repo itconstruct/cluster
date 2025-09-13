@@ -31,14 +31,14 @@ spec:
         ports:
           main:
             port: 32400
-            protocol: http
+            protocol: https
         type: ExternalIP
     ingress:
       main:
         enabled: true
         ingressClassName: internal
         annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
         - host: plex.${DOMAIN_0}
         integrations:
