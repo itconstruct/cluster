@@ -31,6 +31,14 @@ spec:
     keepHistory: false
   values:
     TZ: Australia/Sydney
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                GF_SECURITY_ADMIN_USER: "${GF_SECURITY_ADMIN_USER}"
+                GF_SECURITY_ADMIN_PASSWORD: "${GF_SECURITY_ADMIN_USER}"
     credentials:    
       s3:
         type: s3
@@ -51,7 +59,7 @@ spec:
             certificateIssuer: domain-0-le-prod
     cnpg:
       main:
-        mode: standalone
+        mode: recovery
         cluster:
           singleNode: true
         backups:
