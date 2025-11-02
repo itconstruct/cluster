@@ -1,0 +1,253 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: open-archiver
+  namespace: open-archiver
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 15.24.21
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: archiver.${DOMAIN_0}
+    global:
+      stopAll: false
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-open-archiver"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    image:
+      repository: logiclabshq/open-archiver
+      pullPolicy: IfNotPresent
+      tag: v0.4.0@sha256:8b580260ae82d9f4656912a8d7dd57fbdaaca7b993c82a42f7f0514d8908597b
+    meiliImage:
+      repository: getmeili/meilisearch
+      pullPolicy: IfNotPresent
+      tag: v1.24.0@sha256:d991eb07331e9d1f9cec7bc0f9523fd5d51aee3b223d997e0e66206361952056
+    tikaImage:
+      repository: apache/tika
+      pullPolicy: IfNotPresent
+      tag: 3.2.3.0-full@sha256:21d8052de04e491ccf66e8680ade4da6f3d453a56d59f740b4167e54167219b7
+    securityContext:
+      container:
+        runAsUser: 0
+        runAsGroup: 0
+        runAsNonRoot: false
+        readOnlyRootFilesystem: false
+    service:
+      main:
+        type: ClusterIP
+        ports:
+          main:
+            port: 3000
+      backend:
+        enabled: true
+        type: ClusterIP
+        ports:
+          backend:
+            enabled: true
+            port: 4000
+          meili:
+            enabled: true
+            port: 7700
+          tika:
+            enabled: true
+            port: 9998
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                # --- Application Settings ---
+                # Set to 'production' for production environments
+                NODE_ENV: production
+                PORT_BACKEND: "{{ .Values.service.backend.ports.backend.port }}"
+                PORT_FRONTEND: "{{ .Values.service.main.ports.main.port }}"
+                # The public-facing URL of your application. This is used by the backend to configure CORS.
+                APP_URL: "{{ .Values.chartContext.appUrl }}"
+                # This is used by the SvelteKit Node adapter to determine the server's public-facing URL.
+                # It should always be set to the value of APP_URL.
+                ORIGIN: "{{ .Values.chartContext.appUrl }}"
+                # The frequency of continuous email syncing. Default is every minutes, but you can change it to another value based on your needs.
+                SYNC_FREQUENCY: '* * * * *' 
+                # Set to 'true' to include Junk and Trash folders in the email archive. Defaults to false.
+                ALL_INCLUSIVE_ARCHIVE: false
+                # PostgreSQL
+                DATABASE_URL:
+                  secretKeyRef:
+                    name: cnpg-main-urls
+                    key: std
+                # Meilisearch
+                MEILI_MASTER_KEY: "${OPEN_ARCHIVER_MEILI_MSTR_KEY}"
+                MEILI_HOST: '{{ printf "%s:%v" "localhost" .Values.service.backend.ports.meili.port }}' # '{{ printf "%s-backend:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.backend.ports.meili.port }}'
+                # The number of emails to batch together for indexing. Defaults to 500.
+                MEILI_INDEXING_BATCH: 500
+
+                # Redis (We use Valkey, which is Redis-compatible and open source)
+                REDIS_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
+                REDIS_PORT: 6379
+                REDIS_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+                # If you run Valkey service from Docker Compose, set the REDIS_TLS_ENABLED variable to false.
+                REDIS_TLS_ENABLED: false
+
+                # --- Storage Settings ---
+                # Choose your storage backend. Valid options are 'local' or 's3'.
+                STORAGE_TYPE: local
+                # The maximum request body size to accept in bytes including while streaming. The body size can also be specified with a unit suffix for kilobytes (K), megabytes (M), or gigabytes (G). For example, 512K or 1M. Defaults to 512kb. Or the value of  Infinity if you don't want any upload limit.
+                BODY_SIZE_LIMIT: 100M
+
+                # --- Local Storage Settings ---
+                # The path inside the container where files will be stored.
+                # This is mapped to a Docker volume for persistence.
+                # This is not an optional variable, it is where the Open Archiver service stores application data. Set this even if you are using S3 storage.
+                # Make sure the user that runs the Open Archiver service has read and write access to this path.
+                # Important: It is recommended to create this path manually before installation, otherwise you may face permission and ownership problems.
+                STORAGE_LOCAL_ROOT_PATH: "{{ .Values.persistence.data.mountPath }}"
+
+                # --- S3-Compatible Storage Settings ---
+                # These are only used if STORAGE_TYPE is 's3'.
+                # STORAGE_S3_ENDPOINT: 
+                # STORAGE_S3_BUCKET: 
+                # STORAGE_S3_ACCESS_KEY_ID: 
+                # STORAGE_S3_SECRET_ACCESS_KEY: 
+                # STORAGE_S3_REGION: 
+                # Set to 'true' for MinIO and other non-AWS S3 services
+                # STORAGE_S3_FORCE_PATH_STYLE: false
+
+                # --- Storage Encryption ---
+                # IMPORTANT: Generate a secure, random 32-byte hex string for this key.
+                # You can use `openssl rand -hex 32` to generate a key.
+                # This key is used for AES-256 encryption of files at rest.
+                # This is an optional variable, if not set, files will not be encrypted.
+                # STORAGE_ENCRYPTION_KEY: "${OPEN_ARCHIVER_STORAGE_ENCRYPTION_KEY}"
+                # --- Security & Authentication ---
+                # Enable or disable deletion of emails and ingestion sources. Defaults to false.
+                ENABLE_DELETION: false
+                # Rate Limiting
+                # The window in milliseconds for which API requests are checked. Defaults to 60000 (1 minute).
+                RATE_LIMIT_WINDOW_MS: 60000
+                # The maximum number of API requests allowed from an IP within the window. Defaults to 100.
+                RATE_LIMIT_MAX_REQUESTS: 100
+                # JWT
+                # IMPORTANT: Change this to a long, random, and secret string in your .env file
+                JWT_SECRET: ${OPEN_ARCHIVER_JWT_SECRET}
+                JWT_EXPIRES_IN: "7d"
+
+                # Master Encryption Key for sensitive data (Such as Ingestion source credentials and passwords)
+                # IMPORTANT: Generate a secure, random 32-byte hex string for this
+                # You can use `openssl rand -hex 32` to generate a key.
+                ENCRYPTION_KEY: ${OPEN_ARCHIVER_ENCRYPTION_KEY}
+
+                # Apache Tika Integration
+                # ONLY active if TIKA_URL is set
+                # '{{ printf "%s:%v" "localhost" .Values.service.backend.ports.tika.port }}' 
+                TIKA_URL: '{{ printf "%s-backend:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.backend.ports.tika.port }}'
+            meili:
+              enabled: true
+              imageSelector: meiliImage
+              probes:
+                liveness:
+                  enabled: true
+                  type: http
+                  path: /health
+                  port: "{{ .Values.service.backend.ports.meili.port }}"
+                readiness:
+                  enabled: true
+                  type: http
+                  path: /health
+                  port: "{{ .Values.service.backend.ports.meili.port }}"
+                startup:
+                  enabled: true
+                  type: http
+                  path: /health
+                  port: "{{ .Values.service.backend.ports.meili.port }}"
+              env:
+                MEILI_MASTER_KEY: "${OPEN_ARCHIVER_MEILI_MSTR_KEY}"
+            tika:
+              enabled: true
+              imageSelector: tikaImage
+              probes:
+                liveness:
+                  enabled: true
+                  type: http
+                  path: /
+                  port: "{{ .Values.service.backend.ports.tika.port }}"
+                readiness:
+                  enabled: true
+                  type: http
+                  path: /
+                  port: "{{ .Values.service.backend.ports.tika.port }}"
+                startup:
+                  enabled: true
+                  type: http
+                  path: /
+                  port: "{{ .Values.service.backend.ports.tika.port }}"
+    persistence:
+      data:
+        type: nfs
+        server: "${NAS_IP}"
+        path: /mnt/docker/archive/mail
+        enabled: true
+        mountPath: "/var/data/open-archiver"
+      meili:
+        enabled: true
+        targetSelector:
+          main:
+            meili:
+              mountPath: /meili_data
+    redis:
+      enabled: true
+    cnpg:
+      main:
+        enabled: true
+        user: open-archiver
+        database: open-archiver
+        # mode: recovery
+        cluster:
+          singleNode: true
+        backups:
+          enabled: true
+          credentials: s3
+          retentionPolicy: "7d"
+          scheduledBackups:
+            - name: daily-backup
+              schedule: "0 5 0 * * *"
+              backupOwnerReference: self
+              immediate: true
+              suspend: false
+        recovery:
+          method: object_store
+          credentials: s3
