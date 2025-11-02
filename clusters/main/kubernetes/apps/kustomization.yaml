@@ -29,4 +29,3 @@ resources:
   - lldap/ks.yaml
   - paperless/ks.yaml
   - grafana/ks.yaml
-  - open-archiver/ks.yaml
