@@ -20,7 +20,6 @@ resources:
   - kavita/ks.yaml
   - bytestash/ks.yaml
   - uptime-kuma/ks.yaml
-  - nextcloud/ks.yaml
   - hass/ks.yaml
   - immich/ks.yaml
   - readarr/ks.yaml
