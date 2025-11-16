@@ -29,4 +29,3 @@ resources:
   - paperless/ks.yaml
   - grafana/ks.yaml
   - open-archiver/ks.yaml
-  - nextcloud/ks.yaml
