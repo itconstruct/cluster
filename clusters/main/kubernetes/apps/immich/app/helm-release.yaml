@@ -13,7 +13,6 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
-  primaryUpdateMethod: switchover
   install:
     createNamespace: true
     crds: CreateReplace
