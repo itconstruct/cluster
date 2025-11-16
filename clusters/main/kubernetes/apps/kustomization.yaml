@@ -12,7 +12,6 @@ resources:
   - gaps/ks.yaml
   - it-tools/ks.yaml
   - sabnzbd/ks.yaml
-  - kms/ks.yaml
   - librespeed/ks.yaml
   - ollama/ks.yaml
   - myspeed/ks.yaml
@@ -23,9 +22,7 @@ resources:
   - hass/ks.yaml
   - immich/ks.yaml
   - readarr/ks.yaml
-  - authelia/ks.yaml
-  - bookstack/ks.yaml
-  - lldap/ks.yaml
   - paperless/ks.yaml
   - grafana/ks.yaml
   - open-archiver/ks.yaml
+  - nextcloud/ks.yaml
