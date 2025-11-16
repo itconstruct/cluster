@@ -24,6 +24,9 @@ spec:
       retries: 3
   timeout: 30m
   values:
+    workload:
+      main:
+        replicas: 0
     ingress:
       main:
         enabled: true
@@ -75,7 +78,7 @@ spec:
         # recovery
         # Set to 'recovery' when recovery from S3
         backups:
-          enabled: true
+          enabled: false
           credentials: s3
           revision: "3"
           scheduledBackups:
@@ -87,6 +90,6 @@ spec:
         recovery:
           method: object_store
           credentials: s3
-          recoveryTarget:
-            targetTime: "2025-07-28 23:59:59+11:00"
+          #recoveryTarget:
+            #targetTime: "2025-07-28 23:59:59+11:00"
           revision: "2"
