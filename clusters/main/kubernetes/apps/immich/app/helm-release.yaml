@@ -24,9 +24,6 @@ spec:
       retries: 3
   timeout: 30m
   values:
-    workload:
-      main:
-        replicas: 0
     ingress:
       main:
         enabled: true
