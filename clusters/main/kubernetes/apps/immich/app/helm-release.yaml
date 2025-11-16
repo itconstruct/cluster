@@ -75,6 +75,7 @@ spec:
     cnpg:
       main:
         mode: recovery
+        type: vectorchord
         # standalone
         # recovery
         # Set to 'recovery' when recovery from S3
