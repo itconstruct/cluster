@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: paperless-ngx
-      version: 11.29.14
+      version: 11.30.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
