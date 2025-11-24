@@ -60,6 +60,7 @@ spec:
             targetPort: 15630
     persistence:
       data:
+        enabled: true
         volsync:
           - name: data
             type: restic
