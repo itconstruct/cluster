@@ -26,3 +26,4 @@ resources:
   - grafana/ks.yaml
   - open-archiver/ks.yaml
   - nextcloud/ks.yaml
+  - bichon/ks.yaml
