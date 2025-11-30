@@ -58,7 +58,7 @@ spec:
       main:
         type: ClusterIP
         ports:
-          http:
+          main:
             port: 15630
             targetPort: 15630
     persistence:
