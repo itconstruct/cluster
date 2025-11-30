@@ -37,6 +37,9 @@ spec:
             certificateIssuer: domain-0-le-prod
         hosts:
           - host: bichon.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
     global:
       stopAll: false
     credentials:
@@ -55,7 +58,7 @@ spec:
       main:
         type: ClusterIP
         ports:
-          main:
+          http:
             port: 15630
             targetPort: 15630
     persistence:
