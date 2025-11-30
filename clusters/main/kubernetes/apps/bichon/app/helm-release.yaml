@@ -50,7 +50,7 @@ spec:
     image:
       repository: rustmailer/bichon
       pullPolicy: IfNotPresent
-      tag: 0.1.0
+      tag: 0.1.1
     service:
       main:
         type: ClusterIP
