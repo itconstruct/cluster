@@ -61,6 +61,7 @@ spec:
     persistence:
       data:
         enabled: true
+        mountPath: /data
         volsync:
           - name: data
             type: restic
