@@ -82,4 +82,7 @@ spec:
             main:
               env:
                 BICHON_LOG_LEVEL: info
+                BICHON_CORS_ORIGINS: "https://bichon.${DOMAIN_0}"
+                BICHON_ENABLE_ACCESS_TOKEN: "true"
+                BICHON_ENCRYPT_PASSWORD: "${BICHON_ENCRYPTION_PASS}"
                 BICHON_ROOT_DIR: "{{ .Values.persistence.data.mountPath }}"
