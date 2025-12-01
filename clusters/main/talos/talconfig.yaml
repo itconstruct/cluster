@@ -40,14 +40,6 @@ nodes:
               gateway: ${GATEWAY}
           vip:
             ip: ${VIP}
-      schematic:
-        customization:
-          systemExtensions:
-            officialExtensions:
-              - siderolabs/util-linux-tools
-              - siderolabs/iscsi-tools
-              - siderolabs/vmtoolsd-guest-agent
-              - siderolabs/fuse3
 controlPlane:
     patches:
         - '@./patches/controlplane.yaml'
@@ -64,7 +56,6 @@ controlPlane:
                     - siderolabs/util-linux-tools
                     - siderolabs/iscsi-tools
                     - siderolabs/vmtoolsd-guest-agent
-                    - siderolabs/fuse3
     machineFiles:
     - content: |
         [plugins."io.containerd.cri.v1.images"]
@@ -96,7 +87,6 @@ worker:
                     - siderolabs/util-linux-tools
                     - siderolabs/iscsi-tools
                     - siderolabs/vmtoolsd-guest-agent
-                    - siderolabs/fuse3
     machineFiles:
     - content: |
         [plugins."io.containerd.cri.v1.images"]
