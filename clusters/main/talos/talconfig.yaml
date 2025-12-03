@@ -51,7 +51,6 @@ controlPlane:
         customization:
             extraKernelArgs:
                 - net.ifnames=0
-                - ipv6.disable=0
             systemExtensions:
                 officialExtensions:
                     - siderolabs/util-linux-tools
@@ -83,8 +82,6 @@ worker:
      - name: uio_pci_generic
     schematic:
         customization:
-            extraKernalArgs:
-                - ipv6.disable=0
             systemExtensions:
                 officialExtensions:
                     - siderolabs/util-linux-tools
