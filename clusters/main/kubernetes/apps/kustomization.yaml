@@ -19,11 +19,11 @@ resources:
   - kavita/ks.yaml
   - bytestash/ks.yaml
   - uptime-kuma/ks.yaml
-  - hass/ks.yaml
-  - immich/ks.yaml
   - readarr/ks.yaml
-  - paperless/ks.yaml
   - grafana/ks.yaml
   - open-archiver/ks.yaml
-  - nextcloud/ks.yaml
   - bichon/ks.yaml
+  - hass/ks.yaml
+  - immich/ks.yaml
+  - nextcloud/ks.yaml
+  - paperless/ks.yaml
