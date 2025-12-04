@@ -23,7 +23,3 @@ resources:
   - grafana/ks.yaml
   - open-archiver/ks.yaml
   - bichon/ks.yaml
-  - hass/ks.yaml
-  - immich/ks.yaml
-  - nextcloud/ks.yaml
-  - paperless/ks.yaml
