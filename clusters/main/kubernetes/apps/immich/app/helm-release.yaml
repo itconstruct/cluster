@@ -88,5 +88,5 @@ spec:
           method: object_store
           credentials: s3
           #recoveryTarget:
-            #targetTime: "2025-07-28 23:59:59+11:00"
+            targetTime: "2025-11-30 23:59:59+11:00"
           revision: "3"
