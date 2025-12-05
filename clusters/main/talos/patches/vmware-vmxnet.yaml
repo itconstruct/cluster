@@ -1,0 +1,7 @@
+cluster:
+  network:
+    cni:
+      name: flannel
+      flannel:
+        extraArgs:
+          - --flannel-backend=host-gw

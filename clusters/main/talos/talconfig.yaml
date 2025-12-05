@@ -20,6 +20,7 @@ cniConfig:
     name: none
 patches:
     - '@./patches/all.yaml'
+    - '@./patches/vmware-vmxnet.yaml'
 nodes:
     # We would adivce to always stick to a "k8s-something-1" style naming scheme
     - hostname: k8s-control-1
