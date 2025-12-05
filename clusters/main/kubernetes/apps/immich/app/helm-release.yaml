@@ -22,7 +22,7 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-  timeout: 30m
+  timeout: 20m
   values:
     ingress:
       main:
@@ -88,5 +88,5 @@ spec:
           method: object_store
           credentials: s3
           recoveryTarget:
-            targetTime: "2025-11-25 23:59:59+11:00"
+            targetTime: "2025-11-30 23:59:59+11:00"
           revision: "3"
