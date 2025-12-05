@@ -4,3 +4,4 @@ metadata:
   name: hass
   labels:
     pod-security.kubernetes.io/enforce: privileged
+    volsync.backube/privileged-movers: "true"  
