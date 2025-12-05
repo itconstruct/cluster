@@ -24,11 +24,9 @@ spec:
   driftDetection:
     mode: warn
   install:
-    timeout: 30m
     remediation:
       retries: 3
   upgrade:
-    timeout: 30m
     cleanupOnFail: true
     remediation:
       retries: 3
@@ -79,5 +77,4 @@ spec:
     localRedirectPolicy: true
     operator:
       rollOutPods: true
-      replicas: 1
     rollOutCiliumPods: true
