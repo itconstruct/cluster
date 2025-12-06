@@ -71,17 +71,8 @@ spec:
     cnpg:
       main:
         mode: recovery
-        type: vectorchord
-        primaryUpdateStrategy: unsupervised
-        cluster:
-          imageName: ghcr.io/immich-app/postgres:16-vectorchord0.5.3-pgvector0.8.1
-          initdb:
-            postInitApplicationSQL:
-              - CREATE EXTENSION IF NOT EXISTS vectors;
-              - CREATE EXTENSION IF NOT EXISTS vchord;
-              - ALTER USER immich WITH SUPERUSER;
-              - CREATE EXTENSION IF NOT EXISTS cube;
-              - CREATE EXTENSION IF NOT EXISTS earthdistance;
+          #cluster:
+          #imageName: ghcr.io/immich-app/postgres:16-vectorchord0.5.3-pgvector0.8.1
         # standalone
         # recovery
         # Set to 'recovery' when recovery from S3
@@ -101,4 +92,3 @@ spec:
           #recoveryTarget:
             #targetTime: "2025-12-02 23:59:59+11:00"
           revision: "3"
-          recoveryImage: ghcr.io/cloudnative-pg/barman-cloud:latest
