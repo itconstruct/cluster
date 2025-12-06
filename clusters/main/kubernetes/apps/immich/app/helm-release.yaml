@@ -76,9 +76,7 @@ spec:
         cluster:
           imageName: tensorchord/cloudnative-vectorchord:15-0.3.0
           postgresql:
-            shared_preload_libraries:
-              - "vchord.so"
-              - "vectors.so"
+            shared_preload_libraries: "vchord.so,vectors.so"
           initdb:
             postInitApplicationSQL:
               - CREATE EXTENSION IF NOT EXISTS vectors;
