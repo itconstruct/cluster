@@ -76,6 +76,8 @@ spec:
         # standalone
         # recovery
         # Set to 'recovery' when recovery from S3
+        cluster:
+          imageName: ghcr.io/immich-app/postgres:16-vectorchord0.5.3-pgvector0.8.1
         backups:
           enabled: true
           credentials: s3
