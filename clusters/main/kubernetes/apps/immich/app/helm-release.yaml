@@ -74,7 +74,7 @@ spec:
         type: vectorchord
         primaryUpdateStrategy: unsupervised
         cluster:
-          imageName: tensorchord/cloudnative-vectorchord:15-0.3.0
+          imageName: ghcr.io/immich-app/postgres:16-vectorchord0.5.3-pgvector0.8.1
           initdb:
             postInitApplicationSQL:
               - CREATE EXTENSION IF NOT EXISTS vectors;
