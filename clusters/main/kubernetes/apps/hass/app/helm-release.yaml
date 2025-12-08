@@ -66,6 +66,8 @@ spec:
             credentials: s3
             dest:
               enabled: true
+              extraRestoreArgs:
+                - --skip-errors
             src:
               enabled: true
       backup:
@@ -76,6 +78,8 @@ spec:
             credentials: s3
             dest:
               enabled: true
+              extraRestoreArgs:
+                - --skip-errors
             src:
               enabled: true
         mountPath: /config/backups
