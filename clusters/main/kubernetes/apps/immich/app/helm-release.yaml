@@ -74,7 +74,7 @@ spec:
     cnpg:
       main:
         mode: recovery
-        type: vectors
+        type: vectorchord
         #cluster:
           #imageName: ghcr.io/immich-app/postgres:16-vectorchord0.5.3-pgvector0.8.1
         # standalone
