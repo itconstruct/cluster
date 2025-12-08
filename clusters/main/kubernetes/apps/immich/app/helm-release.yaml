@@ -71,9 +71,6 @@ spec:
     cnpg:
       main:
         mode: recovery
-        type: vectorchord
-        #cluster:
-          #imageName: ghcr.io/immich-app/postgres:16-vectorchord0.5.3-pgvector0.8.1
         # standalone
         # recovery
         # Set to 'recovery' when recovery from S3
