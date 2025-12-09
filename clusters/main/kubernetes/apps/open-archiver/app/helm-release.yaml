@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 15.29.11
+      version: 15.29.12
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -55,7 +55,7 @@ spec:
     meiliImage:
       repository: getmeili/meilisearch
       pullPolicy: IfNotPresent
-      tag: v1.28.2@sha256:71cdfc95cbbe20e99e430f9c955a52f6530833ed25041710fa0b04f8128cfbb3
+      tag: v1.29.0@sha256:9af2a48719a1afadbe932a35329ecb504d034234319150a8eaad8de85b621754
     tikaImage:
       repository: apache/tika
       pullPolicy: IfNotPresent
