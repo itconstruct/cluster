@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 15.29.12
+      version: 15.29.61
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -51,11 +51,11 @@ spec:
     image:
       repository: logiclabshq/open-archiver
       pullPolicy: IfNotPresent
-      tag: v0.4.0@sha256:8b580260ae82d9f4656912a8d7dd57fbdaaca7b993c82a42f7f0514d8908597b
+      tag: v0.4.1@sha256:9446de7b1dc27f831e64e4fe4a6cabc34654001019d50b4304f78961919a15ae
     meiliImage:
       repository: getmeili/meilisearch
       pullPolicy: IfNotPresent
-      tag: v1.29.0@sha256:9af2a48719a1afadbe932a35329ecb504d034234319150a8eaad8de85b621754
+      tag: v1.32.2@sha256:d3127a6732bf283d5a387ecf42afee969c8e4211e2dbbdd680f307969511be2e
     tikaImage:
       repository: apache/tika
       pullPolicy: IfNotPresent
