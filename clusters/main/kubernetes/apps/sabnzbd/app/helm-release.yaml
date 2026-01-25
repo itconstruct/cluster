@@ -111,20 +111,18 @@ spec:
     addons:
       gluetun:
         enabled: true
-        killSwitch: true
         excludedNetworks_IPv4:
           - 192.168.1.0/24
         container:
           env:
-            UPDATER_PERIOD: "24h"
             FIREWALL: "on"
-            # Pod Network, Service Network, LAN
             FIREWALL_OUTBOUND_SUBNETS: "172.16.0.0/16,172.17.0.0/16,192.168.1.0/24"
-            VPN_SERVICE_PROVIDER: privado 
-            OPENVPN_USER: ${P_VPN_USER}
-            OPENVPN_PASSWORD: ${P_VPN_PASS}
-              #SERVER_COUNTRIES: Netherlands,United States
-            SERVER_HOSTNAMES: syd-012.vpn.privado.io
-            KEEP_NAMESERVER: "off"
-            DOT: "on"
-            FIREWALL_INPUT_PORTS: "10097"
+            VPN_TYPE: "wireguard"
+            VPN_SERVICE_PROVIDER: "${VPN_SERVICE_PROVIDER}"
+            WIREGUARD_PRIVATE_KEY: "${WIREGUARD_PRIVATE_KEY}"
+            FIREWALL_VPN_INPUT_PORTS: "59241"
+            WIREGUARD_ADDRESSES: "${WIREGUARD_ADDRESSES}"
+            SERVER_CITIES: "Sydney"
+            VPN_ENDPOINT_PORT: "51820"
+            WIREGUARD_PUBLIC_KEY: "${WIREGUARD_PUBLIC_KEY}"
+            VPN_ENDPOINT_IP: "${VPN_ENDPOINT_IP"
