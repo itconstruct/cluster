@@ -12,7 +12,7 @@ spec:
       version: 4.4.0
       sourceRef:
         kind: HelmRepository
-        name: home-ops-mirror
+        name: openebs
         namespace: flux-system
   install:
     createNamespace: true
@@ -29,6 +29,7 @@ spec:
         volumeSnapshots:
           enabled: false
           keep: false
+
     engines:
       local:
         # The lvm-localpv backend contains a duplicate of snapshot controller which will cause conflicts
@@ -41,6 +42,7 @@ spec:
         # The Mayastor backend contains a duplicate of snapshot controller which will cause conflicts
         mayastor:
           enabled: false
+
     loki:
       enabled: false
     alloy:

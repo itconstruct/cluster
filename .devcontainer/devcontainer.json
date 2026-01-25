@@ -1,6 +1,6 @@
 {
     "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
-    "name": "ClusterTool Cluster",
+    "name": "ForgeTool Cluster",
     "image": "oci.trueforge.org/tccr/devcontainer:v2.0.6@sha256:5292842e56b61c27c83b4e8b3daabf5679066df695a72e12596693518b908157",
     "postCreateCommand": {
       "setup": "bash ${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"

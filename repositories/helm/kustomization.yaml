@@ -5,11 +5,14 @@ metadata:
   namespace: flux-system
 resources:
   - bjw-s.yaml
+  - cilium.yaml
   - cloudnative-pg.yaml
   - home-ops-mirror.yaml
   - jetstack.yaml
   - kustomization.yaml
   - metallb.yaml
+  - node-feature-discovery.yaml
+  - openebs.yaml
   - prometheus-community.yaml
   - spegel.yaml
   - truecharts.yaml
