@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kavita
-      version: 12.15.16
+      version: 12.15.17
       sourceRef:
         kind: HelmRepository
         name: truecharts
