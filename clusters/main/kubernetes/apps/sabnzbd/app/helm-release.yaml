@@ -22,7 +22,6 @@ spec:
       # renovate: registryUrl=https://charts.truechartsoci.org
       chart: sabnzbd
       version: 23.2.17
-      tag: "4.5.5@sha256:32a6c624a3d6814919e4cea8a06a527661de028633371ba060f930748f95ab1d"
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -45,6 +44,8 @@ spec:
   uninstall:
     keepHistory: false  
   values:
+    image:
+      tag: "4.5.5@sha256:32a6c624a3d6814919e4cea8a06a527661de028633371ba060f930748f95ab1d"
     workload:
       main:
         podSpec:
