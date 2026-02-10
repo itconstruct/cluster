@@ -54,7 +54,7 @@ jobs:
           path: default
 
       - name: Diff Resources
-        uses: docker://ghcr.io/allenporter/flux-local:main@sha256:6ef9a8d029d8cafdd24fa3615ecdf185898f9c786ac0e19fbdc5190bd1eca5ae
+        uses: docker://ghcr.io/allenporter/flux-local:main@sha256:91a5acf93bd93055ac8dbd99812cfd6f5865c87a1b9a4a6475ac9744b5a9ac7c
         with:
           args: >-
             diff ${{ matrix.resources }}
