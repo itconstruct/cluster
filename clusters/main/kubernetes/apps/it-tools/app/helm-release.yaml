@@ -9,7 +9,7 @@ spec:
         spec:
             # renovate: registryUrl=https://charts.truechartsoci.org
             chart: it-tools
-            version: 8.13.21
+            version: 8.13.22
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
