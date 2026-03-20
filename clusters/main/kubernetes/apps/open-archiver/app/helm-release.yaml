@@ -51,7 +51,7 @@ spec:
     image:
       repository: logiclabshq/open-archiver
       pullPolicy: IfNotPresent
-      tag: v0.4.2@sha256:47801cbe6c432b455c75c1bbfe6da5f0ad465cd97c060d99efbcae8b46285d50
+      tag: v0.5.0@sha256:e57f6ad9953aa70b1d9e900d78c0b74517e102aeacb3af8f4836479926422189
     meiliImage:
       repository: getmeili/meilisearch
       pullPolicy: IfNotPresent
