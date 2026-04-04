@@ -37,7 +37,8 @@ spec:
     # autoDirectNodeRoutes: true
     # routingMode: native
     mtu: 1450
-    tunnel: vxlan
+    routingMode: tunnel
+    tunnelProtocol: vxlan
     hubble:
       enabled: false
     cluster:

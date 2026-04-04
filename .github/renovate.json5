@@ -1,8 +1,34 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  
+  dependencyDashboardTitle: "Renovate Dashboard 🤖",
+  schedule: ["before 06:00 AM"],
+  rebaseWhen: "never",
+  
   "extends": [
     "config:recommended",
-    "github>trueforge-org/truecharts//.github/renovate/main.json5",
-    "github>itconstruct/cluster//.github/special_talos.json5"
+    "timezone(Australia/Sydney)",
+    ":disableRateLimiting",
+    ":semanticCommits",
+    ":configMigration",
+    "helpers:pinGitHubActionDigests",
+    "github>itconstruct/cluster//.github/renovate/customManagers.json5",
+    "github>itconstruct/cluster//.github/renovate/kinds.json5",
+    "github>itconstruct/cluster//.github/renovate/semanticCommits.json5",
+    "github>itconstruct/cluster//.github/renovate/labels.json5",
+    "github>itconstruct/cluster//.github/renovate/autoMerge.json5",
+    "github>itconstruct/cluster//.github/renovate/special_grafanadashboard.json5"
+  ],
+
+  suppressNotifications: [
+    "prEditedNotification",
+    "prIgnoreNotification"
+  ],
+
+  ignorePaths: [
+    "**/*.sops.*",
+    "**/.archive/**",
+    "**/archive/**",
+    "**/resources/**"
   ]
 }
