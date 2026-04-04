@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@6fa4c8300154020277b11ecfbab85263ca1d5a5a # master
 
       - name: Setup Workflow Tools
         run: brew install fluxcd/tap/flux kubeconform kustomize
@@ -54,7 +54,7 @@ jobs:
           path: default
 
       - name: Diff Resources
-        uses: docker://ghcr.io/allenporter/flux-local:main@sha256:88d052d0eea581584816f48426736238edf937b54759bdc4388922f0e160983a
+        uses: docker://ghcr.io/allenporter/flux-local:main@sha256:98596cf8e58eadf211eac324a9d94a5984e492eac812721e85f61b4b1a793bae
         with:
           args: >-
             diff ${{ matrix.resources }}
