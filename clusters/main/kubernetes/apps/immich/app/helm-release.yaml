@@ -87,9 +87,6 @@ spec:
         recovery:
           method: object_store
           credentials: s3
-          backup:
-            name: 20260216T231500
           recoveryTarget:
             targetImmediate: true
-            #targetTime: "2026-02-13 23:59:59+11:00"
           revision: "4"
