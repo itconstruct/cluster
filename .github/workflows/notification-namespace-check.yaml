@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Install kubectl
         run: |
@@ -70,7 +70,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.diffcheck.outputs.update_needed == 'true'
-        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7
+        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v8
         with:
           commit-message: "fix: sync notification.yaml with current namespaces"
           branch: "namespace-sync-patch"
