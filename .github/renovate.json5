@@ -1,23 +1,23 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
   
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
   schedule: ["before 06:00 AM"],
   rebaseWhen: "never",
   
-  "extends": [
+  extends: [
     "config:recommended",
-    "timezone(Australia/Sydney)",
+    ":timezone(Australia/Sydney)",
     ":disableRateLimiting",
     ":semanticCommits",
     ":configMigration",
     "helpers:pinGitHubActionDigests",
-    "github>itconstruct/cluster//.github/renovate/customManagers.json5",
-    "github>itconstruct/cluster//.github/renovate/kinds.json5",
-    "github>itconstruct/cluster//.github/renovate/semanticCommits.json5",
-    "github>itconstruct/cluster//.github/renovate/labels.json5",
-    "github>itconstruct/cluster//.github/renovate/autoMerge.json5",
-    "github>itconstruct/cluster//.github/renovate/special_grafanadashboard.json5"
+    "./.github/renovate/customManagers.json5",
+    "./.github/renovate/kinds.json5",
+    "./.github/renovate/semanticCommits.json5",
+    "./.github/renovate/labels.json5",
+    "./.github/renovate/autoMerge.json5",
+    "./.github/renovate/special_grafanadashboard.json5"
   ],
 
   suppressNotifications: [
