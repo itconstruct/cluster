@@ -112,24 +112,24 @@ spec:
         mountPath: "/Media"
     addons:
       vpn:
+        enabled: true
         type: gluetun
 
-        killSwitch: false   # (since you set FIREWALL off previously)
+        gluetun:
+          env:
+            VPN_SERVICE_PROVIDER: "mullvad"
+            VPN_TYPE: "wireguard"
 
-        excludedNetworks_IPv4:
-          - "10.0.0.0/8"
-          - "172.16.0.0/12"
-          - "192.168.1.0/24"
+            WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
+            WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES}
 
-        env:
-          VPN_SERVICE_PROVIDER: "mullvad"
-          VPN_TYPE: "wireguard"
+            SERVER_COUNTRIES: "Australia"
+            SERVER_CITIES: "Sydney"
 
-          WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
-          WIREGUARD_PUBLIC_KEY: ${WIREGUARD_PUBLIC_KEY}
-          WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES}
+            DOT: "off"
 
-          SERVER_COUNTRIES: "Australia"
-          SERVER_CITIES: "Sydney"
-
-          DOT: "off"
+            excludedNetworks_IPv4:
+              - "10.0.0.0/8"
+              - "172.16.0.0/16"
+              - "172.17.0.0/16"
+              - "192.168.1.0/24"
