@@ -117,13 +117,21 @@ spec:
           env:
             FIREWALL: "on"
             FIREWALL_OUTBOUND_SUBNETS: "10.64.0.0/16,192.168.178.0/24"
+
             VPN_TYPE: "wireguard"
-            VPN_SERVICE_PROVIDER: "${VPN_SERVICE_PROVIDER}"
+            VPN_SERVICE_PROVIDER: "mullvad"
+
             WIREGUARD_PRIVATE_KEY: "${WIREGUARD_PRIVATE_KEY}"
+            WIREGUARD_PUBLIC_KEY: "${WIREGUARD_PUBLIC_KEY}"
             WIREGUARD_ADDRESSES: "${WIREGUARD_ADDRESSES}"
+
             SERVER_CITIES: "Sydney"
             WIREGUARD_ENDPOINT_PORT: "51820"
-            WIREGUARD_PUBLIC_KEY: "${WIREGUARD_PUBLIC_KEY}"
-            VPN_ENDPOINT_IP: "${VPN_ENDPOINT_IP}"
-            KEEP_NAMESERVER: "off"
-            DOT: "on"
+          
+            DNS_KEEP_NAMESERVER: "off"
+            VPN_ENDPOINT_IP: "146.70.141.194"
+            
+            DNS_ADDRESS: "10.64.0.1"
+            DNS_KEEP_NAMESERVER: "off"
+            
+            DOT: "off"
