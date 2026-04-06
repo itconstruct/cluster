@@ -122,13 +122,12 @@ spec:
           enabled: true
           servers:
             - 1.1.1.1  
-        container:
-          env:
-            FIREWALL: "off"
-            VPN_TYPE: "wireguard"
-            VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
-            WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
-            WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES}
-            SERVER_COUNTRIES: "Australia"
-            SERVER_CITIES: "Sydney"
-            DOT: "off"
+        env:
+          FIREWALL: "off"
+          VPN_TYPE: "wireguard"
+          VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
+          WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
+          WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES}
+          SERVER_COUNTRIES: "Australia"
+          SERVER_CITIES: "Sydney"
+          DOT: "off"
