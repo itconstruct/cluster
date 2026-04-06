@@ -111,24 +111,16 @@ spec:
         path: "/mnt/docker/Media"
         mountPath: "/Media"
     addons:
-  gluetun:
-    enabled: true
+      vpn:
+        type: gluetun
 
-    excludedNetworks_IPv4:
-      - 10.0.0.0/8
-      - 172.16.0.0/12
-      - 192.168.1.0/24
+        killSwitch: false   # (since you set FIREWALL off previously)
 
-    dns:
-      enabled: true
-      servers:
-        - 1.1.1.1
+        excludedNetworks_IPv4:
+          - "10.0.0.0/8"
+          - "172.16.0.0/12"
+          - "192.168.1.0/24"
 
-    firewall:
-      enabled: false
-
-    containers:
-      gluetun:
         env:
           VPN_SERVICE_PROVIDER: "mullvad"
           VPN_TYPE: "wireguard"
