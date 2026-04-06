@@ -10,7 +10,7 @@ spec:
         - target:
             version: v1
             kind: Deployment
-            name: qbittorrent
+            name: sabnzbd
           patch: |
             - op: add
               path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
@@ -128,7 +128,6 @@ spec:
             SERVER_CITIES: "Sydney"
             WIREGUARD_ENDPOINT_PORT: "51820"
           
-            DNS_KEEP_NAMESERVER: "off"
             WIREGUARD_ENDPOINT_IP: "146.70.141.194"
             
             DNS_ADDRESS: "10.64.0.1"
