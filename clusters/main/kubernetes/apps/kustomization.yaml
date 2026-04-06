@@ -11,7 +11,7 @@ resources:
   - cloudflared/ks.yaml
   - gaps/ks.yaml
   - it-tools/ks.yaml
-    #- sabnzbd/ks.yaml
+  - sabnzbd/ks.yaml
     # - librespeed/ks.yaml
     # - ollama/ks.yaml
   - myspeed/ks.yaml
