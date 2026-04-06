@@ -111,23 +111,32 @@ spec:
         path: "/mnt/docker/Media"
         mountPath: "/Media"
     addons:
+  gluetun:
+    enabled: true
+
+    excludedNetworks_IPv4:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.1.0/24
+
+    dns:
+      enabled: true
+      servers:
+        - 1.1.1.1
+
+    firewall:
+      enabled: false
+
+    containers:
       gluetun:
-        enabled: true
-        excludedNetworks_IPv4:
-          - 10.0.0.0/8
-          - 172.16.0.0/16
-          - 172.17.0.0/16
-          - 192.168.1.0/24
-        dns:
-          enabled: true
-          servers:
-            - 1.1.1.1  
         env:
-          FIREWALL: "off"
+          VPN_SERVICE_PROVIDER: "mullvad"
           VPN_TYPE: "wireguard"
-          VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
+
           WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
           WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES}
+
           SERVER_COUNTRIES: "Australia"
           SERVER_CITIES: "Sydney"
+
           DOT: "off"
