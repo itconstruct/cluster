@@ -128,3 +128,4 @@ spec:
             SERVER_COUNTRIES: "Australia"
             SERVER_CITIES: "Sydney"
             DOT: "off"
+            DNS_ADDRESS: "1.1.1.1"
