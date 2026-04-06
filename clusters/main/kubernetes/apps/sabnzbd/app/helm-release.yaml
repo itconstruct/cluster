@@ -5,7 +5,7 @@ metadata:
   namespace: sabnzbd
 spec:
   interval: 15m
-  timeout: 20m
+  timeout: 5m
   chart:
     spec:
       # renovate: registryUrl=https://charts.truechartsoci.org
@@ -24,12 +24,10 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-    timeout: 20m
   upgrade:
     crds: CreateReplace
     remediation:
       retries: 3
-    timeout: 20m
   uninstall:
     keepHistory: false  
   values:
