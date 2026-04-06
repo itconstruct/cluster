@@ -129,7 +129,7 @@ spec:
             WIREGUARD_ENDPOINT_PORT: "51820"
           
             DNS_KEEP_NAMESERVER: "off"
-            VPN_ENDPOINT_IP: "146.70.141.194"
+            WIREGUARD_ENDPOINT_IP: "146.70.141.194"
             
             DNS_ADDRESS: "10.64.0.1"
             DNS_KEEP_NAMESERVER: "off"
