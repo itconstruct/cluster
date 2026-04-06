@@ -114,11 +114,14 @@ spec:
       gluetun:
         enabled: true
         excludedNetworks_IPv4:
+          - 10.0.0.0/8
+          - 172.16.0.0/16
+          - 172.17.0.0/16
           - 192.168.1.0/24
         container:
           env:
             FIREWALL: "on"
-            FIREWALL_OUTBOUND_SUBNETS: "172.16.0.0/16,172.17.0.0/16,192.168.1.0/24"
+            FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8,172.16.0.0/16,172.17.0.0/16,192.168.1.0/24"
             VPN_TYPE: "wireguard"
             VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
             WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
@@ -126,3 +129,5 @@ spec:
             MULLVAD_ACCOUNT_NUMBER: ${MULLVAD_ACCOUNT_NUMBER}
             SERVER_COUNTRIES: "Australia"
             SERVER_CITIES: "Sydney"
+            DOT: "off"
+            DNS_ADDRESS: "1.1.1.1,8.8.8.8"
