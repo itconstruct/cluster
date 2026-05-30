@@ -41,6 +41,7 @@ spec:
           - host: status.${DOMAIN_0}
     cnpg:
       main:
+        enabled: true
         cluster:
           singleNode: false
         monitoring:
