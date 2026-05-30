@@ -27,4 +27,3 @@ resources:
   - paperless/ks.yaml
   - immich/ks.yaml
   - hass/ks.yaml
-  - gatus/ks.yaml
