@@ -60,7 +60,7 @@ spec:
             {{- if .Values.cnpg.main.enabled }}
             storage:
               type: postgres
-              path: {{ (printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | trimAll "\"")) | quote }}
+              path: {{ (printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | quote }}
             {{- end }}
             ui:
               title: Status | Gatus
@@ -135,7 +135,7 @@ spec:
                   - "[BODY].status == UP"
                 alerts:
                   - type: discord
-                  - minimum-reminder-interval: 12h
+                  minimum-reminder-interval: 12h
               - name: Ping (Buddy)
                 group: buddy
                 url: icmp://${BUDDY_DDNS_HOSTNAME}
