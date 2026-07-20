@@ -55,10 +55,6 @@ spec:
         integrations:
           metallb:
             enabled: true
-    config:  
-      clientLookup:
-        # -- upstream used for client-name lookup
-        upstream: "192.168.1.1"
     k8sgateway:
       # -- list of processed domains
       domains:

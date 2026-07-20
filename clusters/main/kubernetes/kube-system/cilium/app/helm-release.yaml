@@ -19,7 +19,7 @@ spec:
         name: cilium
         namespace: flux-system
       interval: 15m
-  timeout: 30m
+  timeout: 20m
   maxHistory: 3
   driftDetection:
     mode: warn
@@ -80,5 +80,4 @@ spec:
     localRedirectPolicy: true
     operator:
       rollOutPods: true
-      replicas: 1
     rollOutCiliumPods: true
