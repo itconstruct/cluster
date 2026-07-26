@@ -34,8 +34,6 @@ spec:
       service:
         externalTrafficPolicy: Local
         annotations:
-          # TODO: Maybe play with this
-          # internal-dns.alpha.kubernetes.io/hostname: external.${DOMAIN_0}
           metallb.io/ip-allocated-from-pool: main
           metallb.io/loadBalancerIPs: ${NGINX_EXTERNAL_IP}
       ingressClassByName: true
@@ -77,7 +75,7 @@ spec:
         enabled: false
       resources:
         requests:
-          cpu: 100m
+          cpu: 75m
         limits:
           memory: 500Mi
     defaultBackend:

@@ -35,14 +35,14 @@ spec:
       blacklist: []
       clientGroupsBlock: []
 
-      #clientGroupsBlock:
-        #- name: default
-          #groups:
+      clientGroupsBlock:
+        - name: default
+          groups:
             #- default
             #- default-ads
             #- default-tracking
-            #- default-malicious
-            #- default-suspicious
+            - default-malicious
+            - default-suspicious
     ## set stopAll to "true" if you do not want to use blocky
     # and/or disable its service
     global:
