@@ -1,33 +1,15 @@
 <div align="center">
   <img align="center" width="100" height="100" src="https://github.com/trueforge-org/website/blob/main/public/svg/logo.svg">
-  <h3 align="center">Forgetool</h3>
+  <h3 align="center">Clustertool</h3>
 
-  [![GitHub release (release name instead of tag name)](https://img.shields.io/github/v/release/trueforge-org/forgetool?include_prereleases)](https://github.com/trueforge-org/forgetool/releases)
-  [![GitHub issues](https://img.shields.io/github/issues/trueforge-org/forgetool)](https://github.com/trueforge-org/forgetool/issues)
+This repository contains a Kubernetes cluster bootstrapped with **TrueForge Clustertool**.
 
-  <p align="center">
-    A helper tool to help building <a href="https://truecharts.org">TrueCharts</a> helm charts
-    <br />
-    ·
-    <a href="https://github.com/trueforge-org/forgetool/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/trueforge-org/forgetool/issues">Request Feature</a>
-  </p>
-</div>
+✨ What **TrueForge Clustertool** provides:
+- ⚙️ Bootstraps a **Talos Linux** Kubernetes cluster
+- 🔄 Installs **Flux** for GitOps-based cluster management
+- 📦 Delivers a minimal, reproducible, ready-to-use setup
 
-## About The Project
+🌍 **TrueForge** is a community-driven organization building and maintaining awesome open-source projects.  
+Learn more at 👉 https://trueforge.org/
 
-## CLA: Before contributing
-
-Our CLA applies to this repository as well.
-
-Please ensure it's signed before submitting a PR:
-https://cla-assistant.io/truecharts/charts
-
-*We use the truecharts/charts link, as CLA assistant does not allow for creating a custom link to a private repository.
-However, they all sign the same CLA that applies project-wide*
-
-## License
-
-This tool is released as "All Rights reserved" and hence it's code should NOT be shared. This includes binaries that are modified to remove TrueCharts specific code, unless approved by Kjeld Schouten "The Owner".
-Those that are invited to have access to repository, are free to edit and use this code for testing purposes, as long as its sourcecode is not shared or saved in-the-cloud.
+🎯 The goal is a **simple, GitOps-driven Kubernetes cluster** with minimal manual effort.

@@ -3,8 +3,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - helm-release.yaml
+  - jobs
   - volumeSnapshotClass.yaml
   - ingress.yaml
-  - recurring-job-trim.yaml
-  - recurring-job-snapshot-cleanup.yaml
-  - recurring-job-snapshot-delete.yaml

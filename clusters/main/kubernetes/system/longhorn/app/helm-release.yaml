@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: longhorn
-      version: 1.11.2
+      version: 1.12.0
       sourceRef:
         kind: HelmRepository
         name: home-ops-mirror
@@ -31,15 +31,10 @@ spec:
       storageOverProvisioningPercentage: "100000"
       storageReservedPercentageForDefaultDisk: 10
       # v2DataEngine: true
-    csi:
-      attacherReplicaCount: 1
-      provisionerReplicaCount: 1
-      resizerReplicaCount: 1
-      snapshotterReplicaCount: 1
     persistence:
       # Set to false to pick another CSI as default
       defaultClass: true
       # Increase to 3 for a multi-node cluster
-      defaultClassReplicaCount: 1
+      defaultClassReplicaCount: 3
     longhornUI:
       replicas: 1

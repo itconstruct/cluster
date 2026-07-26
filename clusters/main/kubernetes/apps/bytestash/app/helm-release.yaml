@@ -5,7 +5,7 @@ metadata:
   namespace: bytestash
 spec:
   interval: 15m
-  timeout: 40m
+  timeout: 30m
   chart:
     spec:
       chart: bytestash
