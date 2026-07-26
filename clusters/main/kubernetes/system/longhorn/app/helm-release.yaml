@@ -26,7 +26,7 @@ spec:
   values:
     defaultSettings:
       # Increase to 3 for a multi-node cluster
-      defaultReplicaCount: "1"
+      defaultReplicaCount: "3"
       # Overprovisioning might be needed when using volsync
       storageOverProvisioningPercentage: "100000"
       storageReservedPercentageForDefaultDisk: 10
@@ -37,4 +37,4 @@ spec:
       # Increase to 3 for a multi-node cluster
       defaultClassReplicaCount: 3
     longhornUI:
-      replicas: 1
+      replicas: 3

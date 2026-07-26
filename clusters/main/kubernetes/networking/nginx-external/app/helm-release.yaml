@@ -30,7 +30,7 @@ spec:
     keepHistory: false
   values:
     controller:
-      replicaCount: 2
+      replicaCount: 3
       service:
         externalTrafficPolicy: Local
         annotations:
