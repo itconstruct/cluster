@@ -59,7 +59,7 @@ spec:
           config.yaml: |
             storage:
               type: postgres
-              path: ${GATUS_DB_PATH}
+              path: "{{ .Values.cnpg.main.creds.std }}"
 
             ui:
               title: Status | Gatus
@@ -78,9 +78,6 @@ spec:
                 default-alert:
                   description: "health check failed"
                   send-on-resolved: true
-                overrides:
-                  - group: "buddy"
-                    webhook-url: ${GATUS_WEBHOOK_BUDDY}
             endpoints:
               - name: Cloudflare
                 group: connectivity
@@ -114,37 +111,3 @@ spec:
                   - "[STATUS] == 200"
                 alerts:
                   - type: discord
-              - name: Status Page (Buddy)
-                group: buddy
-                url: https://${GATUS_BUDDY_STATUS_HOSTNAME}
-                interval: 60s
-                ui:
-                  hide-url: true
-                  hide-hostname: true
-                conditions:
-                  - "[STATUS] == 200"
-                  - "[BODY].status == UP"
-                alerts:
-                  - type: discord
-                  minimum-reminder-interval: 12h
-              - name: Ping (Buddy)
-                group: buddy
-                url: icmp://${BUDDY_DDNS_HOSTNAME}
-                interval: 1m
-                ui:
-                  hide-url: true
-                  hide-hostname: true
-                conditions:
-                  - "[CONNECTED] == true"
-                alerts:
-                  - type: discord
-                    minimum-reminder-interval: 12h
-            external-endpoints:
-              - name: Heartbeat (Buddy)
-                group: buddy
-                token: ${GATUS_BUDDY_HEARTBEAT_TOKEN}
-                heartbeat:
-                  interval: 5m
-                alerts:
-                  - type: discord
-                    minimum-reminder-interval: 12h
