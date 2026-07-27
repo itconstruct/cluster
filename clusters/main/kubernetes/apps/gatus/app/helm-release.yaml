@@ -57,11 +57,10 @@ spec:
         enabled: true
         data:
           config.yaml: |
-            {{- if .Values.cnpg.main.enabled }}
             storage:
               type: postgres
-              path: {{ printf "%s?client_encoding=utf8" .Values.cnpg.main.creds.std | quote }}
-            {{- end }}
+              path: ${GATUS_DB_PATH}
+
             ui:
               title: Status | Gatus
               header: Status
@@ -115,14 +114,6 @@ spec:
                   - "[STATUS] == 200"
                 alerts:
                   - type: discord
-              - name: ${DOMAIN_0}
-                group: cloudflare
-                url: https://${DOMAIN_0}
-                interval: 1m
-                conditions:
-                  - "[STATUS] == 200"
-                alerts:
-                  - type: discord
               - name: Status Page (Buddy)
                 group: buddy
                 url: https://${GATUS_BUDDY_STATUS_HOSTNAME}
@@ -147,7 +138,7 @@ spec:
                   - "[CONNECTED] == true"
                 alerts:
                   - type: discord
-                  - minimum-reminder-interval: 12h
+                    minimum-reminder-interval: 12h
             external-endpoints:
               - name: Heartbeat (Buddy)
                 group: buddy
@@ -156,4 +147,4 @@ spec:
                   interval: 5m
                 alerts:
                   - type: discord
-                  - minimum-reminder-interval: 12h
+                    minimum-reminder-interval: 12h
