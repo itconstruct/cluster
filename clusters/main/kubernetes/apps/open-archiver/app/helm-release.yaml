@@ -51,11 +51,11 @@ spec:
     image:
       repository: logiclabshq/open-archiver
       pullPolicy: IfNotPresent
-      tag: v0.5.1@sha256:dd5d5ca653e620da9db7a7ef4376e6dc40115d4d547f6bf8017b313fa2d057ab
+      tag: v0.5.2@sha256:3d756fa193421f832a59be18d16147b41442ecede45b95e844e82e774a77c549
     meiliImage:
       repository: getmeili/meilisearch
       pullPolicy: IfNotPresent
-      tag: v1.50.0@sha256:9694a59df43ee3f54b3fda9c5de381a3ee9852678e3e31cadf37d6bddea7fc1b
+      tag: v1.51.0@sha256:a9eb29ee09ab4943db3b4c68620bd6f3382e6b2b0ac4431c0e607b48dbcd4c14
     tikaImage:
       repository: apache/tika
       pullPolicy: IfNotPresent
