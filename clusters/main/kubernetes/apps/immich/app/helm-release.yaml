@@ -71,7 +71,7 @@ spec:
     cnpg:
       instances: 1
       main:
-        mode: recovery
+        mode: standalone
         # standalone
         # recovery
         # Set to 'recovery' when recovery from S3
