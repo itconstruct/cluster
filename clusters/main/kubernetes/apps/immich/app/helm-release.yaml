@@ -69,6 +69,7 @@ spec:
         path: /mnt/docker/talos_apps/immich/encoded-video
         mountPath: /usr/src/app/upload/encoded-video
     cnpg:
+      instances: 1
       main:
         mode: recovery
         # standalone
