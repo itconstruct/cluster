@@ -74,10 +74,11 @@ spec:
         recovery:
           method: object_store
           credentials: s3 
-    configmap:
-      dashboard-certmanager:
+    dashboards:
+      grafana:
+      cert-manager:
         enabled: true
-      dashboard-nginx:
+      nginx:
         enabled: true
     persistence:
       data:
