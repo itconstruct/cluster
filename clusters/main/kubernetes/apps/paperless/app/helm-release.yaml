@@ -66,6 +66,8 @@ spec:
         mountPath: "/export"
     cnpg:
       main:
+        cluster:
+          instances: 1
         mode: recovery
         # Set to 'recovery' when recovery from S3
         backups:
