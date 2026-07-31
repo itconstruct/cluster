@@ -39,6 +39,8 @@ spec:
         ingressClassName: internal
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 401"]
         hosts:
         - host: plex.${DOMAIN_0}
         integrations:
