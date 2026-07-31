@@ -122,7 +122,7 @@ spec:
                   hide-hostname: true
                 conditions:
                   - "[STATUS] == 200"
-                  - "[BODY].status == UP"
+                    #- "[BODY].status == UP"
                 alerts:
                   - type: discord
                   - minimum-reminder-interval: 12h
