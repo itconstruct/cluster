@@ -69,7 +69,6 @@ spec:
         proxy-busy-buffers-size: 32k
         ssl-protocols: TLSv1.3 TLSv1.2
         use-forwarded-headers: "true"
-        proxy-real-ip-cidr: "${PODNET},${SVCNET}"
       metrics:
         enabled: true
         serviceMonitor:
