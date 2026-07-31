@@ -25,5 +25,5 @@ resources:
   - nextcloud/ks.yaml
   - paperless/ks.yaml
   - immich/ks.yaml
-  - hass/ks.yaml
+    #- hass/ks.yaml
   - gatus/ks.yaml
