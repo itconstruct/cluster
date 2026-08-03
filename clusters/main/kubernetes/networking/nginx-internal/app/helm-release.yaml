@@ -30,6 +30,8 @@ spec:
     keepHistory: false
   values:
     nameOverride: nginx-internal
+    tcp:
+      "902": "external-service/external-service-esx:902"
     controller:
       replicaCount: 3
       service:

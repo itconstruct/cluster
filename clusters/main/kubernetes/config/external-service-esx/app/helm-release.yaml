@@ -32,6 +32,9 @@ spec:
           main:
             port: 443
             protocol: https
+          nfc:
+            port: 902
+            protocol: tcp
         type: ExternalIP
     ingress:
       main:
