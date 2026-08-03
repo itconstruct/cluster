@@ -32,6 +32,8 @@ spec:
     nameOverride: nginx-internal
     tcp:
       "902": "external-service/external-service-esx:902"
+      "445": "external-service/external-service-truenas:445"
+      "2049": "external-service/external-service-truenas:2049"
     controller:
       replicaCount: 3
       service:
