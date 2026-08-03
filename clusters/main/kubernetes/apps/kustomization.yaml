@@ -15,11 +15,11 @@ resources:
     # - ollama/ks.yaml
   - myspeed/ks.yaml
   - tailscale/ks.yaml
-  - kavita/ks.yaml
+    #- kavita/ks.yaml
   - bytestash/ks.yaml
-  - uptime-kuma/ks.yaml
   - readarr/ks.yaml
   - grafana/ks.yaml
+    # B
     # - open-archiver/ks.yaml
   - bichon/ks.yaml
   - nextcloud/ks.yaml
