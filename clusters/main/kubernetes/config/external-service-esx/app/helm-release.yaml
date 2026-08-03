@@ -30,9 +30,11 @@ spec:
         externalIP: ${ESX_IP}
         ports:
           main:
+            enabled: true
             port: 443
             protocol: https
           nfc:
+            enabled: true
             port: 902
             protocol: tcp
         type: ExternalIP
