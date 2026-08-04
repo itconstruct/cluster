@@ -1,0 +1,64 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: calibre-web
+  namespace: calibre-web
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: calibre-web
+      version: 22.7.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  timeout: 20m
+  values:
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: calibre-web.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: "domain-0-le-prod"
+    credentials:
+      s3:
+        type: s3
+        url: "${S3URL}"
+        bucket: "${S3PREFIX}-calibre-web"
+        accessKey: "${S3ID}"
+        secretKey: "${S3KEY}"
+        encrKey: "${S3KEY}"
+    persistence:
+      config:
+        enabled: true
+        mountPath: /config
+        volsync:
+          - name: config
+            type: restic
+            credentials: s3
+            src:
+              enabled: true
+              cacheCapacity: 5Gi
+            dest:
+              enabled: true
+              cacheCapacity: 5Gi
+      calibre-library:
+        enabled: true
+        type: nfs
+        server: "${NAS_IP}"
+        path: "/mnt/docker/Media/calibre-library"
+        mountPath: "/books"
