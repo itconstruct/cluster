@@ -27,4 +27,3 @@ resources:
   - immich/ks.yaml
     #- hass/ks.yaml
   - gatus/ks.yaml
-  - uptime-kuma/ks.yaml
