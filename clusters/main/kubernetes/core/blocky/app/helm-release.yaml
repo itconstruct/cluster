@@ -103,6 +103,11 @@ spec:
     defaultUpstreams:
       - "https://1.1.1.1/dns-query"
       - "https://1.0.0.1/dns-query"
+
+    conditional:
+      mapping:
+        - domain: test.${DOMAIN_1}
+          dnsserver: 192.168.1.81
     bootstrapDns:
       ips: []
       upstream: "1.1.1.1"
