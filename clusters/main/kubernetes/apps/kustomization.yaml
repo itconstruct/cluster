@@ -8,7 +8,7 @@ resources:
   - tautulli/ks.yaml
   - threadfin/ks.yaml
   - cloudflared/ks.yaml
-    #- gaps/ks.yaml
+  - gaps/ks.yaml
   - it-tools/ks.yaml
   - sabnzbd/ks.yaml
     # - librespeed/ks.yaml
@@ -16,7 +16,7 @@ resources:
   - myspeed/ks.yaml
   - tailscale/ks.yaml
   - bytestash/ks.yaml
-    #- readarr/ks.yaml
+  - readarr/ks.yaml
   - grafana/ks.yaml
     # - open-archiver/ks.yaml
   - bichon/ks.yaml
