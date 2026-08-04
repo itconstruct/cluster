@@ -40,6 +40,21 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: blocky
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          gatus.home-operations.com/endpoint: |
+            path: ""
+        hosts:
+          - host: blocky.${BASE_DOMAIN}
+            paths:
+              - path: /
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: "domain-0-le-prod"
     # ToDo review blocklists
     blocking:
       whitelist: []
