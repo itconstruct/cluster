@@ -29,6 +29,17 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    workload:
+      main:
+        replicas: 3
+        podSpec:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: blocky
     # ToDo review blocklists
     blocking:
       whitelist: []
@@ -75,7 +86,8 @@ spec:
           enabled: false
           domain: dns01.clouddns.com
     defaultUpstreams:
-    - "https://1.1.1.1/dns-query"
+      - "https://1.1.1.1/dns-query"
+      - "https://1.0.0.1/dns-query"
     bootstrapDns:
       ips: []
       upstream: "1.1.1.1"
