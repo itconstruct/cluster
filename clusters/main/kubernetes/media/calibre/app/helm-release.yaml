@@ -62,3 +62,9 @@ spec:
         server: "${NAS_IP}"
         path: "/mnt/docker/Media/books"
         mountPath: "/books"
+      calibre-library:
+        enabled: true
+        type: nfs
+        server: "${NAS_IP}"
+        path: "/mnt/docker/Media/calibre-library"
+        mountPath: "/calibre-library"
