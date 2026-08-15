@@ -142,4 +142,4 @@ spec:
                   interval: 5m
                 alerts:
                   - type: discord
-                  - minimum-reminder-interval: 12hT
+                  - minimum-reminder-interval: 12h
