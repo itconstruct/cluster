@@ -108,14 +108,6 @@ spec:
                   - "[CONNECTED] == true"
                 alerts:
                   - type: discord
-              - name: ${DOMAIN_0}
-                group: cloudflare
-                url: https://${DOMAIN_0}
-                interval: 60s
-                conditions:
-                  - "[STATUS] == 200"
-                alerts:
-                  - type: discord
             ### BUDDY ENDPOINTS
               - name: Status Page (Buddy)
                 group: buddy
@@ -132,7 +124,7 @@ spec:
                   - minimum-reminder-interval: 12h
               - name: Ping (Buddy)
                 group: buddy
-                url: icmp://${BUDDY_DDNS_HOSTNAME}
+                url: icmp://${GATUS_BUDDY_DDNS_HOSTNAME}
                 interval: 1m
                 ui:
                   hide-url: true
@@ -150,4 +142,4 @@ spec:
                   interval: 5m
                 alerts:
                   - type: discord
-                  - minimum-reminder-interval: 12h
+                  - minimum-reminder-interval: 12hT
