@@ -48,7 +48,7 @@ spec:
           gatus.home-operations.com/endpoint: |
             path: ""
         hosts:
-          - host: blocky.${BASE_DOMAIN}
+          - host: blocky.${DOMAIN_0}
             paths:
               - path: /
         integrations:

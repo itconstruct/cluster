@@ -93,24 +93,24 @@ spec:
       type: LoadBalancer
       loadBalancerIP: ${HEADLAMP_IP}
 
-    # ingress:
-    #   enabled: true
-    #   annotations:
-    #     cert-manager.io/cluster-issuer: domain-0-le-prod
-    #     cert-manager.io/private-key-rotation-policy: Always
-    #   ingressClassName: internal
-    #   hosts:
-    #     - host: headlamp.${DOMAIN_0}
-    #       paths:
-    #         - pathType: Prefix
-    #           path: /
-    #           type: ImplementationSpecific
-    #           backend:
-    #             service:
-    #               name: headlamp
-    #               port:
-    #                 number: 80
-    #   tls:
-    #     - secretName: headlamp-tls-0
-    #       hosts:
-    #         - headlamp.${BASE_DOMAIN}
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: domain-0-le-prod
+        cert-manager.io/private-key-rotation-policy: Always
+      ingressClassName: internal
+      hosts:
+        - host: headlamp.${DOMAIN_0}
+          paths:
+            - pathType: Prefix
+              path: /
+              type: ImplementationSpecific
+              backend:
+                service:
+                  name: headlamp
+                  port:
+                    number: 80
+      tls:
+        - secretName: headlamp-tls-0
+          hosts:
+            - headlamp.${DOMAIN_0}
