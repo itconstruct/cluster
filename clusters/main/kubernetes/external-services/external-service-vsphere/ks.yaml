@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: external-service-plex
+  name: external-service-vsphere
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/config/external-service-plex/app
+  path: clusters/main/kubernetes/external-services/external-service-vsphere/app
   prune: true
   sourceRef:
     kind: GitRepository

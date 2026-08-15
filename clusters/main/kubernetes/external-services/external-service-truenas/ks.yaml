@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: external-service-vsphere
+  name: external-service-truenas
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/config/external-service-vsphere/app
+  path: clusters/main/kubernetes/external-services/external-service-truenas/app
   prune: true
   sourceRef:
     kind: GitRepository
