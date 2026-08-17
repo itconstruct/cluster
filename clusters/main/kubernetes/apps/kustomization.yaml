@@ -16,7 +16,7 @@ resources:
   - myspeed/ks.yaml
   - tailscale/ks.yaml
   - bytestash/ks.yaml
-    #- grafana/ks.yaml
+  - grafana/ks.yaml
     # - open-archiver/ks.yaml
   - bichon/ks.yaml
   - nextcloud/ks.yaml
