@@ -94,6 +94,19 @@ spec:
         recovery:
           method: object_store
           credentials: s3
+    workload:
+      notify:
+        podSpec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: truecharts.org/pvc
+                        operator: In
+                        values:
+                          - config_html
+                  topologyKey: kubernetes.io/hostname
     nextcloud:
       general:
         default_phone_region: AU
