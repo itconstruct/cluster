@@ -67,7 +67,7 @@ spec:
     cnpg:
       main:
         cluster:
-          instances: 1
+          singleNode: false
         mode: recovery
         # Set to 'recovery' when recovery from S3
         backups:
