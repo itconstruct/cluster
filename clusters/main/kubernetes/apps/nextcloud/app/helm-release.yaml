@@ -78,7 +78,7 @@ spec:
     cnpg:
       main:
         cluster:
-          singleNode: true
+          singleNode: false
         mode: recovery
         # standalone
         # Set to 'recovery' when recovery from S3
