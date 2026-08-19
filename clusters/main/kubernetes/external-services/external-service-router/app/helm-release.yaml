@@ -31,7 +31,7 @@ spec:
         ports:
           main:
             enabled: true
-            port: 443
+            port: 80
             protocol: http
         type: ExternalIP
     ingress:
