@@ -40,6 +40,8 @@ spec:
         ingressClassName: internal
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Referer "http://${ROUTER_IP}/";
         hosts:
         - host: router.${DOMAIN_0}
         integrations:
