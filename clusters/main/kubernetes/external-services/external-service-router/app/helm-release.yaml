@@ -32,7 +32,7 @@ spec:
           main:
             enabled: true
             port: 443
-            protocol: https
+            protocol: http
         type: ExternalIP
     ingress:
       main:
