@@ -22,9 +22,4 @@ spec:
     remediation:
       retries: 3
   values:
-    metrics:
-    main:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        interval: 60s
+    {}
