@@ -104,7 +104,7 @@ spec:
                             DB="/myspeed/data/storage.db"
                             [ -f "$DB" ] || { echo "No DB at $DB, skipping"; exit 0; }
                             echo "Looking for *_backup tables…"
-                            tables="$(sqlite3 "$DB" "SELECT name FROM sqlite_master WHERE type='table' AND name LIKE '%\\_backup';" || true)"
+                            tables="$(sqlite3 "$DB" "SELECT name FROM sqlite_master WHERE type='table' AND name LIKE '%\_backup' ESCAPE '\';" || true)"
                             if [ -z "$tables" ]; then
                               echo "No *_backup tables found."
                             else
