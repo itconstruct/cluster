@@ -1,27 +1,39 @@
 ---
-
-name: PR - HelmRelease Lint
+name: PR - HelmRelease Validate
 
 on:
   pull_request:
     paths:
       - '**/helm-release.yaml'
+      - '.github/workflows/pr-check-helmrelease-lint.yaml'
+
+permissions:
+  contents: read
 
 jobs:
   helm-lint:
+    name: helm-lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - name: Set up Helm
-        uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
         with:
-          version: v3.22.0
+          fetch-depth: 0
 
-      - name: Lint HelmRelease manifests
+      - name: Find changed HelmReleases
+        id: changed
         run: |
-          for hr in $(find . -name helm-release.yaml); do
-            echo "Linting $hr..."
-            helm lint $(dirname "$hr")
-          done
+          git diff --name-only --diff-filter=ACMR "origin/${{ github.base_ref }}...HEAD" \
+            | grep 'helm-release\.yaml$' > changed.txt || true
+          echo "count=$(wc -l < changed.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          echo "Changed HelmReleases:"; cat changed.txt
+
+      - name: Validate against Flux CRD schemas
+        if: steps.changed.outputs.count != '0'
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work \
+            ghcr.io/yannh/kubeconform:v0.6.7-alpine \
+            -strict -summary \
+            -schema-location default \
+            -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+            $(cat changed.txt)
