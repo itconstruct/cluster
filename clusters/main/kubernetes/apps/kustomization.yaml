@@ -23,3 +23,4 @@ resources:
   - paperless/ks.yaml
   - immich/ks.yaml
     #- hass/ks.yaml
+  - wire-pod/ks.yaml
