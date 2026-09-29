@@ -52,9 +52,6 @@ spec:
         runAsGroup: 0
         runAsNonRoot: false
         readOnlyRootFilesystem: false
-        capabilities:
-          add:
-            - NET_BIND_SERVICE # binds 80 and 443
     service:
       main:
         type: LoadBalancer
