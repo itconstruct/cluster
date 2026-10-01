@@ -55,7 +55,7 @@ spec:
     meiliImage:
       repository: getmeili/meilisearch
       pullPolicy: IfNotPresent
-      tag: v1.53.1@sha256:8d6643d86d71fad6ad3cba92cde7ccfce9e4d6c384bda67598eb553571c32431
+      tag: v1.54.2@sha256:1c9dc9b037162d59224a4fc8b1fadd96e343213acf7c828e5d380e28407443fb
     tikaImage:
       repository: apache/tika
       pullPolicy: IfNotPresent
