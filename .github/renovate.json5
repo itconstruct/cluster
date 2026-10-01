@@ -1,16 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  
+
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "schedule": ["before 06:00 AM"],
   "rebaseWhen": "conflicted",
   "prHourlyLimit": 0,
-  "commitHourlyLimit": 0,  
+  "commitHourlyLimit": 0,
 
   "extends": [
     "config:recommended",
     ":timezone(Australia/Sydney)",
-    "github>trueforge-org/renovate-config"    
+    // Floats on main (no tags upstream). Security-critical rules are restated
+    // in packageRules below so upstream changes cannot weaken them.
+    "github>trueforge-org/renovate-config"
   ],
 
   "ignorePaths": [
@@ -18,5 +20,33 @@
     "**/.archive/**",
     "**/archive/**",
     "**/resources/**"
+  ],
+
+  // Root packageRules apply after all presets, so these win.
+  "packageRules": [
+    {
+      "description": "Soak period before automerging minors/patches",
+      "matchUpdateTypes": ["minor", "patch"],
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "GitHub Actions: PR + passing tests (overrides preset quickMerge branch/ignoreTests)",
+      "matchManagers": ["github-actions"],
+      "automergeType": "pr",
+      "ignoreTests": false
+    },
+    {
+      "description": "Talos + Kubernetes: manual merge for minor/patch",
+      "matchPackageNames": ["ghcr.io/siderolabs/installer", "ghcr.io/siderolabs/kubelet"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false,
+      "addLabels": ["system-upgrade"]
+    },
+    {
+      "description": "Talos + Kubernetes: dashboard approval for major",
+      "matchPackageNames": ["ghcr.io/siderolabs/installer", "ghcr.io/siderolabs/kubelet"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    }
   ]
 }
