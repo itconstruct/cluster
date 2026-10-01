@@ -27,15 +27,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@f8d4222eb633e65c2a0157383cf80861fc7fae7f # master
+      - name: Setup kustomize and kubeconform
+        env:
+          KUSTOMIZE_VERSION: v5.7.1
+          KUBECONFORM_VERSION: v0.6.7
+        run: |
+          set -euo pipefail
+          bin="$HOME/.local/bin"; mkdir -p "$bin"
+          cd "$(mktemp -d)"
 
-      - name: Setup Workflow Tools
-        run: brew install fluxcd/tap/flux kubeconform kustomize
+          base="https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}"
+          curl -fsSLO "$base/kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+          curl -fsSLO "$base/checksums.txt"
+          sha256sum -c --ignore-missing checksums.txt
+          tar xzf "kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz" -C "$bin" kustomize
+
+          base="https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}"
+          curl -fsSLO "$base/kubeconform-linux-amd64.tar.gz"
+          curl -fsSLO "$base/CHECKSUMS"
+          sha256sum -c --ignore-missing CHECKSUMS
+          tar xzf kubeconform-linux-amd64.tar.gz -C "$bin" kubeconform
+
+          echo "$bin" >> "$GITHUB_PATH"
+
+      - name: Tool versions
+        run: kustomize version && kubeconform -v
 
       - name: Run kubeconform
         shell: bash
-        run: bash ./scripts/kubeconform.sh ${{ env.KUBERNETES_DIR }}
+        run: bash ./scripts/kubeconform.sh "$KUBERNETES_DIR"
 
   flux-diff:
     name: Flux Diff
