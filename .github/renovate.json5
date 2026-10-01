@@ -18,5 +18,30 @@
     "**/.archive/**",
     "**/archive/**",
     "**/resources/**"
+  ],
+  "packageRules": [
+    {
+      "description": "Soak period before automerging minors/patches",
+      "matchUpdateTypes": ["minor", "patch"],
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "GitHub Actions: go through a PR and pass tests (overrides preset quickMerge)",
+      "matchManagers": ["github-actions"],
+      "automergeType": "pr",
+      "ignoreTests": false
+    },
+    {
+      "description": "Talos + Kubernetes: manual merge for minor/patch, dashboard approval for major (owned here, not inherited)",
+      "matchPackageNames": ["ghcr.io/siderolabs/installer", "ghcr.io/siderolabs/kubelet"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false,
+      "addLabels": ["system-upgrade"]
+    },
+    {
+      "matchPackageNames": ["ghcr.io/siderolabs/installer", "ghcr.io/siderolabs/kubelet"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    }
   ]
 }

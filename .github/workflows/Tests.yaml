@@ -5,7 +5,13 @@ name: "Tests"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["clusters/main/kubernetes/**"]
+    paths:
+      - "clusters/main/kubernetes/**"
+      - ".github/workflows/Tests.yaml"
+      - "scripts/kubeconform.sh"
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -85,17 +91,3 @@ jobs:
             ```diff
             ${{ steps.diff.outputs.diff }}
             ```
-  automerge-and-approve:
-    needs:
-      - kubeconform
-      - flux-diff
-    name: Automerge and Approve build
-    runs-on: ubuntu-latest
-    steps:
-      - name: automerge
-        uses: pascalgn/automerge-action@7961b8b5eec56cc088c140b56d864285eabd3f67 # v0.16.4
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          UPDATE_RETRIES: 12
-          UPDATE_RETRY_SLEEP: 60000
-          MERGE_METHOD: squash
