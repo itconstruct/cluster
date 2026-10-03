@@ -70,6 +70,8 @@ spec:
         mountPath: /usr/src/app/upload/encoded-video
     cnpg:
       main:
+        monitoring:
+          enablePodMonitor: true
         mode: recovery
         # standalone
         # recovery

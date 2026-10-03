@@ -79,6 +79,8 @@ spec:
       main:
         cluster:
           singleNode: false
+        monitoring:
+          enablePodMonitor: true
         mode: recovery
         # standalone
         # Set to 'recovery' when recovery from S3
