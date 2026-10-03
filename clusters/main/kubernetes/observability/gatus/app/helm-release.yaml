@@ -41,6 +41,13 @@ spec:
             certificateIssuer: domain-0-le-prod
         hosts:
           - host: status.${DOMAIN_0}
+    metrics:
+      main:
+        enabled: true
+        type: "servicemonitor"
+        endpoints:
+          - port: main
+            path: /metrics
     cnpg:
       main:
         enabled: true
@@ -121,7 +128,7 @@ spec:
                   - "[BODY].status == UP"
                 alerts:
                   - type: discord
-                  - minimum-reminder-interval: 12h
+                    minimum-reminder-interval: 12h
               - name: Ping (Buddy)
                 group: buddy
                 url: icmp://${GATUS_BUDDY_DDNS_HOSTNAME}
@@ -133,7 +140,7 @@ spec:
                   - "[CONNECTED] == true"
                 alerts:
                   - type: discord
-                  - minimum-reminder-interval: 12h
+                    minimum-reminder-interval: 12h
             external-endpoints:
               - name: Heartbeat (Buddy)
                 group: buddy
@@ -142,4 +149,4 @@ spec:
                   interval: 5m
                 alerts:
                   - type: discord
-                  - minimum-reminder-interval: 12h
+                    minimum-reminder-interval: 12h
