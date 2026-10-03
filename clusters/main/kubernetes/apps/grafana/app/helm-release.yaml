@@ -59,6 +59,8 @@ spec:
             certificateIssuer: domain-0-le-prod
     cnpg:
       main:
+        monitoring:
+          enablePodMonitor: true
         mode: recovery
         cluster:
           singleNode: true
