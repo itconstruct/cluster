@@ -37,4 +37,5 @@ spec:
           registry: ghcr.io
           username: "${GHCR_USER}"
           password: "${GHCR_PAT}"
+          email: "${DOMAIN_0_EMAIL}"
         targetSelectAll: true
