@@ -24,3 +24,4 @@ resources:
   - immich/ks.yaml
     #- hass/ks.yaml
   - wire-pod/ks.yaml
+  - static-web-server-guides/ks.yaml
