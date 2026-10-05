@@ -29,7 +29,7 @@ spec:
           - host: guides.${DOMAIN_0}
     image:
       repository: ghcr.io/itconstruct/guides
-      tag: 0.0.1@sha256:f7181bf033e03537cbab3067d61826beaad94d3e01c5008819c20dc5f888fa0e
+      tag: 0.0.3@sha256:4f1ef4c04dba74c9a0f0ea039e5f514f57bbb53fa7e2d2916ccc2c65d1683426
     imagePullSecret:
       ghcr:
         enabled: true
