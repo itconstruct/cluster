@@ -36,7 +36,7 @@ spec:
             certificateIssuer: "domain-0-le-prod"
           homepage:
             enabled: true
-            group: Media
+            group: Infra
             widget:
               custom:
                 key: "${IMMICH_API_KEY}"
