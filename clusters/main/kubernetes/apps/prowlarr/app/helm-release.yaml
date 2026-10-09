@@ -26,7 +26,7 @@ spec:
             certificateIssuer: domain-0-le-prod
           homepage:
             enabled: true
-            group: Media
+            group: Arr
             widget:
               custom:
                 key: "${PROWLARR_API_KEY}"
