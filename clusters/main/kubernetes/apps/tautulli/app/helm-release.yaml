@@ -25,6 +25,15 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
+          homepage:
+            enabled: true
+            group: Media
+            widget:
+              custom:
+                key: "${TAUTULLI_API_KEY}"
+                enableUser: true
+                showEpisodeNumber: true
+                expandOneStreamToTwoRows: false
         hosts:
           - host: tautulli.${DOMAIN_0}
     credentials:

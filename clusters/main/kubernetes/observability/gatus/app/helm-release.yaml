@@ -39,6 +39,12 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
+          homepage:
+            enabled: true
+            group: Monitoring
+            widget:
+              type: gatus
+              url: http://gatus.gatus.svc.cluster.local:8080
         hosts:
           - host: status.${DOMAIN_0}
     metrics:
