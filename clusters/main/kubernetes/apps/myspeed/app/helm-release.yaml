@@ -50,7 +50,7 @@ spec:
         integrations:
           homepage:
             enabled: true
-            group: Apps
+            group: Monitoring
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
