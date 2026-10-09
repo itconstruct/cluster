@@ -40,7 +40,7 @@ spec:
             widget:
               custom:
                 key: "${IMMICH_API_KEY}"
-                version: 2
+                version: "2"
     credentials:
       s3:
         type: s3

@@ -31,9 +31,9 @@ spec:
             widget:
               custom:
                 key: "${TAUTULLI_API_KEY}"
-                enableUser: true
-                showEpisodeNumber: true
-                expandOneStreamToTwoRows: false
+                enableUser: "true"
+                showEpisodeNumber: "true"
+                expandOneStreamToTwoRows: "false"
         hosts:
           - host: tautulli.${DOMAIN_0}
     credentials:
