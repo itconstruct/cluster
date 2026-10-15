@@ -44,7 +44,7 @@ spec:
       pullPolicy: IfNotPresent
       # Upstream publishes no current semver image tags - pin main by digest,
       # Renovate raises a PR when the digest changes.
-      tag: main@sha256:c3c52a0f27227caf407db4e24f199a1c35284ebde6b21d1e56d8e2f75e456b9a
+      tag: main@sha256:b8ac0d5593704592eacedd293a864e0504f4974b44e64a4c56a6fae19857fb94
     securityContext:
       container:
         # start.sh refuses to run as non-root; entrypoint rewrites /opt/wire-pod
