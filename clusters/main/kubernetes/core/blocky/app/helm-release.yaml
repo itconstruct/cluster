@@ -104,6 +104,11 @@ spec:
     - "https://1.1.1.1/dns-query"
     - "https://1.0.0.1/dns-query"
 
+    blockyConfig:
+      customDNS:
+        mapping:
+          devops-prod.lan: 192.168.1.230
+          devops-test.lan: 192.168.1.231
     conditional:
       mapping:
         - domain: ${DOMAIN_1}
