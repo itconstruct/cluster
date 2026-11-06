@@ -19,7 +19,26 @@
     "**/archive/**",
     "**/resources/**"
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": ["Track the TrueCharts common schema version pinned for editor validation"],
+      "managerFilePatterns": ["/^\\.schemas/truecharts-helmrelease\\.json$/"],
+      "matchStrings": ["schemas/common/(?<currentValue>\\d+\\.\\d+\\.\\d+)\\.schema\\.json"],
+      "depNameTemplate": "truecharts-common-schema",
+      "packageNameTemplate": "oci.trueforge.org/truecharts/common",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "semver"
+    }
+  ],
+
   "packageRules": [
+    {
+      "description": "Editor schema pin: minors flow, a new common major (common-2026) waits for dashboard approval",
+      "matchDepNames": ["truecharts-common-schema"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    },
     {
       "description": "Soak period before automerging minors/patches",
       "matchUpdateTypes": ["minor", "patch"],

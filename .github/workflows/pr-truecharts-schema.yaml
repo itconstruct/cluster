@@ -1,0 +1,68 @@
+---
+name: PR - TrueCharts Schema
+
+# No paths filter on purpose: a required status check must report on every PR, or PRs that
+# don't touch HelmReleases would wait forever. The job decides what is in scope itself.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  truecharts-schema:
+    name: truecharts-schema
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Select HelmReleases to validate
+        id: scope
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          if [ "$EVENT" != "pull_request" ]; then
+            echo "args=--all" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          changed=$(git diff --name-only --diff-filter=ACMR "origin/${BASE_REF}...HEAD")
+          if echo "$changed" | grep -qE '^(\.schemas/|\.github/workflows/(pr-truecharts-schema\.yaml|scripts/validate-truecharts-values\.py)$)'; then
+            echo "Validator or schema changed: validating everything"
+            echo "args=--all" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          files=$(echo "$changed" | grep 'helm-release\.yaml$' | tr '\n' ' ' || true)
+          echo "Changed HelmReleases: ${files:-none}"
+          echo "args=${files}" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Helm
+        if: steps.scope.outputs.args != ''
+        uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
+        with:
+          version: v3.22.1
+
+      - name: Install validator dependencies
+        if: steps.scope.outputs.args != ''
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet --disable-pip-version-check \
+            "jsonschema==4.26.0" "PyYAML==6.0.3"
+
+      - name: Validate values against each chart's schema
+        if: steps.scope.outputs.args != ''
+        env:
+          ARGS: ${{ steps.scope.outputs.args }}
+        run: |
+          # shellcheck disable=SC2086
+          "$RUNNER_TEMP/venv/bin/python" .github/workflows/scripts/validate-truecharts-values.py $ARGS
+
+      - name: Nothing in scope
+        if: steps.scope.outputs.args == ''
+        run: echo "No TrueCharts HelmReleases changed in this PR."

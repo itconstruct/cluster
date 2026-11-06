@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=../../../../../../.schemas/truecharts-helmrelease.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
