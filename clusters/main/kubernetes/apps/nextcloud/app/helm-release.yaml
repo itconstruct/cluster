@@ -26,8 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    global:
-      stopAll: true
     configmap:
       php-security:
         enabled: true
