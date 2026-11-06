@@ -46,4 +46,5 @@ spec:
             src:
               enabled: true
               cacheCapacity: 10Gi
-              schedule: 40 15 * * *
+              trigger:
+                schedule: 40 15 * * *

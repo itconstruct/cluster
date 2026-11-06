@@ -76,7 +76,8 @@ spec:
             src:
               enabled: true
               cacheCapacity: 10Gi
-              schedule: 40 23 * * *
+              trigger:
+                schedule: 40 23 * * *
   postRenderers:
     - kustomize:
         patches:

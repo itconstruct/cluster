@@ -60,7 +60,8 @@ spec:
               enabled: true
             src:
               enabled: true
-              schedule: 40 13 * * *
+              trigger:
+                schedule: 40 13 * * *
       html:
         volsync:
           - name: r2
@@ -70,7 +71,8 @@ spec:
               enabled: true
             src:
               enabled: true
-              schedule: 40 13 * * *
+              trigger:
+                schedule: 40 13 * * *
       data:
         type: nfs
         server: ${NAS_IP}

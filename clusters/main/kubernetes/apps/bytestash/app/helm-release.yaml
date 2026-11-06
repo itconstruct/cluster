@@ -49,7 +49,6 @@ spec:
         volsync:
           - name: snippets
             type: restic
-            schedule: "30 14 * * *"  # 01:30 AEDT / 00:30 AEST
             credentials: s3
             dest:
               enabled: true
@@ -57,6 +56,8 @@ spec:
             src:
               enabled: true
               cacheCapacity: 5Gi
+              trigger:
+                schedule: "30 14 * * *"  # 01:30 AEDT / 00:30 AEST
 
     env:
       JWT_SECRET: "${BYTESTASH_JWT}"
