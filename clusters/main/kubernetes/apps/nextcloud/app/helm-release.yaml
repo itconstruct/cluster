@@ -28,6 +28,12 @@ spec:
   values:
     global:
       stopAll: true
+    configmap:
+      php-security:
+        enabled: true
+        data:
+          zz-security.ini: |
+            session.upload_progress.enabled = 0
     ingress:
       main:
         enabled: true
@@ -79,6 +85,16 @@ spec:
         type: nfs
         server: ${NAS_IP}
         path: /mnt/docker/talos_apps/nextcloud/data
+      php-security:
+        enabled: true
+        type: configmap
+        objectName: php-security
+        targetSelector:
+          main:
+            main:
+              mountPath: /usr/local/etc/php/conf.d/zz-security.ini
+              subPath: zz-security.ini
+              readOnly: true
     cnpg:
       main:
         cluster:
