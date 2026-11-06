@@ -47,6 +47,11 @@ spec:
               cacheCapacity: 10Gi
               trigger:
                 schedule: 0 18 * * *
-    env:
-      PGADMIN_DEFAULT_EMAIL: "${DOMAIN_0_EMAIL}"
-      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_PASS}"
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                PGADMIN_DEFAULT_EMAIL: "${DOMAIN_0_EMAIL}"
+                PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_PASS}"
