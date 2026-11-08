@@ -61,7 +61,7 @@ spec:
       main:
         monitoring:
           enablePodMonitor: true
-        mode: recovery
+        mode: standalone
         cluster:
           singleNode: true
         backups:
