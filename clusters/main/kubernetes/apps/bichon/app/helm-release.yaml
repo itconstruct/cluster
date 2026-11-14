@@ -53,7 +53,7 @@ spec:
     image:
       repository: rustmailer/bichon
       pullPolicy: IfNotPresent
-      tag: 2.3.1
+      tag: 2.3.2
     service:
       main:
         type: ClusterIP
